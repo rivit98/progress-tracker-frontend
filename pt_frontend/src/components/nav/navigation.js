@@ -23,7 +23,7 @@ export function Navigation({ children }) {
     const toast = useToast();
     const logged = useSelector(isLoggedIn);
 
-    const LinkItems = [
+    const linkItems = [
         { name: 'Home', to: '/', icon: FiHome },
         { name: 'Login', to: '/login', icon: FiLogIn, show: !logged },
         { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
@@ -62,7 +62,7 @@ export function Navigation({ children }) {
                         </Text>
                         <CloseButton mr={4} display={'flex'} onClick={onClose} />
                     </Flex>
-                    {LinkItems.filter((link) => link.show === undefined || link.show === true).map((link) => (
+                    {linkItems.filter((link) => link.show === undefined || link.show === true).map((link) => (
                         <SideBarItem
                             key={link.name}
                             icon={link.icon}

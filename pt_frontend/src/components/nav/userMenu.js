@@ -7,18 +7,9 @@ export const UserMenu = () => {
     const { username } = useSelector(currentUserData);
     const logged = useSelector(isLoggedIn);
 
-    const loggedAs = () => {
-        return (
-            <>
-                <Text mr={1}>Logged as: </Text>
-                <Text fontWeight={'bold'}>{username}</Text>
-            </>
-        );
-    };
-
     return (
         <>
-            {logged && loggedAs()}
+            {logged && <Text fontWeight={'bold'}>{username}</Text>}
             {!logged && <Text>Not logged</Text>}
         </>
     );
