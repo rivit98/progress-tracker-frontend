@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { TopNavbar } from './topNavbar';
 import { isLoggedIn, removeUser } from '../../context/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import { RiKey2Fill, RiKey2Line, VscKey } from 'react-icons/all';
 
 export function Navigation({ children }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,6 +28,9 @@ export function Navigation({ children }) {
         { name: 'Home', to: '/', icon: FiHome },
         { name: 'Login', to: '/login', icon: FiLogIn, show: !logged },
         { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
+
+        { name: 'crackmes', to: '/crackmes', icon: VscKey, show: logged},
+
         { name: 'Log out', to: '/', icon: FiLogOut, onClick: () => logOut(), show: logged }
     ];
 

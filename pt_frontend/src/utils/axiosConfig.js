@@ -3,7 +3,6 @@ import { authService } from '../services/auth';
 
 const axiosInstance = axios.create({
     // baseURL: 'http://localhost:8000/'
-    // baseURL: 'https://cpt-rest-backend.herokuapp.com/'
     baseURL: 'https://cpt-rest.ct8.pl/'
 });
 

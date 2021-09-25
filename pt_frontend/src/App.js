@@ -8,6 +8,7 @@ import withComponent from './utils/withComponent';
 import Register from './components/auth/register';
 import Login from './components/auth/login';
 import withStore from './context/withStore';
+import { CrackmesList } from './components/crackmes/crackmesList';
 
 const App = () => {
     return (
@@ -15,6 +16,8 @@ const App = () => {
             <Route exact path={'/'} component={Home} />
             <Route exact path={'/login'} component={Login} />
             <Route exact path={'/register'} component={Register} />
+
+            <Route exact path={'/crackmes'} component={CrackmesList} />
         </Container>
     );
 };

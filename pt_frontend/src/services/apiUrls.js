@@ -5,9 +5,13 @@ const ME = `${API_VERSION}/users/me/`;
 const TOKEN = `${API_VERSION}/auth/login/`;
 const REFRESH_TOKEN = `${API_VERSION}/auth/refresh/`;
 
+const CRACKMES = `${API_VERSION}/tasks`
+
 export const apiUrls = {
     REGISTER,
     ME,
     TOKEN,
-    REFRESH_TOKEN
+    REFRESH_TOKEN,
+
+    CRACKMES
 };

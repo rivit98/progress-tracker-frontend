@@ -1,5 +1,5 @@
 import axiosInstance from '../utils/axiosConfig';
-import { apiUrls } from '../utils/apiUrls';
+import { apiUrls } from './apiUrls';
 import { store } from '../context/store';
 import { updateUser } from '../context/userReducer';
 
