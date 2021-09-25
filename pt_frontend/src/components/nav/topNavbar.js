@@ -28,6 +28,7 @@ export const TopNavbar = ({ onOpen }) => {
             >
                 Progress tracker
             </Text>
+            
             <Box display={'flex'} flex={1} justifyContent={'flex-end'}>
                 <UserMenu />
             </Box>

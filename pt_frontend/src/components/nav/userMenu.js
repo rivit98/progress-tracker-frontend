@@ -10,7 +10,6 @@ export const UserMenu = () => {
     return (
         <>
             {logged && <Text fontWeight={'bold'}>{username}</Text>}
-            {!logged && <Text>Not logged</Text>}
         </>
     );
 };
