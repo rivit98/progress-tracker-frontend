@@ -12,7 +12,7 @@ import { CrackmesList } from './components/crackmes/crackmesList';
 
 const App = () => {
     return (
-        <Container maxW={'container.xl'} centerContent>
+        <Container mt={6} maxW={'container.xl'} centerContent>
             <Route exact path={'/'} component={Home} />
             <Route exact path={'/login'} component={Login} />
             <Route exact path={'/register'} component={Register} />

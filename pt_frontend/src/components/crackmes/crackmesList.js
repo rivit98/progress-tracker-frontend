@@ -29,15 +29,15 @@ const Crackme = ({ crackme }) => {
                     w={'full'}
                     experimental_spaceX={'2'}
                 >
-                    <Box flex={6}>
+                    <Box flex={6} overflow={'hidden'}>
                         <Link href={link} isExternal>
                             {name}
                         </Link>
                     </Box>
-                    <Box flex={3} textAlign="center">
+                    <Box flex={3} textAlign="center" overflow={'hidden'}>
                         {formatDate(date)}
                     </Box>
-                    <Box flex={3} flexWrap={'wrap'} textAlign="center">
+                    <Box flex={3} flexWrap={'wrap'} textAlign="center" overflow={'hidden'}>
                         {language}
                     </Box>
                     <Box flex={1} textAlign="center">
@@ -51,9 +51,7 @@ const Crackme = ({ crackme }) => {
                     </Box>
                 </Flex>
             </AccordionButton>
-            <AccordionPanel pb={4}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            </AccordionPanel>
+            <AccordionPanel pb={4}>Actions here</AccordionPanel>
         </AccordionItem>
     );
 };
