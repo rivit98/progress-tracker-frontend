@@ -3,8 +3,8 @@ import { apiUrls } from './apiUrls';
 
 const responseBody = (response) => response.data;
 
-const getCrackmes = async () => {
-    return axiosInstance.get(apiUrls.CRACKMES).then(responseBody);
+const getCrackmes = async (options = undefined) => {
+    return axiosInstance.get(apiUrls.CRACKMES, options).then(responseBody);
 };
 
 
