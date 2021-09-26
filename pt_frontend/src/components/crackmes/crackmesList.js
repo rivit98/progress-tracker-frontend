@@ -1,20 +1,7 @@
 import { crackmesService } from '../../services/crackmes';
 import { useAxiosEffect } from '../../utils/useAxiosEffect';
 import { ComponentStateHandler } from '../generic/componentStateHandler';
-import {
-    LinkBox,
-    LinkOverlay,
-    List,
-    ListIcon,
-    ListItem,
-    Table,
-    TableCaption,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr
-} from '@chakra-ui/react';
+import { LinkBox, LinkOverlay, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
 const Crackme = ({ crackme }) => {
     //TODO: icon/row color depending on current state

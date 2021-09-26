@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useRef, useState } from 'react';
-import { Button, Center, FormControl, FormErrorMessage, Heading, Input, Stack, useToast } from '@chakra-ui/react';
+import { Box, Button, Center, FormControl, FormErrorMessage, Heading, Input, Stack, useToast } from '@chakra-ui/react';
 import { formTexts } from './formTexts';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -64,62 +64,64 @@ const Register = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
-            <Center mb={3}>
-                <Heading>Register</Heading>
-            </Center>
-            <Stack spacing={2}>
-                <FormControl isInvalid={errors.username}>
-                    <Input
-                        bg={'white'}
-                        placeholder={'Nick'}
-                        {...register('username', {
-                            required: formTexts.requiredField,
-                            minLength: {
-                                value: 3,
-                                message: formTexts.textTooShort
-                            }
-                        })}
-                    />
-                    <FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={errors.password}>
-                    <Input
-                        bg={'white'}
-                        type={'password'}
-                        placeholder={'Password'}
-                        {...register('password', {
-                            required: formTexts.requiredField,
-                            minLength: {
-                                value: 8,
-                                message: formTexts.textTooShort
-                            }
-                        })}
-                    />
-                    <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={errors.password2}>
-                    <Input
-                        bg={'white'}
-                        type={'password'}
-                        placeholder={'Repeat password'}
-                        {...register('password2', {
-                            required: formTexts.requiredField,
-                            minLength: {
-                                value: 8,
-                                message: formTexts.textTooShort
-                            },
-                            validate: (value) => value === password.current || formTexts.passwordsDontMatch
-                        })}
-                    />
-                    <FormErrorMessage>{errors.password2 && errors.password2.message}</FormErrorMessage>
-                </FormControl>
-            </Stack>
+        <Box maxW={'md'} w={'full'} justifyContent={'center'}>
+            <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
+                <Center mb={3}>
+                    <Heading>Register</Heading>
+                </Center>
+                <Stack spacing={2}>
+                    <FormControl isInvalid={errors.username}>
+                        <Input
+                            bg={'white'}
+                            placeholder={'Nick'}
+                            {...register('username', {
+                                required: formTexts.requiredField,
+                                minLength: {
+                                    value: 3,
+                                    message: formTexts.textTooShort
+                                }
+                            })}
+                        />
+                        <FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage>
+                    </FormControl>
+                    <FormControl isInvalid={errors.password}>
+                        <Input
+                            bg={'white'}
+                            type={'password'}
+                            placeholder={'Password'}
+                            {...register('password', {
+                                required: formTexts.requiredField,
+                                minLength: {
+                                    value: 8,
+                                    message: formTexts.textTooShort
+                                }
+                            })}
+                        />
+                        <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
+                    </FormControl>
+                    <FormControl isInvalid={errors.password2}>
+                        <Input
+                            bg={'white'}
+                            type={'password'}
+                            placeholder={'Repeat password'}
+                            {...register('password2', {
+                                required: formTexts.requiredField,
+                                minLength: {
+                                    value: 8,
+                                    message: formTexts.textTooShort
+                                },
+                                validate: (value) => value === password.current || formTexts.passwordsDontMatch
+                            })}
+                        />
+                        <FormErrorMessage>{errors.password2 && errors.password2.message}</FormErrorMessage>
+                    </FormControl>
+                </Stack>
 
-            <Button mt={4} w={'full'} colorScheme="teal" isLoading={loading} type="submit">
-                Submit
-            </Button>
-        </form>
+                <Button mt={4} w={'full'} colorScheme='teal' isLoading={loading} type='submit'>
+                    Submit
+                </Button>
+            </form>
+        </Box>
     );
 };
 

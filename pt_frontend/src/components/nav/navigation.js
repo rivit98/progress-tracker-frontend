@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { TopNavbar } from './topNavbar';
 import { isLoggedIn, removeUser } from '../../context/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { RiKey2Fill, RiKey2Line, VscKey } from 'react-icons/all';
+import { VscKey } from 'react-icons/all';
 
 export function Navigation({ children }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
