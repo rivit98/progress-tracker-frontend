@@ -62,7 +62,7 @@ export function Navigation({ children }) {
                 <DrawerContent>
                     <Flex h="20" w="full" alignItems="center" justify={'space-between'}>
                         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" ml={5}>
-                            Progress tracker
+                            ProgressTracker
                         </Text>
                         <CloseButton mr={4} display={'flex'} onClick={onClose} />
                     </Flex>
@@ -79,7 +79,7 @@ export function Navigation({ children }) {
                 </DrawerContent>
             </Drawer>
             <TopNavbar onOpen={onOpen} />
-            <Box p="4">{children}</Box>
+            <Box p="4" w="full">{children}</Box>
         </Box>
     );
 }
