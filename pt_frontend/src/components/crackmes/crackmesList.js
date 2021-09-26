@@ -2,6 +2,7 @@ import { crackmesService } from '../../services/crackmes';
 import { useAxiosEffect } from '../../utils/useAxiosEffect';
 import { ComponentStateHandler } from '../generic/componentStateHandler';
 import { Link, LinkBox, LinkOverlay, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import formatDate from '../../utils/dateformatter';
 
 const Crackme = ({ crackme }) => {
     //TODO: icon/row color depending on current state
@@ -12,10 +13,10 @@ const Crackme = ({ crackme }) => {
     return (
         <Tr>
             <Td border={0}><Link href={link} isExternal>{name}</Link></Td>
-            <Td border={0}>{date}</Td>
+            <Td border={0}>{formatDate(date)}</Td>
             <Td border={0}>{language}</Td>
-            <Td border={0}>{comments_num}</Td>
-            <Td border={0}>{writeups_num}</Td>
+            <Td border={0} textAlign={'center'}>{comments_num}</Td>
+            <Td border={0} textAlign={'center'}>{writeups_num}</Td>
         </Tr>
     )
 }
@@ -26,9 +27,9 @@ export const CrackmesList = () => {
     const tasks = state.data
 
     const renderTasks = () => {
-        return tasks.map(t => {
-            return <Crackme crackme={t} key={t.id}/>
-        })
+        return tasks
+            .sort((t1, t2) => t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name))
+            .map(t => <Crackme crackme={t} key={t.id}/>)
     }
 
     return (

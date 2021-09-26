@@ -30,7 +30,8 @@ export function Navigation({ children }) {
         { name: 'Login', to: '/login', icon: FiLogIn, show: !logged },
         { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
 
-        { name: 'crackmes', to: '/crackmes', icon: VscKey, show: logged},
+        // { name: 'crackmes', to: '/crackmes', icon: VscKey, show: logged},
+        { name: 'crackmes', to: '/crackmes', icon: VscKey},
 
         { name: 'Log out', to: '/', icon: FiLogOut, onClick: () => logOut(), show: logged }
     ];

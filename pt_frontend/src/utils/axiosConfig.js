@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { authService } from '../services/auth';
+import { handleDates } from './dateformatter';
 
 const axiosInstance = axios.create({
     // baseURL: 'http://localhost:8000/'
@@ -46,5 +47,10 @@ const setAxiosInterceptor = () => {
     );
 };
 setAxiosInterceptor();
+
+axiosInstance.interceptors.response.use((originalResponse) => {
+    handleDates(originalResponse.data);
+    return originalResponse;
+});
 
 export default axiosInstance;
