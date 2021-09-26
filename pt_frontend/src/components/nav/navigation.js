@@ -4,17 +4,17 @@ import {
     Drawer,
     DrawerContent,
     DrawerOverlay,
-    Flex,
+    Flex, HStack,
     Icon,
     Text,
     useDisclosure,
-    useToast
+    useToast, VStack
 } from '@chakra-ui/react';
 import { FiHome, FiLogIn, FiLogOut, FiUserPlus } from 'react-icons/fi';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TopNavbar } from './topNavbar';
-import { isLoggedIn, removeUser } from '../../context/userReducer';
+import { currentUserData, isLoggedIn, removeUser } from '../../context/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { VscKey } from 'react-icons/all';
 
@@ -23,6 +23,7 @@ export function Navigation({ children }) {
     const dispatch = useDispatch();
     const toast = useToast();
     const logged = useSelector(isLoggedIn);
+    const { username } = useSelector(currentUserData);
 
     const linkItems = [
         { name: 'Home', to: '/', icon: FiHome },
@@ -57,9 +58,10 @@ export function Navigation({ children }) {
                 onOverlayClick={onClose}
                 closeOnEsc={true}
                 closeOnOverlayClick={true}
+                isFullHeight={true}
             >
                 <DrawerOverlay />
-                <DrawerContent>
+                <DrawerContent overflowY={'auto'}>
                     <Flex h="20" w="full" alignItems="center" justify={'space-between'}>
                         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" ml={5}>
                             ProgressTracker
@@ -76,6 +78,22 @@ export function Navigation({ children }) {
                             {link.name}
                         </SideBarItem>
                     ))}
+                    <Flex
+                        align="end"
+                        grow={1}
+                        p="4"
+                        mx="4"
+                        borderRadius="lg"
+                        role="group"
+                        _focus={{
+                            outline: 'none'
+                        }}
+                    >
+                        <VStack align={'start'}>
+                            <Text>Logged as:</Text>
+                            <Text>{username}</Text>
+                        </VStack>
+                    </Flex>
                 </DrawerContent>
             </Drawer>
             <TopNavbar onOpen={onOpen} />
