@@ -15,12 +15,12 @@ import {
     Thead,
     Tr
 } from '@chakra-ui/react';
-import { MdCheckCircle } from 'react-icons/all';
 
 const Crackme = ({ crackme }) => {
-    //TODO: icon depending on current state
+    //TODO: icon/row color depending on current state
     //TODO: clickable row -> modal
-    const {actions, comments_num, date, hexid, id, language, name, solutions, writeup_num} = crackme
+    //TODO: if not logged -> not clickable
+    const {actions, comments_num, date, hexid, language, name, writeups_num} = crackme
     const link = `https://crackmes.one/crackme/${hexid}`
     return (
         <LinkBox as={Tr}>
@@ -28,8 +28,7 @@ const Crackme = ({ crackme }) => {
             <Td>{date}</Td>
             <Td>{language}</Td>
             <Td>{comments_num}</Td>
-            <Td>{writeup_num}</Td>
-            <Td>{solutions}</Td>
+            <Td>{writeups_num}</Td>
         </LinkBox>
     )
 }
@@ -41,7 +40,7 @@ export const CrackmesList = () => {
 
     const renderTasks = () => {
         return tasks.map(t => {
-            return <Crackme crackme={t}/>
+            return <Crackme crackme={t} key={t.id}/>
         })
     }
 
@@ -55,7 +54,6 @@ export const CrackmesList = () => {
                         <Th>Language</Th>
                         <Th>Comments</Th>
                         <Th>Writeups</Th>
-                        <Th>Solutions</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
