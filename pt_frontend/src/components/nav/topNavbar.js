@@ -8,9 +8,7 @@ export const TopNavbar = ({ onOpen }) => {
             px={4}
             height="12"
             alignItems="center"
-            bg={'white'}
-            borderBottomWidth="1px"
-            borderBottomColor={'gray.200'}
+            bg={'gray.700'}
             justifyContent={'space-between'}
         >
             <Box flex={1}>

@@ -47,7 +47,7 @@ export function Navigation({ children }) {
     };
 
     return (
-        <Box minH="100vh" bg={'gray.300'}>
+        <Box minH="100vh" bg={'blackAlpha.900'} color={'whiteAlpha.500'}>
             <Drawer
                 autoFocus={false}
                 isOpen={isOpen}
@@ -61,7 +61,7 @@ export function Navigation({ children }) {
                 isFullHeight={true}
             >
                 <DrawerOverlay />
-                <DrawerContent overflowY={'auto'}>
+                <DrawerContent overflowY={'auto'} bg={'gray.300'}>
                     <Flex h="20" w="full" alignItems="center" justify={'space-between'}>
                         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" ml={5}>
                             ProgressTracker
@@ -91,7 +91,7 @@ export function Navigation({ children }) {
                     >
                         <VStack align={'start'}>
                             <Text>Logged as:</Text>
-                            <Text>{username}</Text>
+                            {logged ? <Text>{username}</Text> : <Text>nobody</Text>}
                         </VStack>
                     </Flex>
                 </DrawerContent>
@@ -120,7 +120,7 @@ const SideBarItem = ({ icon, children, to, onClickActions }) => {
                     outline: 'none'
                 }}
                 _hover={{
-                    bg: 'teal',
+                    bg: 'blue.400',
                     color: 'white'
                 }}
             >

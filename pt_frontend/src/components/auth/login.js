@@ -58,10 +58,10 @@ const Login = () => {
     return (
         <Box maxW={'md'} w={'full'} justifyContent={'center'}>
             <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
-                <Center mb={3}>
+                <Center mb={4}>
                     <Heading>Login</Heading>
                 </Center>
-                <Stack spacing={2}>
+                <Stack spacing={2} color={'black'}>
                     <FormControl isInvalid={errors.username}>
                         <Input
                             bg={'white'}
@@ -85,7 +85,7 @@ const Login = () => {
                     </FormControl>
                 </Stack>
 
-                <Button mt={4} w={'full'} colorScheme="teal" isLoading={loading} type="submit">
+                <Button mt={4} w={'full'} colorScheme="blue" isLoading={loading} type="submit">
                     Submit
                 </Button>
             </form>

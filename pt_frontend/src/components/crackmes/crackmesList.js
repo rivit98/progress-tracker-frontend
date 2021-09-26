@@ -1,7 +1,7 @@
 import { crackmesService } from '../../services/crackmes';
 import { useAxiosEffect } from '../../utils/useAxiosEffect';
 import { ComponentStateHandler } from '../generic/componentStateHandler';
-import { LinkBox, LinkOverlay, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Link, LinkBox, LinkOverlay, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
 const Crackme = ({ crackme }) => {
     //TODO: icon/row color depending on current state
@@ -10,13 +10,13 @@ const Crackme = ({ crackme }) => {
     const {actions, comments_num, date, hexid, language, name, writeups_num} = crackme
     const link = `https://crackmes.one/crackme/${hexid}`
     return (
-        <LinkBox as={Tr}>
-            <LinkOverlay href={link} isExternal={true}>{name}</LinkOverlay>
-            <Td>{date}</Td>
-            <Td>{language}</Td>
-            <Td>{comments_num}</Td>
-            <Td>{writeups_num}</Td>
-        </LinkBox>
+        <Tr>
+            <Td border={0}><Link href={link} isExternal>{name}</Link></Td>
+            <Td border={0}>{date}</Td>
+            <Td border={0}>{language}</Td>
+            <Td border={0}>{comments_num}</Td>
+            <Td border={0}>{writeups_num}</Td>
+        </Tr>
     )
 }
 
@@ -33,14 +33,14 @@ export const CrackmesList = () => {
 
     return (
         <ComponentStateHandler state={state}>
-            <Table variant="simple">
+            <Table variant="simple" >
                 <Thead>
                     <Tr>
-                        <Th>Name</Th>
-                        <Th>Date</Th>
-                        <Th>Language</Th>
-                        <Th>Comments</Th>
-                        <Th>Writeups</Th>
+                        <Th w={'50%'}>Name</Th>
+                        <Th w={'30%'}>Date</Th>
+                        <Th w={'5%'}>Language</Th>
+                        <Th w={'5%'}>Comments</Th>
+                        <Th w={'5%'} isNumeric={true}>Writeups</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
