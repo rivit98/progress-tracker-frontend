@@ -1,53 +1,99 @@
 import { crackmesService } from '../../services/crackmes';
 import { useAxiosEffect } from '../../utils/useAxiosEffect';
 import { ComponentStateHandler } from '../generic/componentStateHandler';
-import { Link, LinkBox, LinkOverlay, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import {
+    Accordion,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
+    Box,
+    Flex,
+    Link
+} from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
 
 const Crackme = ({ crackme }) => {
     //TODO: icon/row color depending on current state
     //TODO: clickable row -> modal
     //TODO: if not logged -> not clickable
-    const {actions, comments_num, date, hexid, language, name, writeups_num} = crackme
-    const link = `https://crackmes.one/crackme/${hexid}`
+    const { actions, comments_num, date, hexid, language, name, writeups_num } = crackme;
+    const link = `https://crackmes.one/crackme/${hexid}`;
     return (
-        <Tr>
-            <Td border={0}><Link href={link} isExternal>{name}</Link></Td>
-            <Td border={0}>{formatDate(date)}</Td>
-            <Td border={0}>{language}</Td>
-            <Td border={0} textAlign={'center'}>{comments_num}</Td>
-            <Td border={0} textAlign={'center'}>{writeups_num}</Td>
-        </Tr>
-    )
-}
+        <AccordionItem border={0}>
+            <AccordionButton>
+                <Flex
+                    textAlign="left"
+                    flexDirection={'row'}
+                    justifyContent={'space-between'}
+                    w={'full'}
+                    experimental_spaceX={'2'}
+                >
+                    <Box flex={6}>
+                        <Link href={link} isExternal>
+                            {name}
+                        </Link>
+                    </Box>
+                    <Box flex={3} textAlign="center">
+                        {formatDate(date)}
+                    </Box>
+                    <Box flex={3} flexWrap={'wrap'} textAlign="center">
+                        {language}
+                    </Box>
+                    <Box flex={1} textAlign="center">
+                        {comments_num}
+                    </Box>
+                    <Box flex={1} textAlign="center">
+                        {writeups_num}
+                    </Box>
+                    <Box flex={1} textAlign="right" justifyContent={'end'} ml={'auto'}>
+                        <AccordionIcon />
+                    </Box>
+                </Flex>
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+            </AccordionPanel>
+        </AccordionItem>
+    );
+};
 
 export const CrackmesList = () => {
     //TODO: caching?
-    const state = useAxiosEffect(crackmesService.getCrackmes, [], [])
-    const tasks = state.data
+    const state = useAxiosEffect(crackmesService.getCrackmes, [], []);
+    const tasks = state.data;
 
     const renderTasks = () => {
         return tasks
             .sort((t1, t2) => t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name))
-            .map(t => <Crackme crackme={t} key={t.id}/>)
-    }
+            .slice(0, 100)
+            .map((t) => <Crackme crackme={t} key={t.id} />);
+    };
 
     return (
         <ComponentStateHandler state={state}>
-            <Table variant="simple" >
-                <Thead>
-                    <Tr>
-                        <Th w={'50%'}>Name</Th>
-                        <Th w={'30%'}>Date</Th>
-                        <Th w={'5%'}>Language</Th>
-                        <Th w={'5%'}>Comments</Th>
-                        <Th w={'5%'} isNumeric={true}>Writeups</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
+            <Flex
+                textAlign="center"
+                flexDirection={'row'}
+                justifyContent={'space-between'}
+                w={'full'}
+                mb={2}
+                px={4}
+                fontWeight={'bold'}
+                experimental_spaceX={'2'}
+            >
+                <Box flex={6}>Task name</Box>
+                <Box flex={3}>Date</Box>
+                <Box flex={3}>Language</Box>
+                <Box flex={1}>Comments</Box>
+                <Box flex={1}>Writeups</Box>
+                <Box flex={1} />
+            </Flex>
+            <Flex w={'full'} justifyContent={'center'}>
+                <Accordion allowToggle w={'full'}>
                     {renderTasks()}
-                </Tbody>
-            </Table>
+                </Accordion>
+            </Flex>
         </ComponentStateHandler>
-    )
-}
+    );
+};
