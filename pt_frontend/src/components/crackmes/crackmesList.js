@@ -21,7 +21,7 @@ const Crackme = ({ crackme }) => {
     const link = `https://crackmes.one/crackme/${hexid}`;
     return (
         <AccordionItem border={0}>
-            <AccordionButton>
+            <AccordionButton px={0}>
                 <Flex
                     textAlign="left"
                     flexDirection={'row'}
@@ -29,21 +29,18 @@ const Crackme = ({ crackme }) => {
                     w={'full'}
                     experimental_spaceX={'2'}
                 >
-                    <Box flex={6} overflow={'hidden'}>
+                    <Box flex={8} overflow={'hidden'}>
                         <Link href={link} isExternal>
                             {name}
                         </Link>
                     </Box>
-                    <Box flex={3} textAlign="center" overflow={'hidden'}>
+                    <Box flex={2} textAlign="center" overflow={'hidden'}>
                         {formatDate(date)}
                     </Box>
-                    <Box flex={3} flexWrap={'wrap'} textAlign="center" overflow={'hidden'}>
-                        {language}
-                    </Box>
-                    <Box flex={1} textAlign="center">
+                    <Box flex={2} textAlign="center" overflow={'hidden'}>
                         {comments_num}
                     </Box>
-                    <Box flex={1} textAlign="center">
+                    <Box flex={2} textAlign="center" overflow={'hidden'}>
                         {writeups_num}
                     </Box>
                     <Box flex={1} textAlign="right" justifyContent={'end'} ml={'auto'}>
@@ -61,13 +58,6 @@ export const CrackmesList = () => {
     const state = useAxiosEffect(crackmesService.getCrackmes, [], []);
     const tasks = state.data;
 
-    const renderTasks = () => {
-        return tasks
-            .sort((t1, t2) => t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name))
-            .slice(0, 100)
-            .map((t) => <Crackme crackme={t} key={t.id} />);
-    };
-
     return (
         <ComponentStateHandler state={state}>
             <Flex
@@ -76,20 +66,31 @@ export const CrackmesList = () => {
                 justifyContent={'space-between'}
                 w={'full'}
                 mb={2}
-                px={4}
                 fontWeight={'bold'}
                 experimental_spaceX={'2'}
             >
-                <Box flex={6}>Task name</Box>
-                <Box flex={3}>Date</Box>
-                <Box flex={3}>Language</Box>
-                <Box flex={1}>Comments</Box>
-                <Box flex={1}>Writeups</Box>
-                <Box flex={1} />
+                <Box flex={8} overflow={'hidden'}>
+                    Task name
+                </Box>
+                <Box flex={2} overflow={'hidden'}>
+                    Date
+                </Box>
+                <Box flex={2} overflow={'hidden'}>
+                    Comments
+                </Box>
+                <Box flex={2} overflow={'hidden'}>
+                    Writeups
+                </Box>
+                <Box flex={1} overflow={'hidden'} />
             </Flex>
             <Flex w={'full'} justifyContent={'center'}>
                 <Accordion allowToggle w={'full'}>
-                    {renderTasks()}
+                    {tasks
+                        .sort((t1, t2) => t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name))
+                        .slice(0, 100)
+                        .map((t) => (
+                            <Crackme crackme={t} key={t.id} />
+                        ))}
                 </Accordion>
             </Flex>
         </ComponentStateHandler>
