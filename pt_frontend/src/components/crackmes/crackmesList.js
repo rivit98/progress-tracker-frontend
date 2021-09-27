@@ -29,18 +29,18 @@ const Crackme = ({ crackme }) => {
                     w={'full'}
                     experimental_spaceX={'2'}
                 >
-                    <Box flex={8} overflow={'hidden'}>
+                    <Box flex={10} overflow={'hidden'}>
                         <Link href={link} isExternal>
                             {name}
                         </Link>
                     </Box>
-                    <Box flex={2} textAlign="center" overflow={'hidden'}>
+                    <Box flex={3} textAlign="center" overflow={'hidden'}>
                         {formatDate(date)}
                     </Box>
-                    <Box flex={2} textAlign="center" overflow={'hidden'}>
+                    <Box flex={3} textAlign="center" overflow={'hidden'}>
                         {comments_num}
                     </Box>
-                    <Box flex={2} textAlign="center" overflow={'hidden'}>
+                    <Box flex={3} textAlign="center" overflow={'hidden'}>
                         {writeups_num}
                     </Box>
                     <Box flex={1} textAlign="right" justifyContent={'end'} ml={'auto'}>
@@ -69,16 +69,16 @@ export const CrackmesList = () => {
                 fontWeight={'bold'}
                 experimental_spaceX={'2'}
             >
-                <Box flex={8} overflow={'hidden'}>
+                <Box flex={10} overflow={'hidden'}>
                     Task name
                 </Box>
-                <Box flex={2} overflow={'hidden'}>
+                <Box flex={3} overflow={'hidden'}>
                     Date
                 </Box>
-                <Box flex={2} overflow={'hidden'}>
+                <Box flex={3} overflow={'hidden'}>
                     Comments
                 </Box>
-                <Box flex={2} overflow={'hidden'}>
+                <Box flex={3} overflow={'hidden'}>
                     Writeups
                 </Box>
                 <Box flex={1} overflow={'hidden'} />
