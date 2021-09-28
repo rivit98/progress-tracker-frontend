@@ -1,11 +1,12 @@
-const API_VERSION = '/api/v1';
+const API_VERSION = '/v1';
 
-const REGISTER = `${API_VERSION}/auth/register/`;
-const ME = `${API_VERSION}/users/me/`;
-const TOKEN = `${API_VERSION}/auth/login/`;
-const REFRESH_TOKEN = `${API_VERSION}/auth/refresh/`;
+const REGISTER = `/crackmes${API_VERSION}/auth/register/`;
+const ME = `/crackmes${API_VERSION}/users/me/`;
+const TOKEN = `/crackmes${API_VERSION}/auth/login/`;
+const REFRESH_TOKEN = `/crackmes${API_VERSION}/auth/refresh/`;
 
-const CRACKMES = `${API_VERSION}/tasks/`
+const CRACKMES = `/crackmes${API_VERSION}/tasks/`;
+const LAST_UPDATED = `/crackmes${API_VERSION}/tasks/lastUpdated`;
 
 export const apiUrls = {
     REGISTER,
@@ -13,5 +14,6 @@ export const apiUrls = {
     TOKEN,
     REFRESH_TOKEN,
 
-    CRACKMES
+    CRACKMES,
+    LAST_UPDATED
 };
