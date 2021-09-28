@@ -1,5 +1,4 @@
 import { createLogger } from 'redux-logger/src';
-// import storageSession from 'redux-persist/lib/storage/session';
 import storage from 'redux-persist/lib/storage';
 import persistReducer from 'redux-persist/es/persistReducer';
 import persistStore from 'redux-persist/es/persistStore';
@@ -8,7 +7,6 @@ import { appReducer } from './appReducer';
 
 const persistConfig = {
     key: 'root',
-    // storage: storageSession
     storage
 };
 

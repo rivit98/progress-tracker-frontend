@@ -66,7 +66,7 @@ export const CrackmesList = () => {
             try {
                 const lastUpdated = await crackmesService.lastUpdated(options);
                 dispatch(setTasksLastUpdated(lastUpdated));
-                if (date !== undefined && cacheDate.getTime() <= lastUpdated.date.getTime()) {
+                if (date !== undefined && cacheDate.getTime() >= lastUpdated.date.getTime()) {
                     console.log('cached');
                     resolve(tasks.map((t) => ({ ...t, date: new Date(t.date) })));
                 } else {
