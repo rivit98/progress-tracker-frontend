@@ -14,7 +14,7 @@ import {
 import formatDate from '../../utils/dateformatter';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentUserData } from '../../context/userReducer';
-import { crackmes, setTasksLastUpdated, storeTasks } from '../../context/crackmesReducer';
+import { crackmes, setCrackmes, setTasksLastUpdated, storeTasks } from '../../context/crackmesReducer';
 
 const Crackme = ({ crackme }) => {
     //TODO: icon/row color depending on current state
@@ -65,14 +65,19 @@ export const CrackmesList = () => {
         return new Promise(async (resolve, reject) => {
             try {
                 const lastUpdated = await crackmesService.lastUpdated(options);
-                dispatch(setTasksLastUpdated(lastUpdated));
                 if (date !== undefined && cacheDate.getTime() >= lastUpdated.date.getTime()) {
                     console.log('cached');
+                    dispatch(setTasksLastUpdated(lastUpdated));
                     resolve(tasks.map((t) => ({ ...t, date: new Date(t.date) })));
                 } else {
                     const updatedTasks = await crackmesService.getCrackmes(options);
                     console.log('from api');
-                    dispatch(storeTasks(updatedTasks));
+                    dispatch(
+                        setCrackmes({
+                            lastUpdated: lastUpdated,
+                            tasks: updatedTasks
+                        })
+                    );
                     resolve(updatedTasks);
                 }
             } catch (e) {
