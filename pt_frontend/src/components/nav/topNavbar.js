@@ -4,15 +4,18 @@ import React from 'react';
 
 export const TopNavbar = ({ onOpen }) => {
     return (
-        <Flex
-            px={4}
-            height="12"
-            alignItems="center"
-            bg={'gray.700'}
-            justifyContent={'space-between'}
-        >
+        <Flex px={4} height="12" alignItems="center" bg={'gray.700'} justifyContent={'space-between'}>
             <Box flex={1}>
-                <IconButton onClick={onOpen} variant="outline" aria-label="open menu" icon={<FiMenu />} />
+                <IconButton
+                    onClick={onOpen}
+                    variant="outline"
+                    aria-label="open menu"
+                    icon={<FiMenu />}
+                    _hover={{
+                        background: 'blackAlpha.600',
+                        color: 'teal.500'
+                    }}
+                />
             </Box>
 
             <Text
@@ -26,8 +29,7 @@ export const TopNavbar = ({ onOpen }) => {
                 ProgressTracker
             </Text>
 
-            <Box display={'flex'} flex={1} justifyContent={'flex-end'}>
-            </Box>
+            <Box display={'flex'} flex={1} justifyContent={'flex-end'} />
         </Flex>
     );
 };

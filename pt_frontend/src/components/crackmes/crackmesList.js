@@ -13,22 +13,33 @@ import {
 } from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
 import { useDispatch, useSelector } from 'react-redux';
-import { currentUserData } from '../../context/userReducer';
-import { crackmes, setCrackmes, setTasksLastUpdated, storeTasks } from '../../context/crackmesReducer';
+import { crackmes, setCrackmes, setTasksLastUpdated } from '../../context/crackmesReducer';
+import { isLoggedIn } from '../../context/userReducer';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 
 const Crackme = ({ crackme }) => {
+    const logged = useSelector(isLoggedIn);
+
     //TODO: icon/row color depending on current state
-    //TODO: clickable row -> modal
+    //TODO: clickable row
     //TODO: if not logged -> not clickable
     const { actions, comments_num, date, hexid, name, writeups_num } = crackme;
     const link = `https://crackmes.one/crackme/${hexid}`;
     return (
-        <AccordionItem border={0} maxW={'3xl'} w={'full'} mx={'auto'} textAlign={'center'}>
-            <AccordionButton px={0}>
+        <AccordionItem border={0} maxW={'3xl'} w={'full'} mx={'auto'} textAlign={'center'} isDisabled={false}>
+            <AccordionButton
+                px={0}
+                _hover={{
+                    background: 'blackAlpha.600',
+                    color: 'teal.500'
+                }}
+                rounded="md"
+            >
                 <Flex flexDirection={'row'} justifyContent={'space-between'} experimental_spaceX={'2'} w={'full'}>
-                    <Box flex={10} overflow={'hidden'} textAlign="left">
-                        <Link href={link} isExternal>
-                            {name}
+                    <Box ml={1} flex={10} overflow={'hidden'} textAlign="left">
+                        {name}
+                        <Link href={link} isExternal onclick="event.stopPropagation()">
+                            <ExternalLinkIcon textDecoration={'none'} my={'auto'} ml={1} />
                         </Link>
                     </Box>
                     <Box flex={3} overflow={'hidden'}>
@@ -40,13 +51,13 @@ const Crackme = ({ crackme }) => {
                     <Box flex={3} overflow={'hidden'}>
                         {writeups_num}
                     </Box>
-                    <Box flex={1} textAlign="right" justifyContent={'end'} ml={'auto'}>
+                    <Box flex={1} textAlign="right" justifyContent={'end'} ml={'auto'} mr={1}>
                         <AccordionIcon />
                     </Box>
                 </Flex>
             </AccordionButton>
             <AccordionPanel pb={4} w={'full'}>
-                actions
+                {logged ? 'actions' : 'Log in to track progress'}
             </AccordionPanel>
         </AccordionItem>
     );
@@ -70,8 +81,8 @@ export const CrackmesList = () => {
                     dispatch(setTasksLastUpdated(lastUpdated));
                     resolve(tasks.map((t) => ({ ...t, date: new Date(t.date) })));
                 } else {
-                    const updatedTasks = await crackmesService.getCrackmes(options);
                     console.log('from api');
+                    const updatedTasks = await crackmesService.getCrackmes(options);
                     dispatch(
                         setCrackmes({
                             lastUpdated: lastUpdated,
@@ -119,7 +130,7 @@ export const CrackmesList = () => {
                 <Accordion allowToggle w={'full'}>
                     {[...state.data]
                         .sort((t1, t2) => t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name))
-                        .slice(0, 10)
+                        .slice(0, 100)
                         .map((t) => (
                             <Crackme crackme={t} key={t.id} />
                         ))}

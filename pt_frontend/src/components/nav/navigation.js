@@ -4,11 +4,13 @@ import {
     Drawer,
     DrawerContent,
     DrawerOverlay,
-    Flex, HStack,
+    Flex,
+    HStack,
     Icon,
     Text,
     useDisclosure,
-    useToast, VStack
+    useToast,
+    VStack
 } from '@chakra-ui/react';
 import { FiHome, FiLogIn, FiLogOut, FiUserPlus } from 'react-icons/fi';
 import React from 'react';
@@ -31,7 +33,7 @@ export function Navigation({ children }) {
         { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
 
         // { name: 'crackmes', to: '/crackmes', icon: VscKey, show: logged},
-        { name: 'crackmes', to: '/crackmes', icon: VscKey},
+        { name: 'crackmes', to: '/crackmes', icon: VscKey },
 
         { name: 'Log out', to: '/', icon: FiLogOut, onClick: () => logOut(), show: logged }
     ];
@@ -62,23 +64,25 @@ export function Navigation({ children }) {
                 isFullHeight={true}
             >
                 <DrawerOverlay />
-                <DrawerContent overflowY={'auto'} bg={'gray.300'}>
+                <DrawerContent overflowY={'auto'} bg={'gray.700'} color={'whiteAlpha.500'}>
                     <Flex h="20" w="full" alignItems="center" justify={'space-between'}>
                         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" ml={5}>
                             ProgressTracker
                         </Text>
                         <CloseButton mr={4} display={'flex'} onClick={onClose} />
                     </Flex>
-                    {linkItems.filter((link) => link.show === undefined || link.show === true).map((link) => (
-                        <SideBarItem
-                            key={link.name}
-                            icon={link.icon}
-                            to={link.to}
-                            onClickActions={[onClose, link.onClick]}
-                        >
-                            {link.name}
-                        </SideBarItem>
-                    ))}
+                    {linkItems
+                        .filter((link) => link.show === undefined || link.show === true)
+                        .map((link) => (
+                            <SideBarItem
+                                key={link.name}
+                                icon={link.icon}
+                                to={link.to}
+                                onClickActions={[onClose, link.onClick]}
+                            >
+                                {link.name}
+                            </SideBarItem>
+                        ))}
                     <Flex
                         align="end"
                         grow={1}
@@ -98,7 +102,9 @@ export function Navigation({ children }) {
                 </DrawerContent>
             </Drawer>
             <TopNavbar onOpen={onOpen} />
-            <Box p="4" w="full">{children}</Box>
+            <Box p="4" w="full">
+                {children}
+            </Box>
         </Box>
     );
 }
@@ -115,26 +121,15 @@ const SideBarItem = ({ icon, children, to, onClickActions }) => {
                 p="4"
                 mx="4"
                 borderRadius="lg"
-                role="group"
                 cursor="pointer"
                 _focus={{
                     outline: 'none'
                 }}
                 _hover={{
-                    bg: 'blue.400',
                     color: 'white'
                 }}
             >
-                {icon && (
-                    <Icon
-                        mr="4"
-                        fontSize="16"
-                        _groupHover={{
-                            color: 'white'
-                        }}
-                        as={icon}
-                    />
-                )}
+                {icon && <Icon mr="4" fontSize="16" as={icon} />}
                 {children}
             </Flex>
         </Link>
