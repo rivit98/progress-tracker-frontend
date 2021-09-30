@@ -1,6 +1,6 @@
 import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
-import { FiMenu } from 'react-icons/fi';
 import React from 'react';
+import { HamburgerIcon } from '@chakra-ui/icons';
 
 export const TopNavbar = ({ onOpen }) => {
     return (
@@ -10,7 +10,7 @@ export const TopNavbar = ({ onOpen }) => {
                     onClick={onOpen}
                     variant="outline"
                     aria-label="open menu"
-                    icon={<FiMenu />}
+                    icon={<HamburgerIcon />}
                     _hover={{
                         background: 'blackAlpha.600',
                         color: 'teal.500'

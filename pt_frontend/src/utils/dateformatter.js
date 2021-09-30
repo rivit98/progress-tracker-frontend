@@ -4,10 +4,11 @@ const formatDate = (date) => {
     return dateformat(date, 'dd.mm.yyyy');
 };
 
-const isoDateFormat = /^(\d{4})-(\d{2})-(\d{2})$/;
+const shortDateFormat = /^(\d{4})-(\d{2})-(\d{2})$/;
+const isoDateFormat = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?)$/;
 
 const isIsoDateString = (value) => {
-    return value && typeof value === 'string' && isoDateFormat.test(value);
+    return value && typeof value === 'string' && (shortDateFormat.test(value) || isoDateFormat.test(value));
 };
 
 export const handleDates = (body) => {

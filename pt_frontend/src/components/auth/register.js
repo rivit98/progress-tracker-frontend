@@ -117,7 +117,7 @@ const Register = () => {
                     </FormControl>
                 </Stack>
 
-                <Button mt={4} w={'full'} colorScheme='blue' isLoading={loading} type='submit'>
+                <Button mt={4} w={'full'} colorScheme="blue" isLoading={loading} type="submit">
                     Submit
                 </Button>
             </form>

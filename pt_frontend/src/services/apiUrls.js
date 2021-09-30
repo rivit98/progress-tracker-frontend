@@ -7,6 +7,7 @@ const REFRESH_TOKEN = `/crackmes${API_VERSION}/auth/refresh/`;
 
 const CRACKMES = `/crackmes${API_VERSION}/tasks/`;
 const LAST_UPDATED = `/crackmes${API_VERSION}/tasks/lastUpdated`;
+const ACTIONS = `/crackmes${API_VERSION}/tasks/actions`;
 
 export const apiUrls = {
     REGISTER,
@@ -15,5 +16,6 @@ export const apiUrls = {
     REFRESH_TOKEN,
 
     CRACKMES,
-    LAST_UPDATED
+    LAST_UPDATED,
+    ACTIONS
 };

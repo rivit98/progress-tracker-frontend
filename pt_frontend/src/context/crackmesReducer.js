@@ -4,7 +4,7 @@ export const crackmesSlice = createSlice({
     name: 'crackmes',
     initialState: {
         lastUpdated: {},
-        tasks: []
+        cachedTasks: []
     },
     reducers: {
         setTasksLastUpdated: (state, action) => {
@@ -17,7 +17,7 @@ export const crackmesSlice = createSlice({
         clearState: (state, action) => {
             return {
                 lastUpdated: {},
-                tasks: []
+                cachedTasks: []
             };
         }
     }

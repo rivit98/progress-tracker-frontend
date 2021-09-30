@@ -5,7 +5,6 @@ import {
     DrawerContent,
     DrawerOverlay,
     Flex,
-    HStack,
     Icon,
     Text,
     useDisclosure,

@@ -3,8 +3,8 @@ import { authService } from '../services/auth';
 import { handleDates } from './dateformatter';
 
 const axiosInstance = axios.create({
-    // baseURL: 'http://localhost:8000/'
-    baseURL: 'https://cpt-rest.ct8.pl/'
+    baseURL: 'http://localhost:8000/'
+    // baseURL: 'https://cpt-rest.ct8.pl/'
 });
 
 axiosInstance.interceptors.request.use((request) => {
