@@ -6,8 +6,8 @@ const TOKEN = `/crackmes${API_VERSION}/auth/login/`;
 const REFRESH_TOKEN = `/crackmes${API_VERSION}/auth/refresh/`;
 
 const CRACKMES = `/crackmes${API_VERSION}/tasks/`;
-const LAST_UPDATED = `/crackmes${API_VERSION}/tasks/lastUpdated`;
-const ACTIONS = `/crackmes${API_VERSION}/tasks/actions`;
+const LAST_UPDATED = `/crackmes${API_VERSION}/tasks/lastUpdated/`;
+const ACTIONS = `/crackmes${API_VERSION}/tasks/actions/`;
 
 export const apiUrls = {
     REGISTER,
