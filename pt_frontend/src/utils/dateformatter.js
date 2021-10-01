@@ -1,7 +1,7 @@
 import dateformat from 'dateformat';
 
-const formatDate = (date) => {
-    return dateformat(date, 'dd.mm.yyyy');
+const formatDate = (date, format = 'dd.mm.yyyy') => {
+    return dateformat(date, format);
 };
 
 const shortDateFormat = /^(\d{4})-(\d{2})-(\d{2})$/;
