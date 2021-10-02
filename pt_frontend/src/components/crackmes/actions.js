@@ -1,9 +1,24 @@
-import { Box, Button, Flex, Link, List, ListIcon, ListItem, Select, Text } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Flex,
+    FormControl,
+    FormErrorMessage,
+    Link,
+    List,
+    ListIcon,
+    ListItem,
+    Select,
+    Text
+} from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import formatDate from '../../utils/dateformatter';
 import { MdArrowDropDown } from 'react-icons/all';
 import { statusDesc, statusIcon } from './consts';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { crackmesService } from '../../services/crackmes';
 
 export const CrackmeActionsNotLogged = () => {
     return (
@@ -16,8 +31,83 @@ export const CrackmeActionsNotLogged = () => {
     );
 };
 
+const UpdateActionPanel = ({ id, actions }) => {
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors }
+    } = useForm();
+    const [loading, setLoading] = useState(false);
+
+    const successCallback = (action) => {
+        setLoading(false);
+        actions.push(action);
+    };
+
+    const errorCallback = (e) => {
+        setLoading(false);
+
+        const err = e.response?.data;
+        if (err) {
+            setError('status', {
+                type: 'manual',
+                message: 'Something went wrong, try again later'
+            });
+        } else {
+        }
+    };
+
+    const onSubmit = (data) => {
+        if (loading) {
+            return;
+        }
+        setLoading(true);
+        const status = data['status'];
+        const statusDescToStatusIDMap = Object.fromEntries(
+            Object.entries(statusDesc).map(([k, v]) => [v.toLowerCase(), k])
+        );
+        const statusID = statusDescToStatusIDMap[status];
+        crackmesService.updateStatus(id, { status: statusID }).then(successCallback).catch(errorCallback);
+    };
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
+            <Flex flexDirection={'row'} experimental_spaceX={2} mb={4}>
+                <FormControl isInvalid={errors.status}>
+                    <Select
+                        icon={<MdArrowDropDown />}
+                        w={'25%'}
+                        size={'sm'}
+                        border={0}
+                        bg="gray.700"
+                        color="whiteAlpha.500"
+                        {...register('status')}
+                    >
+                        <option value={'started'}>Start solving</option>
+                        <option value={'aborted'}>Stop solving</option>
+                        <option value={'solved'}>Mark as solved</option>
+                        <option value={'ignored'}>Mark as ignored</option>
+                    </Select>
+                    <FormErrorMessage>{errors.status && errors.status.message}</FormErrorMessage>
+                </FormControl>
+                <Button
+                    colorScheme="teal"
+                    fontSize={'md'}
+                    fontWeight={'normal'}
+                    size={'sm'}
+                    isLoading={loading}
+                    type="submit"
+                >
+                    Update status
+                </Button>
+            </Flex>
+        </form>
+    );
+};
+
 export const ActionsList = ({ crackme }) => {
-    const { actions, comments_num, hexid, writeups_num } = crackme;
+    const { id, actions, comments_num, hexid, writeups_num } = crackme;
     const link = `https://crackmes.one/crackme/${hexid}`;
 
     return (
@@ -62,24 +152,7 @@ export const ActionsList = ({ crackme }) => {
                     );
                 })}
             </List>
-            <Flex flexDirection={'row'} experimental_spaceX={2} mb={4}>
-                <Select
-                    icon={<MdArrowDropDown />}
-                    w={'25%'}
-                    size={'sm'}
-                    border={0}
-                    bg="gray.700"
-                    color="whiteAlpha.500"
-                >
-                    <option value={'started'}>Start solving</option>
-                    <option value={'aborted'}>Stop solving</option>
-                    <option value={'solved'}>Mark as solved</option>
-                    <option value={'ignored'}>Mark as ignored</option>
-                </Select>
-                <Button colorScheme="teal" fontSize={'md'} fontWeight={'normal'} size={'sm'}>
-                    Update status
-                </Button>
-            </Flex>
+            <UpdateActionPanel id={id} actions={actions} />
         </Box>
     );
 };
