@@ -4,10 +4,17 @@ import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Fle
 import formatDate from '../../utils/dateformatter';
 import { statusIcon } from './consts';
 import { ActionsList, CrackmeActionsNotLogged } from './actions';
+import { useState } from 'react';
 
 export const Crackme = ({ crackme }) => {
     const logged = useSelector(isLoggedIn);
-    const { date, name, language, lastAction } = crackme;
+    let { date, name, language, lastAction } = crackme;
+    const [count, setCount] = useState(0);
+
+    const updateLastAction = (a) => {
+        crackme.lastAction = a;
+        setCount(count + 1);
+    };
 
     return (
         <AccordionItem border={0} maxW={'3xl'} w={'full'} mx={'auto'} textAlign={'center'} isDisabled={false}>
@@ -42,7 +49,11 @@ export const Crackme = ({ crackme }) => {
                 </Flex>
             </AccordionButton>
             <AccordionPanel pb={4} w={'full'}>
-                {logged ? <ActionsList crackme={crackme} /> : <CrackmeActionsNotLogged />}
+                {logged ? (
+                    <ActionsList crackme={crackme} updateLastAction={updateLastAction} />
+                ) : (
+                    <CrackmeActionsNotLogged />
+                )}
             </AccordionPanel>
         </AccordionItem>
     );

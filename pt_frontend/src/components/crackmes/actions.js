@@ -4,6 +4,7 @@ import {
     Flex,
     FormControl,
     FormErrorMessage,
+    HStack,
     Link,
     List,
     ListIcon,
@@ -31,7 +32,7 @@ export const CrackmeActionsNotLogged = () => {
     );
 };
 
-const UpdateActionPanel = ({ id, actions }) => {
+const UpdateActionPanel = ({ id, updateAction }) => {
     const {
         register,
         handleSubmit,
@@ -42,7 +43,7 @@ const UpdateActionPanel = ({ id, actions }) => {
 
     const successCallback = (action) => {
         setLoading(false);
-        actions.push(action);
+        updateAction(action);
     };
 
     const errorCallback = (e) => {
@@ -62,6 +63,7 @@ const UpdateActionPanel = ({ id, actions }) => {
         if (loading) {
             return;
         }
+
         setLoading(true);
         const status = data['status'];
         const statusDescToStatusIDMap = Object.fromEntries(
@@ -73,11 +75,10 @@ const UpdateActionPanel = ({ id, actions }) => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
-            <Flex flexDirection={'row'} experimental_spaceX={2} mb={4}>
-                <FormControl isInvalid={errors.status}>
+            <HStack>
+                <FormControl isInvalid={errors.status} flex={'auto'}>
                     <Select
                         icon={<MdArrowDropDown />}
-                        w={'25%'}
                         size={'sm'}
                         border={0}
                         bg="gray.700"
@@ -101,14 +102,19 @@ const UpdateActionPanel = ({ id, actions }) => {
                 >
                     Update status
                 </Button>
-            </Flex>
+            </HStack>
         </form>
     );
 };
 
-export const ActionsList = ({ crackme }) => {
+export const ActionsList = ({ crackme, updateLastAction }) => {
     const { id, actions, comments_num, hexid, writeups_num } = crackme;
     const link = `https://crackmes.one/crackme/${hexid}`;
+
+    const updateActions = (a) => {
+        actions.unshift(a);
+        updateLastAction(a);
+    };
 
     return (
         <Box textAlign={'left'}>
@@ -152,7 +158,7 @@ export const ActionsList = ({ crackme }) => {
                     );
                 })}
             </List>
-            <UpdateActionPanel id={id} actions={actions} />
+            <UpdateActionPanel id={id} updateAction={updateActions} />
         </Box>
     );
 };
