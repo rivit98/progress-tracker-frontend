@@ -76,7 +76,7 @@ const UpdateActionPanel = ({ id, updateAction }) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
             <HStack>
-                <FormControl isInvalid={errors.status} flex={'auto'}>
+                <FormControl isInvalid={errors.status} w={'140px'}>
                     <Select
                         icon={<MdArrowDropDown />}
                         size={'sm'}
