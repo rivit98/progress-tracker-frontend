@@ -110,6 +110,7 @@ const UpdateActionPanel = ({ id, updateAction }) => {
 export const ActionsList = ({ crackme, updateLastAction }) => {
     const { id, actions, comments_num, hexid, writeups_num } = crackme;
     const link = `https://crackmes.one/crackme/${hexid}`;
+    const downloadLink = `https://crackmes.one/static/crackme/${hexid}.zip`;
 
     const updateActions = (a) => {
         actions.unshift(a);
@@ -129,9 +130,13 @@ export const ActionsList = ({ crackme, updateLastAction }) => {
             >
                 <Box flex={1} overflow={'hidden'} flexDirection={'row'} alignItems={'center'} experimental_spaceX={1}>
                     <Link href={link} isExternal color={'teal.500'}>
-                        Challenge link
+                        Challenge page
                     </Link>
-                    <ExternalLinkIcon />
+                </Box>
+                <Box flex={1} overflow={'hidden'} flexDirection={'row'} alignItems={'center'} experimental_spaceX={1}>
+                    <Link href={downloadLink} color={'teal.500'}>
+                        Download
+                    </Link>
                 </Box>
                 <Box flex={1} overflow={'hidden'}>
                     Writeups:{' '}

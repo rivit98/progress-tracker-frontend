@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { isLoggedIn } from '../../context/userReducer';
-import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, Icon } from '@chakra-ui/react';
+import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, Icon, Text } from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
 import { statusIcon } from './consts';
 import { ActionsList, CrackmeActionsNotLogged } from './actions';
@@ -32,10 +32,12 @@ export const Crackme = ({ crackme }) => {
                             <Icon
                                 as={statusIcon[lastAction.status].icon}
                                 color={statusIcon[lastAction.status].color}
-                                mr={1}
+                                mr={2}
                             />
                         )}
-                        {name}
+                        <Text d={'inline'} isTruncated={true}>
+                            {name}
+                        </Text>
                     </Box>
                     <Box flex={1} overflow={'hidden'}>
                         {formatDate(date)}
