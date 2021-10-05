@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 export const Crackme = ({ crackme }) => {
     const logged = useSelector(isLoggedIn);
-    let { date, name, language, lastAction } = crackme;
+    let { date, name, lastAction } = crackme;
     const [count, setCount] = useState(0);
 
     const updateLastAction = (a) => {
@@ -17,7 +17,7 @@ export const Crackme = ({ crackme }) => {
     };
 
     return (
-        <AccordionItem border={0} maxW={'3xl'} w={'full'} mx={'auto'} textAlign={'center'} isDisabled={false}>
+        <AccordionItem border={0} maxW={'xl'} w={'full'} mx={'auto'} textAlign={'center'} isDisabled={false}>
             <AccordionButton
                 px={0}
                 _hover={{
@@ -27,7 +27,7 @@ export const Crackme = ({ crackme }) => {
                 rounded="md"
             >
                 <Flex flexDirection={'row'} justifyContent={'space-between'} experimental_spaceX={'2'} w={'full'}>
-                    <Box ml={1} flex={8} overflow={'hidden'} textAlign="left">
+                    <Box ml={1} flex={4} overflow={'hidden'} textAlign="left">
                         {lastAction && (
                             <Icon
                                 as={statusIcon[lastAction.status].icon}
@@ -37,11 +37,8 @@ export const Crackme = ({ crackme }) => {
                         )}
                         {name}
                     </Box>
-                    <Box flex={3} overflow={'hidden'}>
+                    <Box flex={1} overflow={'hidden'}>
                         {formatDate(date)}
-                    </Box>
-                    <Box flex={4} overflow={'hidden'}>
-                        {language}
                     </Box>
                     <Box w={'20px'} textAlign="right" justifyContent={'end'} mr={2}>
                         <AccordionIcon />
