@@ -8,7 +8,7 @@ export const TopNavbar = ({ onOpen }) => {
             <Box flex={1}>
                 <IconButton
                     onClick={onOpen}
-                    variant="outline"
+                    variant="ghost"
                     aria-label="open menu"
                     icon={<HamburgerIcon />}
                     _hover={{
