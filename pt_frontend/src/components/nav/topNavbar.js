@@ -1,6 +1,7 @@
-import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
+import { Box, Flex, IconButton, Link, Text } from '@chakra-ui/react';
 import React from 'react';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 export const TopNavbar = ({ onOpen }) => {
     return (
@@ -26,7 +27,9 @@ export const TopNavbar = ({ onOpen }) => {
                 fontWeight="bold"
                 justifyContent={'center'}
             >
-                ProgressTracker
+                <Link as={ReactRouterLink} to={'/'} style={{ textDecoration: 'none' }}>
+                    ProgressTracker
+                </Link>
             </Text>
 
             <Box display={'flex'} flex={1} justifyContent={'flex-end'} />
