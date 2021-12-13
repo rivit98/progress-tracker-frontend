@@ -13,12 +13,11 @@ import {
     Text
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
 import formatDate from '../../utils/dateformatter';
 import { MdArrowDropDown } from 'react-icons/all';
-import { statusDesc, statusIcon } from './consts';
+import { statusDesc, statusDescToStatusIDMap, statusIcon } from './consts';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { cloneElement, useState } from 'react';
 import { crackmesService } from '../../services/crackmes';
 
 export const CrackmeActionsNotLogged = () => {
@@ -32,10 +31,37 @@ export const CrackmeActionsNotLogged = () => {
     );
 };
 
-const UpdateActionPanel = ({ id, updateAction }) => {
+const CrackmeActions = ({ actions }) => {
+    const optStart = <option value={'started'}>Start solving</option>;
+    const optStop = <option value={'aborted'}>Stop solving</option>;
+    const optSolve = <option value={'solved'}>Mark as solved</option>;
+    const optIgnore = <option value={'ignored'}>Ignore</option>;
+    const optUnignore = <option value={'clear'}>Unignore</option>;
+
+    const getActions = () => {
+        const lastAction = actions[0];
+
+        if (lastAction === undefined) {
+            return [optStart, optSolve, optStop, optIgnore];
+        }
+
+        const lastStatus = lastAction.status;
+
+        if (lastStatus === 0) return [optStart, optSolve, optStop, optIgnore];
+        if (lastStatus === 1) return [optSolve, optStop, optIgnore];
+        if (lastStatus === 2) return [optStart, optSolve, optIgnore];
+        if (lastStatus === 3) return [optStart, optStop, optIgnore];
+        if (lastStatus === 4) return [optUnignore, optStart, optSolve, optStop];
+    };
+
+    return <>{getActions().map((action, index) => cloneElement(action, { key: index }))}</>;
+};
+
+const UpdateActionPanel = ({ id, updateAction, actions }) => {
     const {
         register,
         handleSubmit,
+        reset,
         setError,
         formState: { errors }
     } = useForm();
@@ -44,6 +70,7 @@ const UpdateActionPanel = ({ id, updateAction }) => {
     const successCallback = (action) => {
         setLoading(false);
         updateAction(action);
+        reset();
     };
 
     const errorCallback = (e) => {
@@ -55,7 +82,6 @@ const UpdateActionPanel = ({ id, updateAction }) => {
                 type: 'manual',
                 message: 'Something went wrong, try again later'
             });
-        } else {
         }
     };
 
@@ -66,9 +92,6 @@ const UpdateActionPanel = ({ id, updateAction }) => {
 
         setLoading(true);
         const status = data['status'];
-        const statusDescToStatusIDMap = Object.fromEntries(
-            Object.entries(statusDesc).map(([k, v]) => [v.toLowerCase(), k])
-        );
         const statusID = statusDescToStatusIDMap[status];
         crackmesService.updateStatus(id, { status: statusID }).then(successCallback).catch(errorCallback);
     };
@@ -85,10 +108,7 @@ const UpdateActionPanel = ({ id, updateAction }) => {
                         color="whiteAlpha.500"
                         {...register('status')}
                     >
-                        <option value={'started'}>Start solving</option>
-                        <option value={'aborted'}>Stop solving</option>
-                        <option value={'solved'}>Mark as solved</option>
-                        <option value={'ignored'}>Mark as ignored</option>
+                        <CrackmeActions actions={actions} />
                     </Select>
                     <FormErrorMessage>{errors.status && errors.status.message}</FormErrorMessage>
                 </FormControl>
@@ -109,7 +129,7 @@ const UpdateActionPanel = ({ id, updateAction }) => {
 
 export const ActionsList = ({ crackme, updateLastAction }) => {
     const { id, actions, comments_num, hexid, writeups_num } = crackme;
-    const link = `https://crackmes.one/crackme/${hexid}`;
+    const challengeLink = `https://crackmes.one/crackme/${hexid}`;
     const downloadLink = `https://crackmes.one/static/crackme/${hexid}.zip`;
 
     const updateActions = (a) => {
@@ -129,7 +149,7 @@ export const ActionsList = ({ crackme, updateLastAction }) => {
                 experimental_spaceX={'2'}
             >
                 <Box flex={1} overflow={'hidden'} flexDirection={'row'} alignItems={'center'} experimental_spaceX={1}>
-                    <Link href={link} isExternal color={'teal.500'}>
+                    <Link href={challengeLink} isExternal color={'teal.500'}>
                         Challenge page
                     </Link>
                 </Box>
@@ -154,16 +174,16 @@ export const ActionsList = ({ crackme, updateLastAction }) => {
             <List spacing={3} my={4}>
                 {actions.map((a, index) => {
                     const status = a.status;
-                    const { icon, color } = statusIcon[status];
+                    const { icon, color, size } = statusIcon[status];
                     return (
                         <ListItem key={index}>
-                            <ListIcon as={icon} color={color} fontSize={'lg'} />
+                            <ListIcon as={icon} color={color} fontSize={size} w={5} />
                             {formatDate(a.date, 'dd.mm.yyyy HH:MM:ss')} -- {statusDesc[status]}
                         </ListItem>
                     );
                 })}
             </List>
-            <UpdateActionPanel id={id} updateAction={updateActions} />
+            <UpdateActionPanel id={id} updateAction={updateActions} actions={actions} />
         </Box>
     );
 };

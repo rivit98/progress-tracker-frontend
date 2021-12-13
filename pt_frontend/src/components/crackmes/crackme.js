@@ -28,11 +28,12 @@ export const Crackme = ({ crackme }) => {
             >
                 <Flex flexDirection={'row'} justifyContent={'space-between'} experimental_spaceX={'2'} w={'full'}>
                     <Box ml={1} flex={4} overflow={'hidden'} textAlign="left">
-                        {lastAction && (
+                        {lastAction && lastAction.status !== 0 && (
                             <Icon
                                 as={statusIcon[lastAction.status].icon}
                                 color={statusIcon[lastAction.status].color}
                                 mr={2}
+                                fontSize={statusIcon[lastAction.status].size}
                             />
                         )}
                         <Text d={'inline'} isTruncated={true}>
