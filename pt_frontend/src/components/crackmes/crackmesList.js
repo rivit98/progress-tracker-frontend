@@ -70,7 +70,7 @@ export const CrackmesList = () => {
     return (
         <ComponentStateHandler state={state}>
             <Filters />
-            <ListRenderer tasks={tasksWithActions} />
+            <ListRenderer tasksWithActions={tasksWithActions} />
         </ComponentStateHandler>
     );
 };

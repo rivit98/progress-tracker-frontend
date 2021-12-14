@@ -30,5 +30,6 @@ export const crackmesSlice = createSlice({
 
 export const { setTasksLastUpdated, clearState, setCrackmes, updateFilters } = crackmesSlice.actions;
 export const crackmes = (state) => state.crackmesReducer;
+export const crackmesFilters = (state) => state.crackmesReducer.filters;
 
 export default crackmesSlice.reducer;

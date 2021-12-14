@@ -1,4 +1,4 @@
-import { Box, Checkbox, Code, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { Box, Flex, Input } from '@chakra-ui/react';
 import { STATUS_SOLVED, statusDesc } from './consts';
 import Select, { components } from 'react-select';
 import debounce from 'debounce';
@@ -9,7 +9,7 @@ const statusesOptions = Object.keys(statusDesc).map((k) => {
     return { value: parseInt(k, 10), label: statusDesc[k].toLowerCase() };
 });
 
-const customStyles = {
+const selectFieldStyles = {
     option: (provided, state) => {
         return {
             ...provided,
@@ -30,15 +30,51 @@ const customStyles = {
     })
 };
 
-const sortOptions = [
-    { value: 'name-asc', label: 'by name (asc)' },
-    { value: 'name-desc', label: 'by name (desc)' },
-    { value: 'date-asc', label: 'by date (asc)' },
-    { value: 'date-desc', label: 'by date (desc)' },
-    { value: 'comments-asc', label: 'by comments num (asc)' },
-    { value: 'comments-desc', label: 'by comments num (desc)' },
-    { value: 'writeups-asc', label: 'by writeups num (asc)' },
-    { value: 'writeups-desc', label: 'by writeups num (desc)' }
+export const sortOptions = [
+    {
+        value: 'name-asc',
+        label: 'by name (asc)',
+        sortFn: (t1, t2) => t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
+    },
+    {
+        value: 'name-desc',
+        label: 'by name (desc)',
+        sortFn: (t1, t2) => -(t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime())
+    },
+    {
+        value: 'date-asc',
+        label: 'by date (asc)',
+        sortFn: (t1, t2) => -(t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name))
+    },
+    {
+        value: 'date-desc',
+        label: 'by date (desc)',
+        sortFn: (t1, t2) => t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name)
+    },
+    {
+        value: 'comments-asc',
+        label: 'by comments num (asc)',
+        sortFn: (t1, t2) =>
+            t1.comments_num - t2.comments_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
+    },
+    {
+        value: 'comments-desc',
+        label: 'by comments num (desc)',
+        sortFn: (t1, t2) =>
+            t2.comments_num - t1.comments_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
+    },
+    {
+        value: 'writeups-asc',
+        label: 'by writeups num (asc)',
+        sortFn: (t1, t2) =>
+            t1.writeups_num - t2.writeups_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
+    },
+    {
+        value: 'writeups-desc',
+        label: 'by writeups num (desc)',
+        sortFn: (t1, t2) =>
+            t2.writeups_num - t1.writeups_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
+    }
 ];
 
 export const DEFAULT_SORT_OPTION = sortOptions[0];
@@ -81,13 +117,13 @@ export const Filters = () => {
                         name="statuses"
                         options={statusesOptions}
                         placeholder="Filter by status task"
-                        closeMenuOnSelect={false}
+                        // closeMenuOnSelect={false}
                         isSearchable={false}
                         defaultValue={statusesOptions.filter((opt) => parseInt(opt.value, 10) !== STATUS_SOLVED)}
                         selectedOptionStyle="check"
                         components={{ Control }}
                         label={'Status:'}
-                        styles={customStyles}
+                        styles={selectFieldStyles}
                         onChange={onStatusChanged}
                     />
                 </Box>
@@ -100,7 +136,7 @@ export const Filters = () => {
                         defaultValue={DEFAULT_SORT_OPTION}
                         components={{ Control }}
                         label={'Sort'}
-                        styles={customStyles}
+                        styles={selectFieldStyles}
                         onChange={onSortMethodChanged}
                     />
                 </Box>
