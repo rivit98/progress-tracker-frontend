@@ -1,4 +1,4 @@
-import { Accordion, Box, Flex } from '@chakra-ui/react';
+import { Accordion, Alert, AlertIcon, Box, Flex, Text } from '@chakra-ui/react';
 import { Crackme } from './crackme';
 import { UpdateSummary } from './summary';
 import { crackmesFilters } from '../../context/crackmesReducer';
@@ -25,9 +25,12 @@ export const ListRenderer = ({ tasksWithActions }) => {
 
     if (tasks.length === 0) {
         return (
-            <Flex textAlign="center" w={'full'} maxW={'xl'} mx={'auto'} mb={2} fontWeight={'bold'} fontSize={'lg'}>
-                empty
-            </Flex>
+            <>
+                <Box w={'full'} maxW={'xl'} mx={'auto'} mb={2} fontWeight={'bold'} fontSize={'lg'}>
+                    <Text align={'center'}>No tasks match your serch criteria</Text>
+                </Box>
+                <UpdateSummary />
+            </>
         );
     }
 
