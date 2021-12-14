@@ -29,7 +29,7 @@ export const ListRenderer = ({ tasks }) => {
                 <Accordion allowToggle w={'full'}>
                     {[...tasks]
                         .sort((t1, t2) => t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name))
-                        .slice(0, 10)
+                        .slice(0, 100)
                         .map((t) => (
                             <Crackme crackme={t} key={t.id} />
                         ))}

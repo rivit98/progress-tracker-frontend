@@ -4,21 +4,23 @@ export const crackmesSlice = createSlice({
     name: 'crackmes',
     initialState: {
         lastUpdated: {},
-        cachedTasks: []
+        cachedTasks: [],
+        filters: {
+            statuses: []
+        }
     },
     reducers: {
         setTasksLastUpdated: (state, action) => {
-            state.lastUpdated = action.payload;
-            return state;
+            return { ...state, lastUpdated: action.payload };
         },
         setCrackmes: (state, action) => {
-            return action.payload;
+            return { ...state, ...action.payload };
         },
         clearState: (state, action) => {
-            return {
-                lastUpdated: {},
-                cachedTasks: []
-            };
+            return crackmesSlice.getInitialState();
+        },
+        updateFilters: (state, action) => {
+            return { ...state, filters: { ...state.filters, ...action.payload } };
         }
     }
 });

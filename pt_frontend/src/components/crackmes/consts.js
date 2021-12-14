@@ -1,11 +1,19 @@
 import { FaCheckCircle, FaPlay, FaTimesCircle, MdVisibility, MdVisibilityOff } from 'react-icons/all';
 
+const STATUS_CLEAR = 0;
+const STATUS_STARTED = 1;
+const STATUS_ABORTED = 2;
+const STATUS_SOLVED = 3;
+const STATUS_IGNORED = 4;
+
+export { STATUS_CLEAR, STATUS_STARTED, STATUS_ABORTED, STATUS_SOLVED, STATUS_IGNORED };
+
 export const statusDesc = {
-    0: 'Clear',
-    1: 'Started',
-    2: 'Aborted',
-    3: 'Solved',
-    4: 'Ignored'
+    [STATUS_CLEAR]: 'Clear',
+    [STATUS_STARTED]: 'Started',
+    [STATUS_ABORTED]: 'Aborted',
+    [STATUS_SOLVED]: 'Solved',
+    [STATUS_IGNORED]: 'Ignored'
 };
 
 export const statusDescToStatusIDMap = Object.fromEntries(
@@ -13,9 +21,9 @@ export const statusDescToStatusIDMap = Object.fromEntries(
 );
 
 export const statusIcon = {
-    0: { icon: MdVisibility, color: 'blue.600', size: 'xl' },
-    1: { icon: FaPlay, color: 'yellow.500', size: 'md' },
-    2: { icon: FaTimesCircle, color: 'red.600', size: 'lg' },
-    3: { icon: FaCheckCircle, color: 'green.500', size: 'lg' },
-    4: { icon: MdVisibilityOff, color: 'gray.400', size: 'xl' }
+    [STATUS_CLEAR]: { icon: MdVisibility, color: 'blue.600', size: 'xl' },
+    [STATUS_STARTED]: { icon: FaPlay, color: 'yellow.500', size: 'md' },
+    [STATUS_ABORTED]: { icon: FaTimesCircle, color: 'red.600', size: 'lg' },
+    [STATUS_SOLVED]: { icon: FaCheckCircle, color: 'green.500', size: 'lg' },
+    [STATUS_IGNORED]: { icon: MdVisibilityOff, color: 'gray.400', size: 'xl' }
 };

@@ -6,6 +6,7 @@ import { crackmes, setCrackmes, setTasksLastUpdated } from '../../context/crackm
 import { isLoggedIn } from '../../context/userReducer';
 import { WEEK } from 'time-constants';
 import { ListRenderer } from './listRenderer';
+import { Filters } from './filters';
 
 export const CrackmesList = () => {
     const logged = useSelector(isLoggedIn);
@@ -68,6 +69,7 @@ export const CrackmesList = () => {
 
     return (
         <ComponentStateHandler state={state}>
+            <Filters />
             <ListRenderer tasks={tasksWithActions} />
         </ComponentStateHandler>
     );
