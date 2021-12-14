@@ -1,15 +1,17 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex, Text, Tooltip } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { crackmes } from '../../context/crackmesReducer';
 import formatDate from '../../utils/dateformatter';
 import { FiChevronsUp, FiMinus, FiPlus } from 'react-icons/all';
 
-const SummaryLabel = ({ icon, content }) => {
+const SummaryLabel = ({ icon, content, tooltipText }) => {
     return (
-        <Flex mx={1} flexDirection={'row'} alignItems={'center'} experimental_spaceX={3}>
-            {icon}
-            {content}
-        </Flex>
+        <Tooltip label={tooltipText}>
+            <Flex mx={1} flexDirection={'row'} alignItems={'center'} experimental_spaceX={3}>
+                {icon}
+                {content}
+            </Flex>
+        </Tooltip>
     );
 };
 
@@ -22,9 +24,21 @@ export const UpdateSummary = () => {
     return (
         <Flex mt={8}>
             <Text mr={1}>Last updated: {formatDate(cacheDate)}</Text>
-            <SummaryLabel icon={<FiPlus color={'green'} />} content={created} />
-            <SummaryLabel icon={<FiChevronsUp color={'yellow'} />} content={updated} />
-            <SummaryLabel icon={<FiMinus color={'red'} />} content={deleted} />
+            <SummaryLabel
+                icon={<FiPlus color={'green'} />}
+                content={created}
+                tooltipText={'New tasks since last update'}
+            />
+            <SummaryLabel
+                icon={<FiChevronsUp color={'yellow'} />}
+                content={updated}
+                tooltipText={'Updated tasks since last update'}
+            />
+            <SummaryLabel
+                icon={<FiMinus color={'red'} />}
+                content={deleted}
+                tooltipText={'Removed tasks since last update'}
+            />
         </Flex>
     );
 };
