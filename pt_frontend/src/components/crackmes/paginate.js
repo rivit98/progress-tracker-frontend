@@ -5,6 +5,7 @@ const PaginationButton = ({ children, fn, ...props }) => {
     return (
         <Button
             size={'xs'}
+            w={7}
             m={0}
             colorScheme={'teal'}
             _hover={{ bg: 'teal.300' }}
@@ -17,9 +18,9 @@ const PaginationButton = ({ children, fn, ...props }) => {
     );
 };
 
-export const Paginate = ({ currentPage, setCurrentPage, total, perPage }) => {
-    const totalPages = Math.ceil(total / perPage);
+export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
     const siblings = 3;
+    const shouldBe = 2 * siblings + 1;
 
     let pages = [];
     for (let p = currentPage - siblings; p <= currentPage + siblings; p++) {
@@ -27,29 +28,37 @@ export const Paginate = ({ currentPage, setCurrentPage, total, perPage }) => {
     }
     pages = pages.filter((p) => p > 0 && p <= totalPages);
 
+    const to = (pagenr) => {
+        return () => setCurrentPage(pagenr);
+    };
+
+    if (pages.length !== shouldBe) {
+    }
+
     return (
         <HStack mt={6} spacing={1}>
-            <PaginationButton fn={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage <= 1}>
+            <PaginationButton fn={to(currentPage - 1)} isDisabled={currentPage === 1}>
                 <MdChevronLeft />
             </PaginationButton>
             {!pages.includes(1) && (
-                <PaginationButton fn={() => setCurrentPage(1)} isDisabled={currentPage === 1}>
+                <PaginationButton fn={to(1)} isDisabled={currentPage === 1}>
                     1
                 </PaginationButton>
             )}
 
             {pages.map((page) => (
-                <PaginationButton key={page} fn={() => setCurrentPage(page)} isDisabled={currentPage === page}>
+                <PaginationButton key={page} fn={to(page)} isDisabled={currentPage === page}>
                     {page}
                 </PaginationButton>
             ))}
+
             {!pages.includes(totalPages) && (
-                <PaginationButton fn={() => setCurrentPage(totalPages)} isDisabled={currentPage === totalPages}>
+                <PaginationButton fn={to(totalPages)} isDisabled={currentPage === totalPages}>
                     {totalPages}
                 </PaginationButton>
             )}
 
-            <PaginationButton fn={() => setCurrentPage(currentPage + 1)} isDisabled={currentPage >= totalPages}>
+            <PaginationButton fn={to(currentPage + 1)} isDisabled={currentPage === totalPages}>
                 <MdChevronRight />
             </PaginationButton>
         </HStack>
