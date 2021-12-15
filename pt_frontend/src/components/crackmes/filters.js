@@ -10,7 +10,7 @@ const Control = ({ children, ...props }) => {
     const { label } = props.selectProps;
     return (
         <components.Control {...props}>
-            <span style={{ color: 'black', paddingLeft: 5, fontWeight: 'bold', fontSize: 'sm' }}>{label}</span>
+            <span style={{ color: 'black', paddingLeft: 5, fontWeight: 'bold', fontSize: '80%' }}>{label}</span>
             {children}
         </components.Control>
     );
@@ -26,7 +26,7 @@ export const Filters = () => {
 
     const onSearchTermChanged = (event) => {
         const term = event.target.value;
-        dispatch(updateFilters({ searchTerm: term }));
+        dispatch(updateFilters({ searchTerm: term.toLowerCase() }));
     };
 
     const onSortMethodChanged = (method) => {
@@ -43,11 +43,8 @@ export const Filters = () => {
                         isMulti
                         name="statuses"
                         options={statusesOptions}
-                        placeholder="Filter by status task"
-                        // closeMenuOnSelect={false}
                         isSearchable={false}
                         defaultValue={statusesOptions.filter((opt) => opt.value !== STATUS_SOLVED)}
-                        selectedOptionStyle="check"
                         components={{ Control }}
                         label={'Status:'}
                         styles={selectFieldStyles}
@@ -58,11 +55,10 @@ export const Filters = () => {
                     <Select
                         name="sort"
                         options={sortOptions}
-                        placeholder="Sort"
                         isSearchable={false}
                         defaultValue={DEFAULT_SORT_OPTION}
                         components={{ Control }}
-                        label={'Sort'}
+                        label={'Sort by'}
                         styles={selectFieldStyles}
                         onChange={onSortMethodChanged}
                     />

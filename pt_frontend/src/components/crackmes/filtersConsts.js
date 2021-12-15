@@ -25,50 +25,58 @@ export const selectFieldStyles = {
     })
 };
 
+const byName = (t1, t2) => {
+    return t1.name.localeCompare(t2.name);
+};
+
+const byDate = (t1, t2) => {
+    return t2.date.getTime() - t1.date.getTime();
+};
+
+const reverse = (res) => {
+    return -res;
+};
+
 export const sortOptions = [
     {
         value: 'name-asc',
-        label: 'by name (asc)',
-        sortFn: (t1, t2) => t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
+        label: 'name ↑',
+        sortFn: (t1, t2) => byName(t1, t2) || byDate(t1, t2)
     },
     {
         value: 'name-desc',
-        label: 'by name (desc)',
-        sortFn: (t1, t2) => -(t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime())
+        label: 'name ↓',
+        sortFn: (t1, t2) => reverse(byName(t1, t2)) || byDate(t1, t2)
     },
     {
         value: 'date-asc',
-        label: 'by date (asc)',
-        sortFn: (t1, t2) => -(t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name))
+        label: 'date ↑',
+        sortFn: (t1, t2) => reverse(byDate(t1, t2)) || byName(t1, t2)
     },
     {
         value: 'date-desc',
-        label: 'by date (desc)',
-        sortFn: (t1, t2) => t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name)
+        label: 'date ↓',
+        sortFn: (t1, t2) => byDate(t1, t2) || byName(t1, t2)
     },
     {
         value: 'comments-asc',
-        label: 'by comments num (asc)',
-        sortFn: (t1, t2) =>
-            t1.comments_num - t2.comments_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
+        label: 'comments num ↑',
+        sortFn: (t1, t2) => t1.comments_num - t2.comments_num || byName(t1, t2) || byDate(t1, t2)
     },
     {
         value: 'comments-desc',
-        label: 'by comments num (desc)',
-        sortFn: (t1, t2) =>
-            t2.comments_num - t1.comments_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
+        label: 'comments num ↓',
+        sortFn: (t1, t2) => t2.comments_num - t1.comments_num || byName(t1, t2) || byDate(t1, t2)
     },
     {
         value: 'writeups-asc',
-        label: 'by writeups num (asc)',
-        sortFn: (t1, t2) =>
-            t1.writeups_num - t2.writeups_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
+        label: 'writeups num ↑',
+        sortFn: (t1, t2) => t1.writeups_num - t2.writeups_num || byName(t1, t2) || byDate(t1, t2)
     },
     {
         value: 'writeups-desc',
-        label: 'by writeups num (desc)',
-        sortFn: (t1, t2) =>
-            t2.writeups_num - t1.writeups_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
+        label: 'writeups num ↓',
+        sortFn: (t1, t2) => t2.writeups_num - t1.writeups_num || byName(t1, t2) || byDate(t1, t2)
     }
 ];
 

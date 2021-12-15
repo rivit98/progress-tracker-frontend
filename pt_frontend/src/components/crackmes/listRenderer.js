@@ -4,14 +4,14 @@ import { UpdateSummary } from './summary';
 import { crackmesFilters } from '../../context/crackmesReducer';
 import { useSelector } from 'react-redux';
 import { STATUS_CLEAR } from './consts';
-import { sortOptions } from './filters';
+import { sortOptions } from './filtersConsts';
 
 export const ListRenderer = ({ tasksWithActions }) => {
     const { filterStatuses, searchTerm, sortMethod } = useSelector(crackmesFilters);
 
     let tasks = tasksWithActions;
     if (searchTerm.length > 2) {
-        tasks = tasks.filter((t) => t.name.includes(searchTerm));
+        tasks = tasks.filter((t) => t.name.toLowerCase().includes(searchTerm));
     }
 
     if (filterStatuses.length > 0) {
