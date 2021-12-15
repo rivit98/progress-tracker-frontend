@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DEFAULT_SORT_OPTION } from '../components/crackmes/filters';
+import { DEFAULT_SORT_OPTION } from '../components/crackmes/filtersConsts';
 
 export const crackmesSlice = createSlice({
     name: 'crackmes',

@@ -4,86 +4,13 @@ import Select, { components } from 'react-select';
 import debounce from 'debounce';
 import { useDispatch } from 'react-redux';
 import { updateFilters as updateFilters } from '../../context/crackmesReducer';
-
-const statusesOptions = Object.keys(statusDesc).map((k) => {
-    return { value: parseInt(k, 10), label: statusDesc[k].toLowerCase() };
-});
-
-const selectFieldStyles = {
-    option: (provided, state) => {
-        return {
-            ...provided,
-            color: 'black'
-        };
-    },
-    multiValueLabel: (styles, { data }) => ({
-        ...styles,
-        color: 'black'
-    }),
-    multiValueRemove: (styles, { data }) => ({
-        ...styles,
-        color: 'black'
-    }),
-    singleValueLabel: (styles, { data }) => ({
-        ...styles,
-        color: 'black'
-    })
-};
-
-export const sortOptions = [
-    {
-        value: 'name-asc',
-        label: 'by name (asc)',
-        sortFn: (t1, t2) => t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
-    },
-    {
-        value: 'name-desc',
-        label: 'by name (desc)',
-        sortFn: (t1, t2) => -(t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime())
-    },
-    {
-        value: 'date-asc',
-        label: 'by date (asc)',
-        sortFn: (t1, t2) => -(t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name))
-    },
-    {
-        value: 'date-desc',
-        label: 'by date (desc)',
-        sortFn: (t1, t2) => t2.date.getTime() - t1.date.getTime() || t1.name.localeCompare(t2.name)
-    },
-    {
-        value: 'comments-asc',
-        label: 'by comments num (asc)',
-        sortFn: (t1, t2) =>
-            t1.comments_num - t2.comments_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
-    },
-    {
-        value: 'comments-desc',
-        label: 'by comments num (desc)',
-        sortFn: (t1, t2) =>
-            t2.comments_num - t1.comments_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
-    },
-    {
-        value: 'writeups-asc',
-        label: 'by writeups num (asc)',
-        sortFn: (t1, t2) =>
-            t1.writeups_num - t2.writeups_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
-    },
-    {
-        value: 'writeups-desc',
-        label: 'by writeups num (desc)',
-        sortFn: (t1, t2) =>
-            t2.writeups_num - t1.writeups_num || t1.name.localeCompare(t2.name) || t2.date.getTime() - t1.date.getTime()
-    }
-];
-
-export const DEFAULT_SORT_OPTION = sortOptions[0];
+import { DEFAULT_SORT_OPTION, selectFieldStyles, sortOptions, statusesOptions } from './filtersConsts';
 
 const Control = ({ children, ...props }) => {
     const { label } = props.selectProps;
     return (
         <components.Control {...props}>
-            <span style={{ color: 'black', paddingLeft: 5, fontWeight: 'bold' }}>{label}</span>
+            <span style={{ color: 'black', paddingLeft: 5, fontWeight: 'bold', fontSize: 'sm' }}>{label}</span>
             {children}
         </components.Control>
     );
@@ -119,7 +46,7 @@ export const Filters = () => {
                         placeholder="Filter by status task"
                         // closeMenuOnSelect={false}
                         isSearchable={false}
-                        defaultValue={statusesOptions.filter((opt) => parseInt(opt.value, 10) !== STATUS_SOLVED)}
+                        defaultValue={statusesOptions.filter((opt) => opt.value !== STATUS_SOLVED)}
                         selectedOptionStyle="check"
                         components={{ Control }}
                         label={'Status:'}
