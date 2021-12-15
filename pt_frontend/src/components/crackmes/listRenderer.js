@@ -43,6 +43,7 @@ export const ListRenderer = ({ tasksWithActions }) => {
     const perPage = 30;
     const indexOfLastPage = currentPage * perPage;
     const indexOfFirstPage = indexOfLastPage - perPage;
+    const totalPages = Math.ceil(tasks.length / perPage);
 
     return (
         <>
@@ -73,12 +74,15 @@ export const ListRenderer = ({ tasksWithActions }) => {
                     ))}
                 </Accordion>
             </Flex>
-            <Paginate
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                totalPosts={tasks.length}
-                postPerPage={perPage}
-            />
+            {totalPages > 1 && (
+                <Paginate
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    total={tasks.length}
+                    perPage={perPage}
+                />
+            )}
+
             <UpdateSummary />
         </>
     );
