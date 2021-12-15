@@ -1,5 +1,5 @@
 import { Box, Flex, Input } from '@chakra-ui/react';
-import { STATUS_SOLVED, statusDesc } from './consts';
+import { STATUS_SOLVED } from './consts';
 import Select, { components } from 'react-select';
 import debounce from 'debounce';
 import { useDispatch } from 'react-redux';
@@ -44,11 +44,11 @@ export const Filters = () => {
                         name="statuses"
                         options={statusesOptions}
                         isSearchable={false}
-                        defaultValue={statusesOptions.filter((opt) => opt.value !== STATUS_SOLVED)}
                         components={{ Control }}
                         label={'Status:'}
                         styles={selectFieldStyles}
                         onChange={onStatusChanged}
+                        defaultValue={statusesOptions.filter((opt) => opt.value !== STATUS_SOLVED)}
                     />
                 </Box>
                 <Box w={'40%'}>

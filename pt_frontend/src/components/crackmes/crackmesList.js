@@ -2,7 +2,7 @@ import { crackmesService } from '../../services/crackmes';
 import { useAxiosEffect } from '../../utils/useAxiosEffect';
 import { ComponentStateHandler, getAggregatedState } from '../generic/componentStateHandler';
 import { useDispatch, useSelector } from 'react-redux';
-import { crackmes, setCrackmes, setTasksLastUpdated } from '../../context/crackmesReducer';
+import { crackmes, resetFilters, setCrackmes, setTasksLastUpdated } from '../../context/crackmesReducer';
 import { isLoggedIn } from '../../context/userReducer';
 import { WEEK } from 'time-constants';
 import { ListRenderer } from './listRenderer';
@@ -48,6 +48,7 @@ export const CrackmesList = () => {
                     );
                     resolve(updatedTasks);
                 }
+                dispatch(resetFilters());
             } catch (e) {
                 reject(e);
             }

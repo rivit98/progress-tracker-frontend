@@ -1,12 +1,15 @@
-import { Accordion, Alert, AlertIcon, Box, Flex, Text } from '@chakra-ui/react';
+import { Accordion, Box, Flex, Text } from '@chakra-ui/react';
 import { Crackme } from './crackme';
 import { UpdateSummary } from './summary';
 import { crackmesFilters } from '../../context/crackmesReducer';
 import { useSelector } from 'react-redux';
 import { STATUS_CLEAR } from './consts';
 import { sortOptions } from './filtersConsts';
+import { useState } from 'react';
+import { Paginate } from './paginate';
 
 export const ListRenderer = ({ tasksWithActions }) => {
+    const [currentPage, setCurrentPage] = useState(1);
     const { filterStatuses, searchTerm, sortMethod } = useSelector(crackmesFilters);
 
     let tasks = tasksWithActions;
@@ -37,6 +40,10 @@ export const ListRenderer = ({ tasksWithActions }) => {
     const sortFn = sortOptions.find((opt) => opt.value === sortMethod).sortFn;
     tasks = tasks.sort(sortFn);
 
+    const perPage = 30;
+    const indexOfLastPage = currentPage * perPage;
+    const indexOfFirstPage = indexOfLastPage - perPage;
+
     return (
         <>
             <Flex
@@ -61,12 +68,17 @@ export const ListRenderer = ({ tasksWithActions }) => {
             </Flex>
             <Flex w={'full'} justifyContent={'center'}>
                 <Accordion allowToggle w={'full'}>
-                    {tasks.slice(0, 50).map((t) => (
+                    {tasks.slice(indexOfFirstPage, indexOfLastPage).map((t) => (
                         <Crackme crackme={t} key={t.id} />
                     ))}
                 </Accordion>
             </Flex>
-            <Flex mt={2}>pagination</Flex>
+            <Paginate
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPosts={tasks.length}
+                postPerPage={perPage}
+            />
             <UpdateSummary />
         </>
     );

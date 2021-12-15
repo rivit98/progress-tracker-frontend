@@ -24,11 +24,14 @@ export const crackmesSlice = createSlice({
         },
         updateFilters: (state, action) => {
             return { ...state, filters: { ...state.filters, ...action.payload } };
+        },
+        resetFilters: (state, action) => {
+            return { ...state, filters: crackmesSlice.getInitialState().filters };
         }
     }
 });
 
-export const { setTasksLastUpdated, clearState, setCrackmes, updateFilters } = crackmesSlice.actions;
+export const { setTasksLastUpdated, clearState, setCrackmes, updateFilters, resetFilters } = crackmesSlice.actions;
 export const crackmes = (state) => state.crackmesReducer;
 export const crackmesFilters = (state) => state.crackmesReducer.filters;
 
