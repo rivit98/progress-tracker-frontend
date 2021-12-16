@@ -27,7 +27,7 @@ export const Crackme = ({ crackme }) => {
                 rounded="md"
             >
                 <Flex flexDirection={'row'} justifyContent={'space-between'} experimental_spaceX={'2'} w={'full'}>
-                    <Box ml={1} flex={4} overflow={'hidden'} textAlign="left">
+                    <Box ml={1} flex={8} overflow={'hidden'} textAlign="left">
                         {lastAction && lastAction.status !== 0 && (
                             <Icon
                                 as={statusIcon[lastAction.status].icon}
@@ -40,7 +40,7 @@ export const Crackme = ({ crackme }) => {
                             {name}
                         </Text>
                     </Box>
-                    <Box flex={1} overflow={'hidden'}>
+                    <Box flex={3} overflow={'hidden'}>
                         {formatDate(date)}
                     </Box>
                     <Box w={'20px'} textAlign="right" justifyContent={'end'} mr={2}>

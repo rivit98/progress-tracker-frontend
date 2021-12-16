@@ -62,10 +62,10 @@ export const ListRenderer = ({ tasksWithActions }) => {
                 experimental_spaceX={'2'}
                 fontSize={'lg'}
             >
-                <Box flex={4} overflow={'hidden'}>
+                <Box flex={8} overflow={'hidden'}>
                     Task name
                 </Box>
-                <Box flex={1} overflow={'hidden'}>
+                <Box flex={3} overflow={'hidden'}>
                     Date
                 </Box>
                 <Box w={'20px'} />

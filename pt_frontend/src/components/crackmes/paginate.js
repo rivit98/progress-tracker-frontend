@@ -19,32 +19,40 @@ const PaginationButton = ({ children, fn, ...props }) => {
 };
 
 export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
-    const siblings = 3;
-    const shouldBe = 2 * siblings + 1;
+    const siblings = 1;
 
-    let pages = [];
+    let pages = new Set();
     for (let p = currentPage - siblings; p <= currentPage + siblings; p++) {
-        pages.push(p);
+        pages.add(p);
     }
-    pages = pages.filter((p) => p > 0 && p <= totalPages);
 
     const to = (pagenr) => {
         return () => setCurrentPage(pagenr);
     };
 
-    if (pages.length !== shouldBe) {
+    const leftPages = currentPage - 1 - siblings;
+    if (leftPages <= 2) {
+        for (let p = 2; p < currentPage; p++) {
+            pages.add(p);
+        }
     }
+
+    pages = [...pages].filter((p) => p > 0 && p <= totalPages);
+    pages.sort();
 
     return (
         <HStack mt={6} spacing={1}>
             <PaginationButton fn={to(currentPage - 1)} isDisabled={currentPage === 1}>
                 <MdChevronLeft />
             </PaginationButton>
+
             {!pages.includes(1) && (
                 <PaginationButton fn={to(1)} isDisabled={currentPage === 1}>
                     1
                 </PaginationButton>
             )}
+
+            {leftPages > 2 && <PaginationButton fn={() => {}}>...</PaginationButton>}
 
             {pages.map((page) => (
                 <PaginationButton key={page} fn={to(page)} isDisabled={currentPage === page}>

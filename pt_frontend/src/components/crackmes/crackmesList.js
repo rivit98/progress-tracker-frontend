@@ -34,11 +34,9 @@ export const CrackmesList = () => {
                     new Date(date).getTime() >= lastUpdated.date.getTime() && // if cache is newer (?) or same as remote, load
                     Date.now() - lastUpdated.date.getTime() < WEEK * 4 // if cache is not older than X, load
                 ) {
-                    console.log('cached');
                     dispatch(setTasksLastUpdated(lastUpdated));
                     resolve(cachedTasks.map((t) => ({ ...t, date: new Date(t.date) })));
                 } else {
-                    console.log('from api');
                     const updatedTasks = await crackmesService.getCrackmes(options);
                     dispatch(
                         setCrackmes({

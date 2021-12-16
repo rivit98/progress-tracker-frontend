@@ -5,7 +5,6 @@ const Home = () => {
     const dispatch = useDispatch();
 
     const clear = () => {
-        console.log('State cleared');
         dispatch(clearState());
     };
 
