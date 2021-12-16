@@ -18,14 +18,9 @@ const PaginationButton = ({ children, fn, ...props }) => {
     );
 };
 
+// code adapted from material UI pagination component
 export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
-    const page = currentPage;
     const boundaryCount = 1;
-    const count = totalPages;
-    const hideNextButton = false;
-    const hidePrevButton = false;
-    const showFirstButton = false;
-    const showLastButton = false;
     const siblingCount = 1;
 
     const handleClick = (value) => {
@@ -38,15 +33,15 @@ export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
         return Array.from({ length }, (_, i) => start + i);
     };
 
-    const startPages = range(1, Math.min(boundaryCount, count));
-    const endPages = range(Math.max(count - boundaryCount + 1, boundaryCount + 1), count);
+    const startPages = range(1, Math.min(boundaryCount, totalPages));
+    const endPages = range(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages);
 
     const siblingsStart = Math.max(
         Math.min(
             // Natural start
-            page - siblingCount,
+            currentPage - siblingCount,
             // Lower boundary when page is high
-            count - boundaryCount - siblingCount * 2 - 1
+            totalPages - boundaryCount - siblingCount * 2 - 1
         ),
         // Greater than startPages
         boundaryCount + 2
@@ -55,26 +50,25 @@ export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
     const siblingsEnd = Math.min(
         Math.max(
             // Natural end
-            page + siblingCount,
+            currentPage + siblingCount,
             // Upper boundary when page is low
             boundaryCount + siblingCount * 2 + 2
         ),
         // Less than endPages
-        endPages.length > 0 ? endPages[0] - 2 : count - 1
+        endPages.length > 0 ? endPages[0] - 2 : totalPages - 1
     );
 
     // Basic list of items to render
     // e.g. itemList = ['first', 'previous', 1, 'ellipsis', 4, 5, 6, 'ellipsis', 10, 'next', 'last']
     const itemList = [
-        ...(showFirstButton ? ['first'] : []),
-        ...(hidePrevButton ? [] : ['previous']),
+        ...['previous'],
         ...startPages,
 
         // Start ellipsis
         // eslint-disable-next-line no-nested-ternary
         ...(siblingsStart > boundaryCount + 2
             ? ['start-ellipsis']
-            : boundaryCount + 1 < count - boundaryCount
+            : boundaryCount + 1 < totalPages - boundaryCount
             ? [boundaryCount + 1]
             : []),
 
@@ -83,15 +77,14 @@ export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
 
         // End ellipsis
         // eslint-disable-next-line no-nested-ternary
-        ...(siblingsEnd < count - boundaryCount - 1
+        ...(siblingsEnd < totalPages - boundaryCount - 1
             ? ['end-ellipsis']
-            : count - boundaryCount > boundaryCount
-            ? [count - boundaryCount]
+            : totalPages - boundaryCount > boundaryCount
+            ? [totalPages - boundaryCount]
             : []),
 
         ...endPages,
-        ...(hideNextButton ? [] : ['next']),
-        ...(showLastButton ? ['last'] : [])
+        ...['next']
     ];
 
     // Map the button type to its page number
@@ -100,11 +93,11 @@ export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
             case 'first':
                 return 1;
             case 'previous':
-                return page - 1;
+                return currentPage - 1;
             case 'next':
-                return page + 1;
+                return currentPage + 1;
             case 'last':
-                return count;
+                return totalPages;
             default:
                 return null;
         }
@@ -119,7 +112,7 @@ export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
                   },
                   type: 'page',
                   page: item,
-                  selected: item === page
+                  selected: item === currentPage
               }
             : {
                   onClick: () => {
@@ -130,7 +123,7 @@ export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
                   selected: false,
                   disabled:
                       item.indexOf('ellipsis') === -1 &&
-                      (item === 'next' || item === 'last' ? page >= count : page <= 1)
+                      (item === 'next' || item === 'last' ? currentPage >= totalPages : currentPage <= 1)
               };
     });
 
@@ -173,13 +166,13 @@ export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
                         );
                     case 'start-ellipsis':
                         return (
-                            <PaginationButton fn={onClick} isDisabled={selected || disabled}>
+                            <PaginationButton fn={onClick} isDisabled={true}>
                                 ...
                             </PaginationButton>
                         );
                     case 'end-ellipsis':
                         return (
-                            <PaginationButton fn={onClick} isDisabled={selected || disabled}>
+                            <PaginationButton fn={onClick} isDisabled={true}>
                                 ...
                             </PaginationButton>
                         );
