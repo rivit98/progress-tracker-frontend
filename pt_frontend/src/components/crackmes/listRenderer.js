@@ -4,7 +4,7 @@ import { UpdateSummary } from './summary';
 import { crackmesFilters } from '../../context/crackmesReducer';
 import { useSelector } from 'react-redux';
 import { STATUS_CLEAR } from './consts';
-import { sortOptions } from './filtersConsts';
+import { getSortOption, sortOptions } from './filtersConsts';
 import { useState } from 'react';
 import { Paginate } from './paginate';
 
@@ -37,8 +37,7 @@ export const ListRenderer = ({ tasksWithActions }) => {
         );
     }
 
-    const sortFn = sortOptions.find((opt) => opt.value === sortMethod).sortFn;
-    tasks = tasks.sort(sortFn);
+    tasks = tasks.sort(getSortOption(sortMethod).sortFn);
 
     const perPage = 30;
     const indexOfLastPage = currentPage * perPage;

@@ -1,5 +1,5 @@
 import { Box, Button, Flex, HStack } from '@chakra-ui/react';
-import { MdChevronLeft, MdChevronRight, MdFirstPage, MdLastPage } from 'react-icons/all';
+import { MdChevronLeft, MdChevronRight } from 'react-icons/all';
 
 const PaginationButton = ({ children, fn, ...props }) => {
     return (
@@ -15,6 +15,14 @@ const PaginationButton = ({ children, fn, ...props }) => {
         >
             {children}
         </Button>
+    );
+};
+
+const Ellipsis = () => {
+    return (
+        <Flex size={'xs'} w={7} m={0} justifyContent={'center'}>
+            ...
+        </Flex>
     );
 };
 
@@ -127,55 +135,35 @@ export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
               };
     });
 
-    console.log(items);
-
     return (
         <HStack mt={6} spacing={1}>
-            {items.map((item) => {
+            {items.map((item, index) => {
                 const { type, selected, disabled, page, onClick } = item;
+                const isDisabled = selected || disabled;
                 switch (type) {
                     case 'page':
-                        return (
-                            <PaginationButton fn={onClick} isDisabled={selected || disabled}>
-                                {page}
-                            </PaginationButton>
-                        );
                     case 'first':
+                    case 'last':
                         return (
-                            <PaginationButton fn={onClick} isDisabled={selected || disabled}>
+                            <PaginationButton key={index} fn={onClick} isDisabled={isDisabled}>
                                 {page}
                             </PaginationButton>
                         );
                     case 'previous':
                         return (
-                            <PaginationButton fn={onClick} isDisabled={selected || disabled}>
+                            <PaginationButton key={index} fn={onClick} isDisabled={isDisabled}>
                                 <MdChevronLeft />
                             </PaginationButton>
                         );
                     case 'next':
                         return (
-                            <PaginationButton fn={onClick} isDisabled={selected || disabled}>
+                            <PaginationButton key={index} fn={onClick} isDisabled={isDisabled}>
                                 <MdChevronRight />
                             </PaginationButton>
                         );
-                    case 'last':
-                        return (
-                            <PaginationButton fn={onClick} isDisabled={selected || disabled}>
-                                {page}
-                            </PaginationButton>
-                        );
                     case 'start-ellipsis':
-                        return (
-                            <PaginationButton fn={onClick} isDisabled={true}>
-                                ...
-                            </PaginationButton>
-                        );
                     case 'end-ellipsis':
-                        return (
-                            <PaginationButton fn={onClick} isDisabled={true}>
-                                ...
-                            </PaginationButton>
-                        );
+                        return <Ellipsis />;
                 }
             })}
         </HStack>

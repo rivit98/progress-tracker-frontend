@@ -3,7 +3,7 @@ import { STATUS_SOLVED } from './consts';
 import Select, { components } from 'react-select';
 import debounce from 'debounce';
 import { useDispatch } from 'react-redux';
-import { updateFilters as updateFilters } from '../../context/crackmesReducer';
+import { updateFilters } from '../../context/crackmesReducer';
 import { DEFAULT_SORT_OPTION, selectFieldStyles, sortOptions, statusesOptions } from './filtersConsts';
 
 const Control = ({ children, ...props }) => {

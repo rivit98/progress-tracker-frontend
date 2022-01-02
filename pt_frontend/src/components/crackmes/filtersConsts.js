@@ -80,4 +80,8 @@ export const sortOptions = [
     }
 ];
 
-export const DEFAULT_SORT_OPTION = sortOptions[0];
+export const getSortOption = (sortOpt) => {
+    return sortOptions.find((opt) => opt.value === sortOpt);
+};
+
+export const DEFAULT_SORT_OPTION = getSortOption('date-desc');
