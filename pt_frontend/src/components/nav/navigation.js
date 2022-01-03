@@ -5,6 +5,7 @@ import {
     DrawerContent,
     DrawerOverlay,
     Flex,
+    HStack,
     Icon,
     Text,
     useDisclosure,
@@ -93,10 +94,10 @@ export function Navigation({ children }) {
                             outline: 'none'
                         }}
                     >
-                        <VStack align={'start'}>
+                        <HStack align={'start'}>
                             <Text>Logged as:</Text>
-                            {logged ? <Text>{username}</Text> : <Text>nobody</Text>}
-                        </VStack>
+                            {logged ? <Text fontWeight={'bold'}>{username}</Text> : <Text>nobody</Text>}
+                        </HStack>
                     </Flex>
                 </DrawerContent>
             </Drawer>

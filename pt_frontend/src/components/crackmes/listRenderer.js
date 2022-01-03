@@ -4,7 +4,7 @@ import { UpdateSummary } from './summary';
 import { crackmesFilters } from '../../context/crackmesReducer';
 import { useSelector } from 'react-redux';
 import { STATUS_CLEAR } from './consts';
-import { getSortOption, sortOptions } from './filtersConsts';
+import { getSortOption } from './filtersConsts';
 import { useState } from 'react';
 import { Paginate } from './paginate';
 
