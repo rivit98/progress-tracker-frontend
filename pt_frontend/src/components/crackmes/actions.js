@@ -10,7 +10,8 @@ import {
     ListIcon,
     ListItem,
     Select,
-    Text
+    Text,
+    Tooltip
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import formatDate from '../../utils/dateformatter';
@@ -177,8 +178,12 @@ export const ActionsList = ({ crackme, updateLastAction }) => {
                     const { icon, color, size } = statusIcon[status];
                     return (
                         <ListItem key={index}>
-                            <ListIcon as={icon} color={color} fontSize={size} w={5} />
-                            {formatDate(a.date, 'dd.mm.yyyy HH:MM:ss')} -- {statusDesc[status]}
+                            <Tooltip label={statusDesc[status]}>
+                                <span>
+                                    <ListIcon as={icon} color={color} fontSize={size} w={5} />
+                                </span>
+                            </Tooltip>
+                            {formatDate(a.date, 'dd.mm.yyyy HH:MM:ss')}
                         </ListItem>
                     );
                 })}

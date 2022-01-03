@@ -9,8 +9,7 @@ import {
     Icon,
     Text,
     useDisclosure,
-    useToast,
-    VStack
+    useToast
 } from '@chakra-ui/react';
 import { FiHome, FiLogIn, FiLogOut, FiUserPlus } from 'react-icons/fi';
 import React from 'react';

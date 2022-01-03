@@ -35,7 +35,7 @@ export const Filters = () => {
     };
 
     return (
-        <Flex maxW={'xl'} w={'full'} flexDir={'column'} mx={'auto'} mb={10}>
+        <Flex maxW={'xl'} w={'full'} flexDir={'column'} mx={'auto'}>
             <Input placeholder={'Search by name'} onChange={debounce((event) => onSearchTermChanged(event), 500)} />
             <Flex mt={2} experimental_spaceX={2}>
                 <Box w={'60%'}>

@@ -30,7 +30,7 @@ export const ListRenderer = ({ tasksWithActions }) => {
         return (
             <>
                 <Box w={'full'} maxW={'xl'} mx={'auto'} mb={2} fontWeight={'bold'} fontSize={'lg'}>
-                    <Text align={'center'}>No tasks match your serch criteria</Text>
+                    <Text align={'center'}>No tasks matching your serch criteria</Text>
                 </Box>
                 <UpdateSummary />
             </>
@@ -49,6 +49,10 @@ export const ListRenderer = ({ tasksWithActions }) => {
 
     return (
         <>
+            <Text mb={5} mt={1}>
+                {tasks.length} results
+            </Text>
+            <Paginate currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
             <Flex
                 textAlign="center"
                 flexDirection={'row'}
@@ -57,6 +61,7 @@ export const ListRenderer = ({ tasksWithActions }) => {
                 maxW={'xl'}
                 mx={'auto'}
                 mb={2}
+                mt={7}
                 fontWeight={'bold'}
                 experimental_spaceX={'2'}
                 fontSize={'lg'}
@@ -76,10 +81,6 @@ export const ListRenderer = ({ tasksWithActions }) => {
                     ))}
                 </Accordion>
             </Flex>
-            {totalPages > 1 && (
-                <Paginate currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
-            )}
-
             <UpdateSummary />
         </>
     );

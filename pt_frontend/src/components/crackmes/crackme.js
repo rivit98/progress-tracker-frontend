@@ -1,14 +1,25 @@
 import { useSelector } from 'react-redux';
 import { isLoggedIn } from '../../context/userReducer';
-import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, Icon, Text } from '@chakra-ui/react';
+import {
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
+    Box,
+    Flex,
+    Icon,
+    Text,
+    Tooltip
+} from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
-import { statusIcon } from './consts';
+import { statusDesc, statusIcon } from './consts';
 import { ActionsList, CrackmeActionsNotLogged } from './actions';
 import { useState } from 'react';
 
 export const Crackme = ({ crackme }) => {
     const logged = useSelector(isLoggedIn);
     let { date, name, lastAction } = crackme;
+    const lastActionStatus = lastAction && lastAction.status;
     const [count, setCount] = useState(0);
 
     const updateLastAction = (a) => {
@@ -28,13 +39,17 @@ export const Crackme = ({ crackme }) => {
             >
                 <Flex flexDirection={'row'} justifyContent={'space-between'} experimental_spaceX={'2'} w={'full'}>
                     <Box ml={1} flex={8} overflow={'hidden'} textAlign="left">
-                        {lastAction && lastAction.status !== 0 && (
-                            <Icon
-                                as={statusIcon[lastAction.status].icon}
-                                color={statusIcon[lastAction.status].color}
-                                mr={2}
-                                fontSize={statusIcon[lastAction.status].size}
-                            />
+                        {lastActionStatus && lastActionStatus !== 0 && (
+                            <Tooltip label={statusDesc[lastActionStatus]}>
+                                <span>
+                                    <Icon
+                                        as={statusIcon[lastActionStatus].icon}
+                                        color={statusIcon[lastActionStatus].color}
+                                        mr={2}
+                                        fontSize={statusIcon[lastActionStatus].size}
+                                    />
+                                </span>
+                            </Tooltip>
                         )}
                         <Text d={'inline'} isTruncated={true}>
                             {name}

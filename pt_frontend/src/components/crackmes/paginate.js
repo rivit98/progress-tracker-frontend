@@ -28,6 +28,10 @@ const Ellipsis = () => {
 
 // code adapted from material UI pagination component
 export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
+    if (totalPages <= 0) {
+        return <></>;
+    }
+
     const boundaryCount = 1;
     const siblingCount = 1;
 
@@ -136,7 +140,7 @@ export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
     });
 
     return (
-        <HStack mt={6} spacing={1}>
+        <HStack mt={0} spacing={1}>
             {items.map((item, index) => {
                 const { type, selected, disabled, page, onClick } = item;
                 const isDisabled = selected || disabled;
@@ -163,7 +167,7 @@ export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
                         );
                     case 'start-ellipsis':
                     case 'end-ellipsis':
-                        return <Ellipsis />;
+                        return <Ellipsis key={index} />;
                 }
             })}
         </HStack>
