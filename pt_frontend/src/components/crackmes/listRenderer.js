@@ -39,7 +39,7 @@ export const ListRenderer = ({ tasksWithActions }) => {
 
     tasks = tasks.sort(getSortOption(sortMethod).sortFn);
 
-    const perPage = 30;
+    const perPage = 40;
     const indexOfLastPage = currentPage * perPage;
     const indexOfFirstPage = indexOfLastPage - perPage;
     const totalPages = Math.ceil(tasks.length / perPage);
