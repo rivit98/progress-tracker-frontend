@@ -15,15 +15,27 @@ import { FiHome, FiLogIn, FiLogOut, FiUserPlus } from 'react-icons/fi';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TopNavbar } from './topNavbar';
-import { currentUserData, isLoggedIn, removeUser } from '../../context/userReducer';
+import { currentUserData, isLoggedIn, removeUser, userGroups } from '../../context/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { VscKey } from 'react-icons/all';
+
+const hasPermissions = (userGroups, requiredPermissions) => {
+    const groupNames = userGroups.map((g) => g.name);
+    for (const perm of requiredPermissions) {
+        if (!groupNames.includes(perm)) {
+            return false;
+        }
+    }
+
+    return true;
+};
 
 export function Navigation({ children }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const dispatch = useDispatch();
     const toast = useToast();
-    const logged = useSelector(isLoggedIn);
+    const logged = useSelector(isLoggedIn) || false;
+    const groups = useSelector(userGroups) || [];
     const { username } = useSelector(currentUserData);
 
     const linkItems = [
@@ -31,7 +43,6 @@ export function Navigation({ children }) {
         { name: 'Login', to: '/login', icon: FiLogIn, show: !logged },
         { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
 
-        // { name: 'crackmes', to: '/crackmes', icon: VscKey, show: logged},
         { name: 'crackmes', to: '/crackmes', icon: VscKey },
 
         { name: 'Log out', to: '/', icon: FiLogOut, onClick: () => logOut(), show: logged }
@@ -72,6 +83,9 @@ export function Navigation({ children }) {
                     </Flex>
                     {linkItems
                         .filter((link) => link.show === undefined || link.show === true)
+                        .filter(
+                            (link) => link.requiredGroups === undefined || hasPermissions(groups, link.requiredGroups)
+                        )
                         .map((link) => (
                             <SideBarItem
                                 key={link.name}
