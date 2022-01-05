@@ -1,8 +1,22 @@
 import { useForm } from 'react-hook-form';
 import { useRef, useState } from 'react';
-import { Box, Button, Center, FormControl, FormErrorMessage, Heading, Input, Stack, useToast } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Center,
+    FormControl,
+    FormErrorMessage,
+    Heading,
+    HStack,
+    Input,
+    Link,
+    Stack,
+    Text,
+    useToast,
+    VStack
+} from '@chakra-ui/react';
 import { formTexts } from './formTexts';
-import { useHistory } from 'react-router-dom';
+import { Link as ReactRouterLink, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { removeUser, updateUser } from '../../context/userReducer';
 import { authService } from '../../services/auth';
@@ -67,7 +81,15 @@ const Register = () => {
         <Box maxW={'md'} w={'full'} justifyContent={'center'}>
             <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
                 <Center mb={4}>
-                    <Heading>Register</Heading>
+                    <VStack>
+                        <Heading>Register</Heading>
+                        <HStack>
+                            <Text>Already have an account?</Text>
+                            <Link as={ReactRouterLink} to={'/login'} mr={1} color={'teal.500'}>
+                                Log in!
+                            </Link>
+                        </HStack>
+                    </VStack>
                 </Center>
                 <Stack spacing={2} color={'black'}>
                     <FormControl isInvalid={errors.username}>
