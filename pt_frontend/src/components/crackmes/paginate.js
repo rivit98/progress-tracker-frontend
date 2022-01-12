@@ -8,6 +8,7 @@ const PaginationButton = ({ children, fn, ...props }) => {
             w={7}
             m={0}
             colorScheme={'teal'}
+            _focus={{ outline: 'none' }}
             _hover={{ bg: 'teal.300' }}
             transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
             onClick={fn}
