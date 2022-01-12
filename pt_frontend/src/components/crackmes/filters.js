@@ -37,8 +37,20 @@ export const Filters = () => {
     return (
         <Flex maxW={'xl'} w={'full'} flexDir={'column'} mx={'auto'}>
             <Input placeholder={'Search by name'} onChange={debounce((event) => onSearchTermChanged(event), 500)} />
-            <Flex mt={2} experimental_spaceX={2}>
-                <Box w={'60%'}>
+            <Flex mt={2} direction={'column'} experimental_spaceY={1}>
+                <Box>
+                    <Select
+                        name="sort"
+                        options={sortOptions}
+                        isSearchable={false}
+                        defaultValue={DEFAULT_SORT_OPTION}
+                        components={{ Control }}
+                        label={'Sort by'}
+                        styles={selectFieldStyles}
+                        onChange={onSortMethodChanged}
+                    />
+                </Box>
+                <Box>
                     <Select
                         isMulti
                         name="statuses"
@@ -49,18 +61,6 @@ export const Filters = () => {
                         styles={selectFieldStyles}
                         onChange={onStatusChanged}
                         defaultValue={statusesOptions.filter((opt) => opt.value !== STATUS_SOLVED)}
-                    />
-                </Box>
-                <Box w={'40%'}>
-                    <Select
-                        name="sort"
-                        options={sortOptions}
-                        isSearchable={false}
-                        defaultValue={DEFAULT_SORT_OPTION}
-                        components={{ Control }}
-                        label={'Sort by'}
-                        styles={selectFieldStyles}
-                        onChange={onSortMethodChanged}
                     />
                 </Box>
             </Flex>
