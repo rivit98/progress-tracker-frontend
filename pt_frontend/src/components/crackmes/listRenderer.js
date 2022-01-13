@@ -29,7 +29,7 @@ export const ListRenderer = ({ tasksWithActions }) => {
     if (tasks.length === 0) {
         return (
             <>
-                <Box w={'full'} maxW={'xl'} mx={'auto'} mb={2} fontWeight={'bold'} fontSize={'lg'}>
+                <Box w={'full'} maxW={'xl'} mx={'auto'} mb={20} mt={10} fontWeight={'bold'} fontSize={'lg'}>
                     <Text align={'center'}>No tasks matching your serch criteria</Text>
                 </Box>
                 <UpdateSummary />
