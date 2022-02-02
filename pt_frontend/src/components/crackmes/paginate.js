@@ -34,7 +34,7 @@ export const Paginate = ({ currentPage, setCurrentPage, totalPages }) => {
     }
 
     const boundaryCount = 1;
-    const siblingCount = 1;
+    const siblingCount = 2;
 
     const handleClick = (value) => {
         setCurrentPage(value);

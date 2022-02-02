@@ -11,7 +11,7 @@ import {
     useDisclosure,
     useToast
 } from '@chakra-ui/react';
-import { FiHome, FiLogIn, FiLogOut, FiUserPlus } from 'react-icons/fi';
+import { FiLogIn, FiLogOut, FiUserPlus } from 'react-icons/fi';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TopNavbar } from './topNavbar';
@@ -39,11 +39,10 @@ export function Navigation({ children }) {
     const { username } = useSelector(currentUserData);
 
     const linkItems = [
-        { name: 'Home', to: '/', icon: FiHome },
+        { name: 'Crackmes', to: '/crackmes', icon: VscKey },
+        // { name: 'Home', to: '/', icon: FiHome },
         { name: 'Login', to: '/login', icon: FiLogIn, show: !logged },
         { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
-
-        { name: 'crackmes', to: '/crackmes', icon: VscKey },
 
         { name: 'Log out', to: '/', icon: FiLogOut, onClick: () => logOut(), show: logged }
     ];

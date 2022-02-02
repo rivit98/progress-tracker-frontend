@@ -2,7 +2,6 @@ import './App.css';
 import { ChakraProvider, Container } from '@chakra-ui/react';
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import Home from './components/home/home';
 import { Navigation } from './components/nav/navigation';
 import withComponent from './utils/withComponent';
 import Register from './components/auth/register';
@@ -13,7 +12,8 @@ import { CrackmesList } from './components/crackmes/crackmesList';
 const App = () => {
     return (
         <Container mt={6} p={0} maxW={'container.xl'} centerContent>
-            <Route exact path={'/'} component={Home} />
+            {/*<Route exact path={'/'} component={Home} />*/}
+            <Route exact path={'/'} component={CrackmesList} />
             <Route exact path={'/login'} component={Login} />
             <Route exact path={'/register'} component={Register} />
 
