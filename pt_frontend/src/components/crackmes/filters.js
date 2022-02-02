@@ -4,7 +4,13 @@ import Select, { components } from 'react-select';
 import debounce from 'debounce';
 import { useDispatch } from 'react-redux';
 import { setCurrentPage, updateFilters } from '../../context/crackmesReducer';
-import { DEFAULT_SORT_OPTION, selectFieldStyles, sortOptions, statusesOptions } from './filtersConsts';
+import {
+    DEFAULT_SORT_OPTION,
+    defaultFilterStatuses,
+    selectFieldStyles,
+    sortOptions,
+    statusesOptions
+} from './filtersConsts';
 
 const Control = ({ children, ...props }) => {
     const { label } = props.selectProps;
@@ -63,7 +69,7 @@ export const Filters = () => {
                         label={'Status:'}
                         styles={selectFieldStyles}
                         onChange={onStatusChanged}
-                        defaultValue={statusesOptions.filter((opt) => opt.value !== STATUS_SOLVED)}
+                        defaultValue={defaultFilterStatuses}
                     />
                 </Box>
             </Flex>

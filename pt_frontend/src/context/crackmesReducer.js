@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DEFAULT_SORT_OPTION } from '../components/crackmes/filtersConsts';
+import { DEFAULT_SORT_OPTION, defaultFilterStatuses } from '../components/crackmes/filtersConsts';
 
 export const crackmesSlice = createSlice({
     name: 'crackmes',
@@ -7,7 +7,7 @@ export const crackmesSlice = createSlice({
         lastUpdated: {},
         cachedTasks: [],
         filters: {
-            filterStatuses: [],
+            filterStatuses: defaultFilterStatuses.map((v) => v['value']),
             searchTerm: '',
             sortMethod: DEFAULT_SORT_OPTION['value']
         },

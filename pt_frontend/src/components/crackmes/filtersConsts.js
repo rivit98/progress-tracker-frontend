@@ -1,8 +1,10 @@
-import { statusDesc } from './consts';
+import { STATUS_SOLVED, statusDesc } from './consts';
 
 export const statusesOptions = Object.keys(statusDesc).map((k) => {
     return { value: parseInt(k, 10), label: statusDesc[k].toLowerCase() };
 });
+
+export const defaultFilterStatuses = statusesOptions.filter((opt) => opt.value !== STATUS_SOLVED);
 
 export const selectFieldStyles = {
     option: (provided, state) => {
