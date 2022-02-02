@@ -1,15 +1,16 @@
 import { Accordion, Box, Flex, Text } from '@chakra-ui/react';
 import { Crackme } from './crackme';
 import { UpdateSummary } from './summary';
-import { crackmesFilters } from '../../context/crackmesReducer';
-import { useSelector } from 'react-redux';
+import { crackmesFilters, crackmesPagination, setCurrentPage } from '../../context/crackmesReducer';
+import { useDispatch, useSelector } from 'react-redux';
 import { STATUS_CLEAR } from './consts';
 import { getSortOption } from './filtersConsts';
 import { useState } from 'react';
 import { Paginate } from './paginate';
 
 export const ListRenderer = ({ tasksWithActions }) => {
-    const [currentPage, setCurrentPage] = useState(1);
+    const dispatch = useDispatch();
+    const { currentPage } = useSelector(crackmesPagination);
     const { filterStatuses, searchTerm, sortMethod } = useSelector(crackmesFilters);
 
     let tasks = tasksWithActions;
@@ -30,7 +31,7 @@ export const ListRenderer = ({ tasksWithActions }) => {
         return (
             <>
                 <Box w={'full'} maxW={'xl'} mx={'auto'} mb={20} mt={10} fontWeight={'bold'} fontSize={'lg'}>
-                    <Text align={'center'}>No tasks matching your serch criteria</Text>
+                    <Text align={'center'}>No tasks matching your search criteria</Text>
                 </Box>
                 <UpdateSummary />
             </>
@@ -44,7 +45,7 @@ export const ListRenderer = ({ tasksWithActions }) => {
     const indexOfFirstPage = indexOfLastPage - perPage;
     const totalPages = Math.ceil(tasks.length / perPage);
     if (currentPage > totalPages) {
-        setCurrentPage(1);
+        dispatch(setCurrentPage(1));
     }
 
     return (
@@ -52,7 +53,7 @@ export const ListRenderer = ({ tasksWithActions }) => {
             <Text mb={5} mt={1}>
                 {tasks.length} results
             </Text>
-            <Paginate currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
+            <Paginate totalPages={totalPages} />
             <Flex
                 textAlign="center"
                 flexDirection={'row'}

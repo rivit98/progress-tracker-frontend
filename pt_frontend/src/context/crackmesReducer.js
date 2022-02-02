@@ -10,6 +10,9 @@ export const crackmesSlice = createSlice({
             filterStatuses: [],
             searchTerm: '',
             sortMethod: DEFAULT_SORT_OPTION['value']
+        },
+        pagination: {
+            currentPage: 1
         }
     },
     reducers: {
@@ -27,12 +30,17 @@ export const crackmesSlice = createSlice({
         },
         resetFilters: (state, action) => {
             return { ...state, filters: crackmesSlice.getInitialState().filters };
+        },
+        setCurrentPage: (state, action) => {
+            return { ...state, pagination: { ...state.pagination, currentPage: action.payload } };
         }
     }
 });
 
-export const { setTasksLastUpdated, clearState, setCrackmes, updateFilters, resetFilters } = crackmesSlice.actions;
+export const { setTasksLastUpdated, clearState, setCrackmes, updateFilters, resetFilters, setCurrentPage } =
+    crackmesSlice.actions;
 export const crackmes = (state) => state.crackmesReducer;
 export const crackmesFilters = (state) => state.crackmesReducer.filters;
+export const crackmesPagination = (state) => state.crackmesReducer.pagination;
 
 export default crackmesSlice.reducer;

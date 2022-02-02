@@ -82,9 +82,9 @@ export function Navigation({ children }) {
                     </Flex>
                     {linkItems
                         .filter((link) => link.show === undefined || link.show === true)
-                        .filter(
-                            (link) => link.requiredGroups === undefined || hasPermissions(groups, link.requiredGroups)
-                        )
+                        // .filter(
+                        //     (link) => link.requiredGroups === undefined || hasPermissions(groups, link.requiredGroups)
+                        // )
                         .map((link) => (
                             <SideBarItem
                                 key={link.name}

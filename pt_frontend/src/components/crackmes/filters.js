@@ -3,7 +3,7 @@ import { STATUS_SOLVED } from './consts';
 import Select, { components } from 'react-select';
 import debounce from 'debounce';
 import { useDispatch } from 'react-redux';
-import { updateFilters } from '../../context/crackmesReducer';
+import { setCurrentPage, updateFilters } from '../../context/crackmesReducer';
 import { DEFAULT_SORT_OPTION, selectFieldStyles, sortOptions, statusesOptions } from './filtersConsts';
 
 const Control = ({ children, ...props }) => {
@@ -22,16 +22,19 @@ export const Filters = () => {
     const onStatusChanged = (statuses) => {
         statuses = statuses.map((v) => v['value']);
         dispatch(updateFilters({ filterStatuses: statuses }));
+        dispatch(setCurrentPage(1));
     };
 
     const onSearchTermChanged = (event) => {
         const term = event.target.value;
         dispatch(updateFilters({ searchTerm: term.toLowerCase() }));
+        dispatch(setCurrentPage(1));
     };
 
     const onSortMethodChanged = (method) => {
         method = method.value;
         dispatch(updateFilters({ sortMethod: method }));
+        dispatch(setCurrentPage(1));
     };
 
     return (
