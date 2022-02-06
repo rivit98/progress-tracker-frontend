@@ -1,4 +1,4 @@
-import { Box, Container, Link, List, ListItem, UnorderedList, VStack } from '@chakra-ui/react';
+import { Box, Container, Link, ListItem, UnorderedList, VStack } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
 const Home = () => {

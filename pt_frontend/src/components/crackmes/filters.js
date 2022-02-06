@@ -27,18 +27,15 @@ export const Filters = () => {
     const onStatusChanged = (statuses) => {
         statuses = statuses.map((v) => v['value']);
         dispatch(updateFilters({ filterStatuses: statuses }));
-        // dispatch(setCurrentPage(1)); //TODO
     };
 
     const onSearchTermChanged = (event) => {
         const term = event.target.value;
         dispatch(updateFilters({ searchTerm: term.toLowerCase() }));
-        // dispatch(setCurrentPage(1));
     };
 
     const onSortMethodChanged = (method) => {
         dispatch(updateFilters({ sortMethod: method.value }));
-        // dispatch(setCurrentPage(1));
     };
 
     return (

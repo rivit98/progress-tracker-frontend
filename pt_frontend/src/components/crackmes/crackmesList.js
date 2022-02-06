@@ -64,8 +64,6 @@ export const CrackmesList = () => {
         return { ...t, date: new Date(t.date), actions: a, lastAction: lastAction };
     });
 
-    console.log('crackmesList rerender');
-
     return (
         <ComponentStateHandler state={state}>
             <Filters />

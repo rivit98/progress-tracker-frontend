@@ -29,27 +29,36 @@ const filterTasks = (tasks, { filterStatuses, searchTerm, sortMethod }) => {
     return filteredTasks;
 };
 
+const EmptyList = () => {
+    return (
+        <Box w={'full'} maxW={'xl'} mx={'auto'} mb={20} mt={10} fontWeight={'bold'} fontSize={'lg'}>
+            <Text align={'center'}>No tasks matching your search criteria</Text>
+        </Box>
+    );
+};
+
 export const ListRenderer = ({ tasksWithActions }) => {
     //FIXME, when updating crackme action and having filters set, crackme dissapears from the list (it is excluded by the filters)
-
     const [tasks, setTasks] = useState([]);
     const { page, setPage, totalPages, indexOfFirstPage, indexOfLastPage } = usePagination({
         totalItems: tasks.length
     });
     const filters = useSelector(crackmesFilters);
+    const { filterStatuses, searchTerm, sortMethod } = filters;
 
     useEffect(() => {
-        console.log('EFFECT');
         setTasks(tasksWithActions);
     }, [tasksWithActions]);
 
+    useEffect(() => {
+        if (page !== 1) {
+            setPage(1);
+        }
+    }, [filterStatuses.length, searchTerm, sortMethod]);
+
     let filteredTasks = filterTasks(tasks, filters);
     if (filteredTasks.length === 0) {
-        return (
-            <Box w={'full'} maxW={'xl'} mx={'auto'} mb={20} mt={10} fontWeight={'bold'} fontSize={'lg'}>
-                <Text align={'center'}>No tasks matching your search criteria</Text>
-            </Box>
-        );
+        return <EmptyList />;
     }
 
     const updateTask = (taskid, action) => {
@@ -88,9 +97,10 @@ export const ListRenderer = ({ tasksWithActions }) => {
                 <Box w={'20px'} />
             </Flex>
             <Flex w={'full'} justifyContent={'center'}>
-                <Accordion allowToggle w={'full'}>
-                    {filteredTasks.slice(indexOfFirstPage, indexOfLastPage).map((t) => (
-                        <Crackme crackme={t} updateTask={updateTask} key={t.id} />
+                {/*FIXME, Accordion does not collapse on page change*/}
+                <Accordion allowMultiple w={'full'}>
+                    {filteredTasks.slice(indexOfFirstPage, indexOfLastPage).map((t, i) => (
+                        <Crackme crackme={t} updateTask={updateTask} key={indexOfFirstPage + i} />
                     ))}
                 </Accordion>
             </Flex>
