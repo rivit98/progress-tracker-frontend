@@ -11,13 +11,14 @@ import {
     useDisclosure,
     useToast
 } from '@chakra-ui/react';
-import { FiLogIn, FiLogOut, FiUserPlus } from 'react-icons/fi';
+import { FiHome, FiLogIn, FiLogOut, FiUserPlus } from 'react-icons/fi';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TopNavbar } from './topNavbar';
-import { currentUserData, isLoggedIn, removeUser, userGroups } from '../../context/userReducer';
+import { currentUserData, isLoggedIn, removeUser } from '../../context/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { VscKey } from 'react-icons/all';
+import { resetFilters } from '../../context/crackmesReducer';
 
 const hasPermissions = (userGroups, requiredPermissions) => {
     const groupNames = userGroups.map((g) => g.name);
@@ -35,12 +36,12 @@ export function Navigation({ children }) {
     const dispatch = useDispatch();
     const toast = useToast();
     const logged = useSelector(isLoggedIn) || false;
-    const groups = useSelector(userGroups) || [];
+    // const groups = useSelector(userGroups) || [];
     const { username } = useSelector(currentUserData);
 
     const linkItems = [
+        { name: 'Home', to: '/', icon: FiHome },
         { name: 'Crackmes', to: '/crackmes', icon: VscKey },
-        // { name: 'Home', to: '/', icon: FiHome },
         { name: 'Login', to: '/login', icon: FiLogIn, show: !logged },
         { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
 
@@ -56,6 +57,7 @@ export function Navigation({ children }) {
             isClosable: true
         });
         dispatch(removeUser());
+        dispatch(resetFilters());
     };
 
     return (

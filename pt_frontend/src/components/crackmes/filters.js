@@ -1,5 +1,4 @@
 import { Box, Flex, Input } from '@chakra-ui/react';
-import { STATUS_SOLVED } from './consts';
 import Select, { components } from 'react-select';
 import debounce from 'debounce';
 import { useDispatch } from 'react-redux';
@@ -28,19 +27,18 @@ export const Filters = () => {
     const onStatusChanged = (statuses) => {
         statuses = statuses.map((v) => v['value']);
         dispatch(updateFilters({ filterStatuses: statuses }));
-        dispatch(setCurrentPage(1));
+        // dispatch(setCurrentPage(1)); //TODO
     };
 
     const onSearchTermChanged = (event) => {
         const term = event.target.value;
         dispatch(updateFilters({ searchTerm: term.toLowerCase() }));
-        dispatch(setCurrentPage(1));
+        // dispatch(setCurrentPage(1));
     };
 
     const onSortMethodChanged = (method) => {
-        method = method.value;
-        dispatch(updateFilters({ sortMethod: method }));
-        dispatch(setCurrentPage(1));
+        dispatch(updateFilters({ sortMethod: method.value }));
+        // dispatch(setCurrentPage(1));
     };
 
     return (

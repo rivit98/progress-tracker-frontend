@@ -18,8 +18,9 @@ import formatDate from '../../utils/dateformatter';
 import { MdArrowDropDown } from 'react-icons/all';
 import { statusDesc, statusDescToStatusIDMap, statusIcon } from './consts';
 import { useForm } from 'react-hook-form';
-import { cloneElement, useState } from 'react';
+import { useState } from 'react';
 import { crackmesService } from '../../services/crackmes';
+import { possibleActionsMap } from './actionOptions';
 
 export const CrackmeActionsNotLogged = () => {
     return (
@@ -32,33 +33,7 @@ export const CrackmeActionsNotLogged = () => {
     );
 };
 
-const CrackmeActions = ({ actions }) => {
-    const optStart = <option value={'started'}>Start solving</option>;
-    const optStop = <option value={'aborted'}>Stop solving</option>;
-    const optSolve = <option value={'solved'}>Mark as solved</option>;
-    const optIgnore = <option value={'ignored'}>Ignore</option>;
-    const optUnignore = <option value={'clear'}>Unignore</option>;
-
-    const getActions = () => {
-        const lastAction = actions[0];
-
-        if (lastAction === undefined) {
-            return [optStart, optSolve, optStop, optIgnore];
-        }
-
-        const lastStatus = lastAction.status;
-
-        if (lastStatus === 0) return [optStart, optSolve, optStop, optIgnore];
-        if (lastStatus === 1) return [optSolve, optStop, optIgnore];
-        if (lastStatus === 2) return [optStart, optSolve, optIgnore];
-        if (lastStatus === 3) return [optStart, optStop, optIgnore];
-        if (lastStatus === 4) return [optUnignore, optStart, optSolve, optStop];
-    };
-
-    return <>{getActions().map((action, index) => cloneElement(action, { key: index }))}</>;
-};
-
-const UpdateActionPanel = ({ id, updateAction, actions }) => {
+const UpdateActionPanel = ({ id, updateTask, lastAction }) => {
     const {
         register,
         handleSubmit,
@@ -70,7 +45,7 @@ const UpdateActionPanel = ({ id, updateAction, actions }) => {
 
     const successCallback = (action) => {
         setLoading(false);
-        updateAction(action);
+        updateTask(id, { ...action, date: new Date(action.date) });
         reset();
     };
 
@@ -109,7 +84,7 @@ const UpdateActionPanel = ({ id, updateAction, actions }) => {
                         color="whiteAlpha.500"
                         {...register('status')}
                     >
-                        <CrackmeActions actions={actions} />
+                        {possibleActionsMap[lastAction]}
                     </Select>
                     <FormErrorMessage>{errors.status && errors.status.message}</FormErrorMessage>
                 </FormControl>
@@ -128,15 +103,10 @@ const UpdateActionPanel = ({ id, updateAction, actions }) => {
     );
 };
 
-export const ActionsList = ({ crackme, updateLastAction }) => {
+export const ActionsList = ({ crackme, updateTask }) => {
     const { id, actions, comments_num, hexid, writeups_num } = crackme;
     const challengeLink = `https://crackmes.one/crackme/${hexid}`;
     const downloadLink = `https://crackmes.one/static/crackme/${hexid}.zip`;
-
-    const updateActions = (a) => {
-        actions.unshift(a);
-        updateLastAction(a);
-    };
 
     return (
         <Box textAlign={'left'}>
@@ -188,7 +158,7 @@ export const ActionsList = ({ crackme, updateLastAction }) => {
                     );
                 })}
             </List>
-            <UpdateActionPanel id={id} updateAction={updateActions} actions={actions} />
+            <UpdateActionPanel id={id} updateTask={updateTask} actions={actions} />
         </Box>
     );
 };

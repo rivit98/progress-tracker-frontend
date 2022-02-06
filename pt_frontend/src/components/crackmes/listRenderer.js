@@ -1,59 +1,69 @@
 import { Accordion, Box, Flex, Text } from '@chakra-ui/react';
 import { Crackme } from './crackme';
-import { UpdateSummary } from './summary';
-import { crackmesFilters, crackmesPagination, setCurrentPage } from '../../context/crackmesReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { crackmesFilters } from '../../context/crackmesReducer';
+import { useSelector } from 'react-redux';
 import { STATUS_CLEAR } from './consts';
 import { getSortOption } from './filtersConsts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Paginate } from './paginate';
+import { usePagination } from './hooks';
 
-export const ListRenderer = ({ tasksWithActions }) => {
-    const dispatch = useDispatch();
-    const { currentPage } = useSelector(crackmesPagination);
-    const { filterStatuses, searchTerm, sortMethod } = useSelector(crackmesFilters);
-
-    let tasks = tasksWithActions;
+const filterTasks = (tasks, { filterStatuses, searchTerm, sortMethod }) => {
+    let filteredTasks = [...tasks];
     if (searchTerm.length > 2) {
-        tasks = tasks.filter((t) => t.name.toLowerCase().includes(searchTerm));
+        filteredTasks = filteredTasks.filter((t) => t.name.toLowerCase().includes(searchTerm));
     }
 
     if (filterStatuses.length > 0) {
         if (filterStatuses.includes(STATUS_CLEAR)) {
             // task has no actions (or cleared state)
-            tasks = tasks.filter((t) => t.lastAction === undefined || filterStatuses.includes(t.lastAction.status));
+            filteredTasks = filteredTasks.filter(
+                (t) => t.lastAction === undefined || filterStatuses.includes(t.lastAction.status)
+            );
         } else {
-            tasks = tasks.filter((t) => t.lastAction).filter((t) => filterStatuses.includes(t.lastAction.status));
+            filteredTasks = filteredTasks.filter((t) => t.lastAction && filterStatuses.includes(t.lastAction.status));
         }
     }
 
-    if (tasks.length === 0) {
+    filteredTasks = filteredTasks.sort(getSortOption(sortMethod).sortFn);
+    return filteredTasks;
+};
+
+export const ListRenderer = ({ tasksWithActions }) => {
+    const [tasks, setTasks] = useState([]);
+    const { page, setPage, totalPages, indexOfFirstPage, indexOfLastPage } = usePagination({
+        totalItems: tasks.length
+    });
+    const filters = useSelector(crackmesFilters);
+
+    useEffect(() => {
+        console.log('EFFECT');
+        setTasks(tasksWithActions);
+    }, [tasksWithActions]);
+
+    let filteredTasks = filterTasks(tasks, filters);
+    if (filteredTasks.length === 0) {
         return (
-            <>
-                <Box w={'full'} maxW={'xl'} mx={'auto'} mb={20} mt={10} fontWeight={'bold'} fontSize={'lg'}>
-                    <Text align={'center'}>No tasks matching your search criteria</Text>
-                </Box>
-                <UpdateSummary />
-            </>
+            <Box w={'full'} maxW={'xl'} mx={'auto'} mb={20} mt={10} fontWeight={'bold'} fontSize={'lg'}>
+                <Text align={'center'}>No tasks matching your search criteria</Text>
+            </Box>
         );
     }
 
-    tasks = tasks.sort(getSortOption(sortMethod).sortFn);
-
-    const perPage = 40;
-    const indexOfLastPage = currentPage * perPage;
-    const indexOfFirstPage = indexOfLastPage - perPage;
-    const totalPages = Math.ceil(tasks.length / perPage);
-    if (currentPage > totalPages) {
-        dispatch(setCurrentPage(1));
-    }
+    const updateTask = (taskid, action) => {
+        const index = tasks.findIndex((t) => t.id === taskid);
+        const newTasks = [...tasks];
+        newTasks[index].actions.unshift(action);
+        newTasks[index].lastAction = action;
+        setTasks(newTasks);
+    };
 
     return (
         <>
             <Text mb={5} mt={1}>
-                {tasks.length} results
+                {filteredTasks.length} results
             </Text>
-            <Paginate totalPages={totalPages} />
+            <Paginate totalPages={totalPages} currentPage={page} setCurrentPage={setPage} />
             <Flex
                 textAlign="center"
                 flexDirection={'row'}
@@ -77,12 +87,11 @@ export const ListRenderer = ({ tasksWithActions }) => {
             </Flex>
             <Flex w={'full'} justifyContent={'center'}>
                 <Accordion allowToggle w={'full'}>
-                    {tasks.slice(indexOfFirstPage, indexOfLastPage).map((t) => (
-                        <Crackme crackme={t} key={t.id} />
+                    {filteredTasks.slice(indexOfFirstPage, indexOfLastPage).map((t) => (
+                        <Crackme crackme={t} updateTask={updateTask} key={t.id} />
                     ))}
                 </Accordion>
             </Flex>
-            <UpdateSummary />
         </>
     );
 };

@@ -1,13 +1,11 @@
 import { Button, Flex, HStack } from '@chakra-ui/react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/all';
-import { useDispatch, useSelector } from 'react-redux';
-import { crackmesPagination, setCurrentPage } from '../../context/crackmesReducer';
 
 const PaginationButton = ({ children, fn, ...props }) => {
     return (
         <Button
             size={'xs'}
-            w={7}
+            w={8}
             m={0}
             colorScheme={'teal'}
             _focus={{ outline: 'none' }}
@@ -23,17 +21,14 @@ const PaginationButton = ({ children, fn, ...props }) => {
 
 const Ellipsis = () => {
     return (
-        <Flex size={'xs'} w={7} m={0} justifyContent={'center'}>
+        <Flex size={'xs'} w={8} m={0} justifyContent={'center'}>
             ...
         </Flex>
     );
 };
 
 // code adapted from material UI pagination component
-export const Paginate = ({ totalPages }) => {
-    const dispatch = useDispatch();
-    const { currentPage } = useSelector(crackmesPagination);
-
+export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
     if (totalPages <= 0) {
         return <></>;
     }
@@ -42,7 +37,7 @@ export const Paginate = ({ totalPages }) => {
     const siblingCount = 2;
 
     const handleClick = (value) => {
-        dispatch(setCurrentPage(value));
+        setCurrentPage(value);
     };
 
     // https://dev.to/namirsab/comment/2050
