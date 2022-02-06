@@ -96,13 +96,10 @@ export const ListRenderer = ({ tasksWithActions }) => {
                 </Box>
                 <Box w={'20px'} />
             </Flex>
-            <Flex w={'full'} justifyContent={'center'}>
-                {/*FIXME, Accordion does not collapse on page change*/}
-                <Accordion allowMultiple w={'full'}>
-                    {filteredTasks.slice(indexOfFirstPage, indexOfLastPage).map((t, i) => (
-                        <Crackme crackme={t} updateTask={updateTask} key={indexOfFirstPage + i} />
-                    ))}
-                </Accordion>
+            <Flex w={'full'} justifyContent={'center'} flexDirection={'column'}>
+                {filteredTasks.slice(indexOfFirstPage, indexOfLastPage).map((t, i) => (
+                    <Crackme crackme={t} updateTask={updateTask} key={indexOfFirstPage + i} />
+                ))}
             </Flex>
         </>
     );
