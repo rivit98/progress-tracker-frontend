@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { formTexts } from './formTexts';
 import { authService } from '../../services/auth';
-import { Link as ReactRouterLink, useHistory } from 'react-router-dom';
+import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeUser, updateUser } from '../../context/userReducer';
@@ -31,13 +31,13 @@ const Login = () => {
 
     const [loading, setLoading] = useState(false);
     const toast = useToast();
-    const history = useHistory();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const loggedCallback = (user) => {
         setLoading(false);
         dispatch(updateUser(user));
-        history.push('/');
+        navigate('/');
     };
 
     const errorCallback = (e) => {

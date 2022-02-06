@@ -12,7 +12,7 @@ import {
     Tooltip
 } from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
-import { statusDesc, statusIcon } from './consts';
+import { statusDesc, statusIcon } from './const/consts';
 import { ActionsList, CrackmeActionsNotLogged } from './actions';
 
 export const Crackme = ({ crackme, updateTask }) => {

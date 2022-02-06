@@ -1,5 +1,5 @@
 import { Button, Flex, HStack } from '@chakra-ui/react';
-import { MdChevronLeft, MdChevronRight } from 'react-icons/all';
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 const PaginationButton = ({ children, fn, ...props }) => {
     return (

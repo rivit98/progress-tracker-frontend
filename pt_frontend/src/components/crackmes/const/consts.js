@@ -1,4 +1,5 @@
-import { FaCheckCircle, FaPlay, FaTimesCircle, MdVisibility, MdVisibilityOff } from 'react-icons/all';
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import { FaCheckCircle, FaPlay, FaTimesCircle } from 'react-icons/fa';
 
 const STATUS_CLEAR = 0;
 const STATUS_STARTED = 1;

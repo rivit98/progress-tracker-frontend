@@ -2,7 +2,7 @@ import { crackmesService } from '../../services/crackmes';
 import { useAxiosEffect } from '../../utils/useAxiosEffect';
 import { ComponentStateHandler, getAggregatedState } from '../generic/componentStateHandler';
 import { useDispatch, useSelector } from 'react-redux';
-import { crackmes, setCrackmes, setTasksLastUpdated } from '../../context/crackmesReducer';
+import { crackmes, setCrackmes, setTasksLastUpdated } from './redux/crackmesReducer';
 import { isLoggedIn } from '../../context/userReducer';
 import { WEEK } from 'time-constants';
 import { ListRenderer } from './listRenderer';

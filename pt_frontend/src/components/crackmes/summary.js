@@ -1,8 +1,8 @@
 import { Flex, Text, Tooltip } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { crackmes } from '../../context/crackmesReducer';
+import { crackmes } from './redux/crackmesReducer';
 import formatDate from '../../utils/dateformatter';
-import { FiChevronsUp, FiMinus, FiPlus } from 'react-icons/all';
+import { FiChevronsUp, FiMinus, FiPlus } from 'react-icons/fi';
 
 const SummaryLabel = ({ icon, content, tooltipText }) => {
     return (

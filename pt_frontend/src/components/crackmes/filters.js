@@ -2,14 +2,14 @@ import { Box, Flex, Input } from '@chakra-ui/react';
 import Select, { components } from 'react-select';
 import debounce from 'debounce';
 import { useDispatch } from 'react-redux';
-import { setCurrentPage, updateFilters } from '../../context/crackmesReducer';
+import { updateFilters } from './redux/crackmesReducer';
 import {
     DEFAULT_SORT_OPTION,
     defaultFilterStatuses,
     selectFieldStyles,
     sortOptions,
     statusesOptions
-} from './filtersConsts';
+} from './const/filtersConsts';
 
 const Control = ({ children, ...props }) => {
     const { label } = props.selectProps;

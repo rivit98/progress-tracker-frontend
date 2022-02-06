@@ -1,9 +1,9 @@
 import { Accordion, Box, Flex, Text } from '@chakra-ui/react';
 import { Crackme } from './crackme';
-import { crackmesFilters } from '../../context/crackmesReducer';
+import { crackmesFilters } from './redux/crackmesReducer';
 import { useSelector } from 'react-redux';
-import { STATUS_CLEAR } from './consts';
-import { getSortOption } from './filtersConsts';
+import { STATUS_CLEAR } from './const/consts';
+import { getSortOption } from './const/filtersConsts';
 import { useEffect, useState } from 'react';
 import { Paginate } from './paginate';
 import { usePagination } from './hooks';
@@ -30,6 +30,8 @@ const filterTasks = (tasks, { filterStatuses, searchTerm, sortMethod }) => {
 };
 
 export const ListRenderer = ({ tasksWithActions }) => {
+    //FIXME, when updating crackme action and having filters set, crackme dissapears from the list (it is excluded by the filters)
+
     const [tasks, setTasks] = useState([]);
     const { page, setPage, totalPages, indexOfFirstPage, indexOfLastPage } = usePagination({
         totalItems: tasks.length

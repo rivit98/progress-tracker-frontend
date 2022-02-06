@@ -17,8 +17,8 @@ import { Link } from 'react-router-dom';
 import { TopNavbar } from './topNavbar';
 import { currentUserData, isLoggedIn, removeUser } from '../../context/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { VscKey } from 'react-icons/all';
-import { resetFilters } from '../../context/crackmesReducer';
+import { VscKey } from 'react-icons/vsc';
+import { resetFilters } from '../crackmes/redux/crackmesReducer';
 
 const hasPermissions = (userGroups, requiredPermissions) => {
     const groupNames = userGroups.map((g) => g.name);

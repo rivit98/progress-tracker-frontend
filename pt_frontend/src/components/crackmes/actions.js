@@ -15,8 +15,8 @@ import {
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import formatDate from '../../utils/dateformatter';
-import { MdArrowDropDown } from 'react-icons/all';
-import { statusDesc, statusDescToStatusIDMap, statusIcon } from './consts';
+import { MdArrowDropDown } from 'react-icons/md';
+import { statusDesc, statusDescToStatusIDMap, statusIcon } from './const/consts';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { crackmesService } from '../../services/crackmes';
