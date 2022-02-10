@@ -7,6 +7,7 @@ import { appReducer } from './appReducer';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
+import { __DEV__ } from '../utils/env';
 
 const persistConfig = {
     key: 'root',
@@ -16,9 +17,9 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, appReducer);
 
 const configureStore = () => {
-    const store = createStore(persistedReducer, applyMiddleware(createLogger()));
+    const store = createStore(persistedReducer, __DEV__ ? applyMiddleware(createLogger()) : applyMiddleware());
 
-    if (module.hot) {
+    if (__DEV__ && module.hot) {
         // Enable Webpack hot module replacement for reducers
         module.hot.accept('./appReducer', () => {
             const nextReducer = require('./appReducer').default;

@@ -6,7 +6,7 @@ import { STATUS_CLEAR } from './const/consts';
 import { getSortOption } from './const/filtersConsts';
 import { useEffect, useState } from 'react';
 import { Paginate } from './paginate';
-import { usePagination } from './hooks';
+import { usePagination } from './hooks/hooks';
 
 const filterTasks = (tasks, { filterStatuses, searchTerm, sortMethod }) => {
     let filteredTasks = [...tasks];

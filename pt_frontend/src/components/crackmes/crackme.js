@@ -23,7 +23,7 @@ export const Crackme = ({ crackme, updateTask }) => {
 
     return (
         // FIXME, Accordion should contain all items instead of one AccordionItem, but there is no way to reset expanded items
-        <Accordion w={'full'}>
+        <Accordion w={'full'} allowToggle={true}>
             <AccordionItem
                 border={0}
                 maxW={'xl'}

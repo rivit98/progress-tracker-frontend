@@ -1,5 +1,5 @@
 import { crackmesService } from '../../services/crackmes';
-import { useAxiosEffect } from '../../utils/useAxiosEffect';
+import { useAxiosEffect } from '../../hooks/useAxiosEffect';
 import { ComponentStateHandler, getAggregatedState } from '../generic/componentStateHandler';
 import { useDispatch, useSelector } from 'react-redux';
 import { crackmes, setCrackmes, setTasksLastUpdated } from './redux/crackmesReducer';
