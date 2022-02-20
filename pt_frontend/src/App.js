@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Navigation } from './components/nav/navigation';
 import Register from './components/auth/register';
 import Login from './components/auth/login';
-import { CrackmesList } from './components/crackmes/crackmesList';
+import { CrackmesFetcher } from './components/crackmes/crackmesFetcher';
 import Home from './components/home/home';
 import { withStore } from './context/store';
 
@@ -16,7 +16,7 @@ const App = () => {
                 <Route path={'/login'} element={<Login />} />
                 <Route path={'/register'} element={<Register />} />
 
-                <Route path={'/crackmes'} element={<CrackmesList />} />
+                <Route path={'/crackmes'} element={<CrackmesFetcher />} />
             </Routes>
         </Container>
     );
