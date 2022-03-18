@@ -11,7 +11,7 @@ const Home = () => {
                         crackmes.one
                     </Link>{' '}
                     website because original page does not allow you to mark challenges as solved or hide the bad ones
-                    so I made custom tracker for it :) Use the panel on the right side to log in or navigate to the
+                    so I made custom tracker for it :) Use the panel on the left side to log in or navigate to the
                     crackmes list.
                 </Box>
                 <Box>
