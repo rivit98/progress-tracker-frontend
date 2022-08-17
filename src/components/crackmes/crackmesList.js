@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Accordion, Box, Flex, Text } from "@chakra-ui/react";
 import { Crackme } from './crackme';
 import { crackmesFilters } from './redux/crackmesReducer';
 import { useSelector } from 'react-redux';
@@ -7,7 +7,6 @@ import { getSortOption } from './const/filtersConsts';
 import { useEffect, useState } from 'react';
 import { Paginate } from './paginate';
 import { usePagination } from './hooks/hooks';
-import AccordionMultipage from '../chakra-reimplemented/AccordionMultipage';
 
 const filterTasks = (tasks, { filterStatuses, searchTerm, sortMethod }) => {
     let filteredTasks = [...tasks];
@@ -44,6 +43,7 @@ export const CrackmesList = ({ tasksWithActions }) => {
     const { page, setPage, totalPages, indexOfFirstPage, indexOfLastPage } = usePagination({
         totalItems: tasks.length
     });
+    const [openedItems, setOpenedItems] = useState({})
     const filters = useSelector(crackmesFilters);
     const { filterStatuses, searchTerm, sortMethod } = filters;
 
@@ -69,6 +69,11 @@ export const CrackmesList = ({ tasksWithActions }) => {
         newTasks[index].lastAction = action;
         setTasks(newTasks);
     };
+
+    const updateOpenedItems = (opened_items) => {
+        console.log(openedItems)
+        setOpenedItems({...openedItems, [page]: opened_items})
+    }
 
     return (
         <>
@@ -98,11 +103,11 @@ export const CrackmesList = ({ tasksWithActions }) => {
                 <Box w={'20px'} />
             </Flex>
             <Flex w={'full'} justifyContent={'center'} flexDirection={'column'}>
-                <AccordionMultipage w={'full'} allowToggle allowMultiple>
+                <Accordion w={'full'} allowToggle allowMultiple onChange={updateOpenedItems} index={openedItems[page] || []}>
                     {filteredTasks.slice(indexOfFirstPage, indexOfLastPage).map((t, i) => (
                         <Crackme crackme={t} updateTask={updateTask} key={indexOfFirstPage + i} />
                     ))}
-                </AccordionMultipage>
+                </Accordion>
             </Flex>
         </>
     );

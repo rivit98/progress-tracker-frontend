@@ -52,7 +52,7 @@ export const Crackme = ({ crackme, updateTask }) => {
                                 </span>
                             </Tooltip>
                         )}
-                        <Text d={'inline'} isTruncated={true}>
+                        <Text d={'inline'} istruncated>
                             {name}
                         </Text>
                     </Box>
