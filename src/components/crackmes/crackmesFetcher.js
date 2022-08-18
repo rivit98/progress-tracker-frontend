@@ -30,10 +30,11 @@ export const CrackmesFetcher = () => {
         return new Promise(async (resolve, reject) => {
             try {
                 const lastUpdated = await crackmesService.lastUpdated(options);
+                const lastUpdatedDate = new Date(lastUpdated.date)
                 if (
                     date !== undefined &&
-                    new Date(date).getTime() >= lastUpdated.date.getTime() && // if cache is newer or same as remote, load
-                    Date.now() - lastUpdated.date.getTime() < WEEK * 4 // if cache is not older than X, load
+                    new Date(date).getTime() >= lastUpdatedDate.getTime() && // if cache is newer or same as remote, load
+                    Date.now() - lastUpdatedDate.getTime() < WEEK * 4 // if cache is not older than X, load
                 ) {
                     dispatch(setTasksLastUpdated(lastUpdated));
                     resolve(cachedTasks);

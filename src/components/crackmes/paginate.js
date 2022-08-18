@@ -169,6 +169,8 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
                     case 'start-ellipsis':
                     case 'end-ellipsis':
                         return <Ellipsis key={index} />;
+                    default:
+                        return <></>
                 }
             })}
         </HStack>

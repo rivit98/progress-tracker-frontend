@@ -40,7 +40,7 @@ export const Filters = () => {
 
     return (
         <Flex maxW={'xl'} w={'full'} flexDir={'column'} mx={'auto'}>
-            <Input placeholder={'Search by name'} onChange={debounce((event) => onSearchTermChanged(event), 500)} />
+            <Input placeholder={'Search by name'} onChange={debounce((event) => onSearchTermChanged(event), 300)} />
             <Flex mt={2} direction={'column'} experimental_spaceY={1}>
                 <Box>
                     <Select

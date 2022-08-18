@@ -1,7 +1,7 @@
-import { Accordion, Box, Flex, Text } from "@chakra-ui/react";
+import { Accordion, Box, Flex, Text } from '@chakra-ui/react';
 import { Crackme } from './crackme';
-import { crackmesFilters } from './redux/crackmesReducer';
-import { useSelector } from 'react-redux';
+import { crackmesFilters, resetFilters } from './redux/crackmesReducer';
+import { useDispatch, useSelector } from 'react-redux';
 import { STATUS_CLEAR } from './const/consts';
 import { getSortOption } from './const/filtersConsts';
 import { useEffect, useState } from 'react';
@@ -37,30 +37,40 @@ const EmptyList = () => {
     );
 };
 
+const perPage = 40;
+
 export const CrackmesList = ({ tasksWithActions }) => {
-    //FIXME, when updating crackme action and having filters set, crackme dissapears from the list (it is excluded by the filters)
+    //FIXME, when updating crackme action and having filters set, crackme disappears from the list (it is excluded by the filters)
+    const dispatch = useDispatch();
     const [tasks, setTasks] = useState([]);
-    const { page, setPage, totalPages, indexOfFirstPage, indexOfLastPage } = usePagination({
-        totalItems: tasks.length
-    });
-    const [openedItems, setOpenedItems] = useState({})
+
+    const [expandedItems, setExpandedItems] = useState({});
     const filters = useSelector(crackmesFilters);
     const { filterStatuses, searchTerm, sortMethod } = filters;
+    const { page, setPage } = usePagination();
 
     useEffect(() => {
+        // set the initial data set and reset the filters
+        dispatch(resetFilters())
         setTasks(tasksWithActions);
-    }, [tasksWithActions]);
+    }, [dispatch, tasksWithActions]);
 
     useEffect(() => {
+        // set first page after filtering (if not already there)
         if (page !== 1) {
             setPage(1);
         }
-    }, [filterStatuses.length, searchTerm, sortMethod]);
+        setExpandedItems({}); // clear expended items after filtering
+    }, [dispatch, filterStatuses.length, searchTerm, sortMethod]);
 
     let filteredTasks = filterTasks(tasks, filters);
     if (filteredTasks.length === 0) {
         return <EmptyList />;
     }
+
+    const totalPages = Math.ceil(filteredTasks.length / perPage);
+    const indexOfLastItem = page * perPage;
+    const indexOfFirstItem = indexOfLastItem - perPage;
 
     const updateTask = (taskid, action) => {
         const index = tasks.findIndex((t) => t.id === taskid);
@@ -71,9 +81,8 @@ export const CrackmesList = ({ tasksWithActions }) => {
     };
 
     const updateOpenedItems = (opened_items) => {
-        console.log(openedItems)
-        setOpenedItems({...openedItems, [page]: opened_items})
-    }
+        setExpandedItems({ ...expandedItems, [page]: opened_items });
+    };
 
     return (
         <>
@@ -82,7 +91,7 @@ export const CrackmesList = ({ tasksWithActions }) => {
             </Text>
             <Paginate totalPages={totalPages} currentPage={page} setCurrentPage={setPage} />
             <Flex
-                textAlign="center"
+                textAlign='center'
                 flexDirection={'row'}
                 justifyContent={'space-between'}
                 w={'full'}
@@ -103,9 +112,10 @@ export const CrackmesList = ({ tasksWithActions }) => {
                 <Box w={'20px'} />
             </Flex>
             <Flex w={'full'} justifyContent={'center'} flexDirection={'column'}>
-                <Accordion w={'full'} allowToggle allowMultiple onChange={updateOpenedItems} index={openedItems[page] || []}>
-                    {filteredTasks.slice(indexOfFirstPage, indexOfLastPage).map((t, i) => (
-                        <Crackme crackme={t} updateTask={updateTask} key={indexOfFirstPage + i} />
+                <Accordion w={'full'} allowToggle allowMultiple onChange={updateOpenedItems}
+                           index={expandedItems[page] || []}>
+                    {filteredTasks.slice(indexOfFirstItem, indexOfLastItem).map((t, i) => (
+                        <Crackme crackme={t} updateTask={updateTask} key={indexOfFirstItem + i} />
                     ))}
                 </Accordion>
             </Flex>

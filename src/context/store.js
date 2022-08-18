@@ -1,37 +1,30 @@
-import { createLogger } from 'redux-logger/src';
+import { logger } from 'redux-logger/src';
 import storage from 'redux-persist/lib/storage';
 import persistReducer from 'redux-persist/es/persistReducer';
 import persistStore from 'redux-persist/es/persistStore';
-import { applyMiddleware, createStore } from 'redux';
-import { appReducer } from './appReducer';
+import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { __DEV__ } from '../utils/env';
+import userReducer from './userReducer';
+import crackmesReducer from '../components/crackmes/redux/crackmesReducer';
+import { configureStore } from '@reduxjs/toolkit';
 
 const persistConfig = {
     key: 'root',
     storage
 };
 
+const appReducer = combineReducers({ userReducer, crackmesReducer });
 const persistedReducer = persistReducer(persistConfig, appReducer);
 
-const configureStore = () => {
-    const store = createStore(persistedReducer, __DEV__ ? applyMiddleware(createLogger()) : applyMiddleware());
-
-    if (__DEV__ && module.hot) {
-        // Enable Webpack hot module replacement for reducers
-        module.hot.accept('./appReducer', () => {
-            const nextReducer = require('./appReducer').default;
-
-            store.replaceReducer(nextReducer);
-        });
+const store = configureStore({
+        reducer: persistedReducer,
+        devTools: __DEV__,
+        middleware: [logger]
     }
-
-    return store;
-};
-
-const store = configureStore();
+);
 const persistor = persistStore(store);
 
 const withStore = (Wrapped) => (props) => {
