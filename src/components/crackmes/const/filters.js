@@ -1,4 +1,4 @@
-import { STATUS_SOLVED, statusDesc } from './consts';
+import { STATUS_SOLVED, statusDesc } from './statuses';
 
 export const statusesOptions = Object.keys(statusDesc).map((k) => {
     return { value: parseInt(k, 10), label: statusDesc[k].toLowerCase() };

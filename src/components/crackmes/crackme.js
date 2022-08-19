@@ -12,7 +12,7 @@ import {
     Tooltip
 } from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
-import { STATUS_CLEAR, statusDesc, statusIcon } from './const/consts';
+import { STATUS_CLEAR, statusDesc, statusIcon } from './const/statuses';
 import { ActionsList, CrackmeActionsNotLogged } from './actions';
 
 export const Crackme = ({ crackme, updateTask }) => {
@@ -52,7 +52,7 @@ export const Crackme = ({ crackme, updateTask }) => {
                                 </span>
                             </Tooltip>
                         )}
-                        <Text d={'inline'} isTruncated>
+                        <Text d={'inline'} noOfLines={1}>
                             {name}
                         </Text>
                     </Box>

@@ -2,32 +2,9 @@ import { Accordion, Box, Flex, Text } from '@chakra-ui/react';
 import { Crackme } from './crackme';
 import { crackmesFilters, resetFilters } from './redux/crackmesReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { STATUS_CLEAR } from './const/consts';
-import { getSortOption } from './const/filtersConsts';
 import { useEffect, useState } from 'react';
 import { Paginate } from './paginate';
-import { usePagination } from './hooks/hooks';
-
-const filterTasks = (tasks, { filterStatuses, searchTerm, sortMethod }) => {
-    let filteredTasks = [...tasks];
-    if (searchTerm.length > 2) {
-        filteredTasks = filteredTasks.filter((t) => t.name.toLowerCase().includes(searchTerm));
-    }
-
-    if (filterStatuses.length > 0) {
-        if (filterStatuses.includes(STATUS_CLEAR)) {
-            // task has no actions (or cleared state)
-            filteredTasks = filteredTasks.filter(
-                (t) => t.lastAction === undefined || filterStatuses.includes(t.lastAction.status)
-            );
-        } else {
-            filteredTasks = filteredTasks.filter((t) => t.lastAction && filterStatuses.includes(t.lastAction.status));
-        }
-    }
-
-    filteredTasks = filteredTasks.sort(getSortOption(sortMethod).sortFn);
-    return filteredTasks;
-};
+import { filterTasks } from './filters';
 
 const EmptyList = () => {
     return (
@@ -47,7 +24,7 @@ export const CrackmesList = ({ tasksWithActions }) => {
     const [expandedItems, setExpandedItems] = useState({});
     const filters = useSelector(crackmesFilters);
     const { filterStatuses, searchTerm, sortMethod } = filters;
-    const { page, setPage } = usePagination();
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         // set the initial data set and reset the filters

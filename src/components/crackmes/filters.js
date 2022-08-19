@@ -6,10 +6,12 @@ import { updateFilters } from './redux/crackmesReducer';
 import {
     DEFAULT_SORT_OPTION,
     defaultFilterStatuses,
+    getSortOption,
     selectFieldStyles,
     sortOptions,
     statusesOptions
-} from './const/filtersConsts';
+} from './const/filters';
+import { STATUS_CLEAR } from './const/statuses';
 
 const Control = ({ children, ...props }) => {
     const { label } = props.selectProps;
@@ -70,4 +72,25 @@ export const Filters = () => {
             </Flex>
         </Flex>
     );
+};
+
+export const filterTasks = (tasks, { filterStatuses, searchTerm, sortMethod }) => {
+    let filteredTasks = [...tasks];
+    if (searchTerm.length > 2) {
+        filteredTasks = filteredTasks.filter((t) => t.name.toLowerCase().includes(searchTerm));
+    }
+
+    if (filterStatuses.length > 0) {
+        if (filterStatuses.includes(STATUS_CLEAR)) {
+            // task has no actions (or cleared state)
+            filteredTasks = filteredTasks.filter(
+                (t) => t.lastAction === undefined || filterStatuses.includes(t.lastAction.status)
+            );
+        } else {
+            filteredTasks = filteredTasks.filter((t) => t.lastAction && filterStatuses.includes(t.lastAction.status));
+        }
+    }
+
+    filteredTasks = filteredTasks.sort(getSortOption(sortMethod).sortFn);
+    return filteredTasks;
 };

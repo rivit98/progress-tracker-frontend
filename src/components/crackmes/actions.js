@@ -16,7 +16,7 @@ import {
 import { Link as ReactRouterLink } from 'react-router-dom';
 import formatDate from '../../utils/dateformatter';
 import { MdArrowDropDown } from 'react-icons/md';
-import { statusDesc, statusDescToStatusIDMap, statusIcon } from './const/consts';
+import { statusDesc, statusDescToStatusIDMap, statusIcon } from './const/statuses';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { crackmesService } from '../../services/crackmes';
