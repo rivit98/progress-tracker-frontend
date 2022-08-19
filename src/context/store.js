@@ -19,10 +19,15 @@ const persistConfig = {
 const appReducer = combineReducers({ userReducer, crackmesReducer });
 const persistedReducer = persistReducer(persistConfig, appReducer);
 
+const middlewares = []
+if(__DEV__){
+    middlewares.push(logger)
+}
+
 const store = configureStore({
         reducer: persistedReducer,
         devTools: __DEV__,
-        middleware: [logger]
+        middleware: middlewares
     }
 );
 const persistor = persistStore(store);
