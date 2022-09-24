@@ -6,9 +6,9 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY . ./
 
-RUN npm install
-RUN npm run build
-RUN npm install -g serve
+RUN npm install \
+    && npm run build \
+    && npm install -g serve
 
 
 CMD ["serve", "-s", "build"]
