@@ -67,28 +67,7 @@ export const CrackmesList = ({ tasksWithActions }) => {
                 {filteredTasks.length} results
             </Text>
             <Paginate totalPages={totalPages} currentPage={page} setCurrentPage={setPage} />
-            <Flex
-                textAlign='center'
-                flexDirection={'row'}
-                justifyContent={'space-between'}
-                w={'full'}
-                maxW={'xl'}
-                mx={'auto'}
-                mb={2}
-                mt={7}
-                fontWeight={'bold'}
-                experimental_spaceX={'2'}
-                fontSize={'lg'}
-            >
-                <Box flex={8} overflow={'hidden'}>
-                    Task name
-                </Box>
-                <Box flex={3} overflow={'hidden'}>
-                    Date
-                </Box>
-                <Box w={'20px'} />
-            </Flex>
-            <Flex w={'full'} justifyContent={'center'} flexDirection={'column'}>
+            <Flex w={'full'} justifyContent={'center'} flexDirection={'column'} mt={3}>
                 <Accordion w={'full'} allowToggle allowMultiple onChange={updateOpenedItems}
                            index={expandedItems[page] || []}>
                     {filteredTasks.slice(indexOfFirstItem, indexOfLastItem).map((t, i) => (
