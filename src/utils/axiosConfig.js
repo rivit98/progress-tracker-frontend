@@ -1,4 +1,5 @@
 import axios from 'axios';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { authService } from '../services/auth';
 
 const axiosInstance = axios.create({
@@ -6,45 +7,17 @@ const axiosInstance = axios.create({
     baseURL: 'https://ptb.rivit.dev/'
 });
 
-axiosInstance.interceptors.request.use((request) => {
-    const accessToken = request.headers.Authorization;
-    if (accessToken != null && accessToken !== '') {
-        // if token is already set - skip
-        return request;
-    }
+axiosInstance.interceptors.response.use(response => response.data);
 
+axiosInstance.interceptors.request.use((request) => {
     const token = authService.getAccessToken();
     if (token != null) {
-        // if token is present in sessionStorage - inject
         request.headers.Authorization = `Bearer ${token}`;
     }
 
     return request;
 });
 
-const setAxiosInterceptor = () => {
-    const interceptor = axiosInstance.interceptors.response.use(
-        (response) => response,
-        (error) => {
-            if (error.config && error.response?.status === 401 && !error.config.__isRetry) {
-                axiosInstance.interceptors.response.eject(interceptor);
-
-                return new Promise((resolve, reject) => {
-                    authService
-                        .refreshUserToken(error)
-                        .then((response) => resolve(response))
-                        .catch((err) => {
-                            err.message = 'Your session expired, please login again';
-                            reject(err);
-                        })
-                        .finally(setAxiosInterceptor); //enable interceptor again
-                });
-            }
-
-            return Promise.reject(error);
-        }
-    );
-};
-setAxiosInterceptor();
+createAuthRefreshInterceptor(axiosInstance, (failedRequest) => authService.refreshUserToken(failedRequest));
 
 export default axiosInstance;

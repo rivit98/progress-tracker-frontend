@@ -3,14 +3,11 @@ import { apiUrls } from './apiUrls';
 import { store } from '../context/store';
 import { updateUser } from '../context/userReducer';
 
-const responseBody = (response) => response.data;
-
 const me = async (token) => {
     return axiosInstance
         .get(apiUrls.ME, {
             headers: { Authorization: `Bearer ${token}` }
         })
-        .then(responseBody);
 };
 
 const login = async (loginData) => {
@@ -26,11 +23,10 @@ const getToken = async (username, password) => {
             username: username,
             password: password
         })
-        .then(responseBody);
 };
 
 const register = async (registerData) => {
-    const user = await axiosInstance.post(apiUrls.REGISTER, registerData).then(responseBody);
+    const user = await axiosInstance.post(apiUrls.REGISTER, registerData)
     const token = await getToken(user.username, registerData.password);
 
     return { ...user, ...token };
@@ -49,21 +45,20 @@ const getNewAccessToken = async (refreshToken) => {
         .post(apiUrls.REFRESH_TOKEN, {
             refresh: refreshToken
         })
-        .then(responseBody);
 };
 
-const refreshUserToken = async (err) => {
-    const config = err.config;
+const refreshUserToken = async (failedRequest) => {
     const refreshToken = getRefreshToken();
     if (refreshToken == null) {
-        return Promise.reject(err);
+        return Promise.reject('Your session expired, please login again');
     }
 
     const token = await getNewAccessToken(refreshToken);
     store.dispatch(updateUser(token));
-    config.headers.Authorization = `Bearer ${token.access}`; // inject new token to old request
-    return axiosInstance.request(config);
+    failedRequest.response.config.headers['Authorization'] = `Bearer ${token.access}`;
+    return Promise.resolve();
 };
+
 
 export const authService = {
     login,

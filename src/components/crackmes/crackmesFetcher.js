@@ -59,10 +59,12 @@ export const CrackmesFetcher = () => {
     const [crackmesList, actions] = state.data;
 
     const tasksWithActions = crackmesList.map((t) => {
-        let a = actions[t.id] || [];
-        a = a.sort((a1, a2) => a2.date.getTime() - a1.date.getTime());
-        const lastAction = a[0] || undefined;
-        return { ...t, date: new Date(t.date), actions: a, lastAction: lastAction };
+        let taskActions = actions[t.id] || [];
+        taskActions = taskActions
+            .map((action) => ({...action, date: new Date(action.date)}))
+            .sort((a1, a2) => a2.date.getTime() - a1.date.getTime());
+        const lastAction = taskActions[0] || undefined;
+        return { ...t, date: new Date(t.date), actions: taskActions, lastAction: lastAction };
     });
 
     return (

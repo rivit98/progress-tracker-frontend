@@ -5,6 +5,7 @@ import {
     AccordionIcon,
     AccordionItem,
     AccordionPanel,
+    HStack,
     Box,
     Flex,
     Icon,
@@ -39,7 +40,7 @@ export const Crackme = ({ crackme, updateTask }) => {
                 rounded="md"
             >
                 <Flex flexDirection={'row'} justifyContent={'space-between'} experimental_spaceX={'2'} w={'full'}>
-                    <Box ml={1} flex={8} overflow={'hidden'} textAlign="left">
+                    <HStack ml={1} flex={8} overflow={'hidden'} textAlign="left">
                         {lastActionStatus && lastActionStatus !== STATUS_CLEAR && (
                             <Tooltip label={statusDesc[lastActionStatus]}>
                                 <span>
@@ -55,7 +56,7 @@ export const Crackme = ({ crackme, updateTask }) => {
                         <Text d={'inline'} noOfLines={1}>
                             {name}
                         </Text>
-                    </Box>
+                    </HStack>
                     <Box flex={3} overflow={'hidden'}>
                         {formatDate(date)}
                     </Box>
