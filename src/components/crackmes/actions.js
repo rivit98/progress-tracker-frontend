@@ -71,11 +71,13 @@ const UpdateActionPanel = ({ id, updateTask, lastAction }) => {
         const statusID = statusDescToStatusIDMap[status];
         crackmesService.updateStatus(id, { status: statusID }).then(successCallback).catch(errorCallback);
     };
+    
+    const lastActionStatus = lastAction && lastAction.status;
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
             <HStack>
-                <FormControl isInvalid={errors.status} w={'140px'}>
+                <FormControl isInvalid={errors.status} w={'150px'}>
                     <Select
                         icon={<MdArrowDropDown />}
                         size={'sm'}
@@ -84,7 +86,7 @@ const UpdateActionPanel = ({ id, updateTask, lastAction }) => {
                         color="whiteAlpha.500"
                         {...register('status')}
                     >
-                        {possibleActionsMap[lastAction]}
+                        {possibleActionsMap[lastActionStatus]}
                     </Select>
                     <FormErrorMessage>{errors.status && errors.status.message}</FormErrorMessage>
                 </FormControl>
@@ -104,7 +106,7 @@ const UpdateActionPanel = ({ id, updateTask, lastAction }) => {
 };
 
 export const ActionsList = ({ crackme, updateTask }) => {
-    const { id, actions, comments_num, hexid, writeups_num } = crackme;
+    const { id, actions, comments_num, hexid, writeups_num, lastAction } = crackme;
     const challengeLink = `https://crackmes.one/crackme/${hexid}`;
     const downloadLink = `https://crackmes.one/static/crackme/${hexid}.zip`;
 
@@ -158,7 +160,7 @@ export const ActionsList = ({ crackme, updateTask }) => {
                     );
                 })}
             </List>
-            <UpdateActionPanel id={id} updateTask={updateTask} actions={actions} />
+            <UpdateActionPanel id={id} updateTask={updateTask} lastAction={lastAction} />
         </Box>
     );
 };
