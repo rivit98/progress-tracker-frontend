@@ -6,6 +6,7 @@ import {
     FormControl,
     FormErrorMessage,
     HStack,
+    IconButton,
     Link,
     Select,
     Table,
@@ -18,6 +19,7 @@ import {
 import { Link as ReactRouterLink } from 'react-router-dom';
 import formatDate from '../../utils/dateformatter';
 import { MdArrowDropDown } from 'react-icons/md';
+import { FaDownload } from 'react-icons/fa';
 import { statusDescToStatusIDMap, statusBadge } from './const/statuses';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
@@ -113,33 +115,27 @@ export const ActionsList = ({ crackme, updateTask }) => {
     const downloadLink = `https://crackmes.one/static/crackme/${hexid}.zip`;
 
     return (
-        <Box textAlign={'left'}>
+        <>
             <Flex
-                textAlign="center"
                 flexDirection={'row'}
-                justifyContent={'center'}
                 w={'full'}
                 mx={'auto'}
                 mb={2}
-                experimental_spaceX={'2'}
+                whiteSpace={'nowrap'}
             >
-                <Box flex={1} overflow={'hidden'} flexDirection={'row'} alignItems={'center'} experimental_spaceX={1}>
+                <HStack flex={1} justifyContent={'center'}>
                     <Link href={challengeLink} isExternal color={'teal.500'}>
-                        Challenge page
+                        Description
                     </Link>
-                </Box>
-                <Box flex={1} overflow={'hidden'} flexDirection={'row'} alignItems={'center'} experimental_spaceX={1}>
-                    <Link href={downloadLink} color={'teal.500'}>
-                        Download
-                    </Link>
-                </Box>
-                <HStack flex={1} overflow={'hidden'}>
+                    <IconButton as={Link} href={downloadLink} icon={<FaDownload />} variant={'link'} color={'teal.500'} />
+                </HStack>
+                <HStack flex={1} justifyContent={'center'}>
                     <Text>Writeups:{' '}</Text>
                     <Text fontWeight={'bold'}>
                         {writeups_num}
                     </Text>
                 </HStack>
-                <HStack flex={1} overflow={'hidden'}>
+                <HStack flex={1} justifyContent={'center'}>
                     <Text>Comments:{' '}</Text>
                     <Text fontWeight={'bold'}>
                         {comments_num}
@@ -147,7 +143,7 @@ export const ActionsList = ({ crackme, updateTask }) => {
                 </HStack>
             </Flex>
             <Divider colorScheme={'gray'} my={1} />
-            <TableContainer>
+            <TableContainer mb={1}>
                 <Table size='sm' variant={'unstyled'}>
                     <Tbody>
                         {actions.map((a, index) => {
@@ -166,6 +162,6 @@ export const ActionsList = ({ crackme, updateTask }) => {
                 </Table>
             </TableContainer>
             <UpdateActionPanel id={id} updateTask={updateTask} lastAction={lastAction} />
-        </Box>
+        </>
     );
 };

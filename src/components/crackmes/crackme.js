@@ -7,11 +7,10 @@ import {
     AccordionPanel,
     HStack,
     Box,
-    Flex,
     Text,
 } from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
-import { statusBadge } from './const/statuses';
+import { statusBadge, STATUS_CLEAR } from './const/statuses';
 import { ActionsList, CrackmeActionsNotLogged } from './actions';
 
 export const Crackme = ({ crackme, updateTask }) => {
@@ -30,29 +29,24 @@ export const Crackme = ({ crackme, updateTask }) => {
             id={`crackme-${id}`}
         >
             <AccordionButton
-                px={0}
                 _hover={{
                     background: 'blackAlpha.600',
                     color: 'teal.500'
                 }}
                 rounded="md"
             >
-                <Flex flexDirection={'row'} justifyContent={'space-between'} experimental_spaceX={'2'} w={'full'}>
-                    <HStack ml={1} flex={8} overflow={'hidden'} textAlign="left">
-                        <Text d={'inline'} noOfLines={1}>
-                            {name}
-                        </Text>
-                        {statusBadge[lastActionStatus]}
-                    </HStack>
-                    <Box flex={3} overflow={'hidden'}>
-                        {formatDate(date)}
-                    </Box>
-                    <Box w={'20px'} textAlign="right" justifyContent={'end'} mr={2}>
-                        <AccordionIcon />
-                    </Box>
-                </Flex>
+                <HStack ml={1} flex={8} overflow={'hidden'}>
+                    <Text noOfLines={1}>
+                        {name}
+                    </Text>
+                    {lastActionStatus !== STATUS_CLEAR && statusBadge[lastActionStatus]}
+                </HStack>
+                <Box flex={3} overflow={'hidden'}>
+                    {formatDate(date)}
+                </Box>
+                <AccordionIcon />
             </AccordionButton>
-            <AccordionPanel pb={4} w={'full'} mb={2}>
+            <AccordionPanel pb={2} w={'full'} mb={2}>
                 {logged ? <ActionsList crackme={crackme} updateTask={updateTask} /> : <CrackmeActionsNotLogged />}
             </AccordionPanel>
         </AccordionItem>
