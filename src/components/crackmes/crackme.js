@@ -11,7 +11,7 @@ import {
     Text,
 } from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
-import { STATUS_CLEAR, statusBadge } from './const/statuses';
+import { statusBadge } from './const/statuses';
 import { ActionsList, CrackmeActionsNotLogged } from './actions';
 
 export const Crackme = ({ crackme, updateTask }) => {
