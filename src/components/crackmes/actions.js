@@ -1,22 +1,24 @@
 import {
     Box,
     Button,
+    Divider,
     Flex,
     FormControl,
     FormErrorMessage,
     HStack,
     Link,
-    List,
-    ListIcon,
-    ListItem,
     Select,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
     Text,
-    Tooltip
+    Tr
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import formatDate from '../../utils/dateformatter';
 import { MdArrowDropDown } from 'react-icons/md';
-import { statusDesc, statusDescToStatusIDMap, statusIcon } from './const/statuses';
+import { statusDescToStatusIDMap, statusBadge } from './const/statuses';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { crackmesService } from '../../services/crackmes';
@@ -71,7 +73,7 @@ const UpdateActionPanel = ({ id, updateTask, lastAction }) => {
         const statusID = statusDescToStatusIDMap[status];
         crackmesService.updateStatus(id, { status: statusID }).then(successCallback).catch(errorCallback);
     };
-    
+
     const lastActionStatus = lastAction && lastAction.status;
 
     return (
@@ -131,35 +133,38 @@ export const ActionsList = ({ crackme, updateTask }) => {
                         Download
                     </Link>
                 </Box>
-                <Box flex={1} overflow={'hidden'}>
-                    Writeups:{' '}
-                    <Text d="inline" fontWeight={'bold'}>
+                <HStack flex={1} overflow={'hidden'}>
+                    <Text>Writeups:{' '}</Text>
+                    <Text fontWeight={'bold'}>
                         {writeups_num}
                     </Text>
-                </Box>
-                <Box flex={1} overflow={'hidden'}>
-                    Comments:{' '}
-                    <Text d="inline" fontWeight={'bold'}>
+                </HStack>
+                <HStack flex={1} overflow={'hidden'}>
+                    <Text>Comments:{' '}</Text>
+                    <Text fontWeight={'bold'}>
                         {comments_num}
                     </Text>
-                </Box>
+                </HStack>
             </Flex>
-            <List spacing={3} my={4}>
-                {actions.map((a, index) => {
-                    const status = a.status;
-                    const { icon, color, size } = statusIcon[status];
-                    return (
-                        <ListItem key={index}>
-                            <Tooltip label={statusDesc[status]}>
-                                <span>
-                                    <ListIcon as={icon} color={color} fontSize={size} w={5} />
-                                </span>
-                            </Tooltip>
-                            {formatDate(a.date, 'dd.mm.yyyy HH:MM:ss')}
-                        </ListItem>
-                    );
-                })}
-            </List>
+            <Divider colorScheme={'gray'} my={1} />
+            <TableContainer>
+                <Table size='sm' variant={'unstyled'}>
+                    <Tbody>
+                        {actions.map((a, index) => {
+                            return (
+                                <Tr key={index}>
+                                    <Td w={'1%'} pr={1}>
+                                        {statusBadge[a.status]}
+                                    </Td>
+                                    <Td pl={1}>
+                                        {formatDate(a.date, 'dd.mm.yyyy HH:MM:ss')}
+                                    </Td>
+                                </Tr>
+                            );
+                        })}
+                    </Tbody>
+                </Table>
+            </TableContainer>
             <UpdateActionPanel id={id} updateTask={updateTask} lastAction={lastAction} />
         </Box>
     );

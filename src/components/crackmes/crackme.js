@@ -8,12 +8,10 @@ import {
     HStack,
     Box,
     Flex,
-    Icon,
     Text,
-    Tooltip
 } from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
-import { STATUS_CLEAR, statusDesc, statusIcon } from './const/statuses';
+import { STATUS_CLEAR, statusBadge } from './const/statuses';
 import { ActionsList, CrackmeActionsNotLogged } from './actions';
 
 export const Crackme = ({ crackme, updateTask }) => {
@@ -41,21 +39,10 @@ export const Crackme = ({ crackme, updateTask }) => {
             >
                 <Flex flexDirection={'row'} justifyContent={'space-between'} experimental_spaceX={'2'} w={'full'}>
                     <HStack ml={1} flex={8} overflow={'hidden'} textAlign="left">
-                        {lastActionStatus && lastActionStatus !== STATUS_CLEAR && (
-                            <Tooltip label={statusDesc[lastActionStatus]}>
-                                <span>
-                                    <Icon
-                                        as={statusIcon[lastActionStatus].icon}
-                                        color={statusIcon[lastActionStatus].color}
-                                        mr={2}
-                                        fontSize={statusIcon[lastActionStatus].size}
-                                    />
-                                </span>
-                            </Tooltip>
-                        )}
                         <Text d={'inline'} noOfLines={1}>
                             {name}
                         </Text>
+                        {statusBadge[lastActionStatus]}
                     </HStack>
                     <Box flex={3} overflow={'hidden'}>
                         {formatDate(date)}

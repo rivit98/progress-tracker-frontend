@@ -1,5 +1,4 @@
-import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
-import { FaCheckCircle, FaPlay, FaTimesCircle } from 'react-icons/fa';
+import { Badge } from '@chakra-ui/react';
 
 const STATUS_CLEAR = 0;
 const STATUS_STARTED = 1;
@@ -21,10 +20,10 @@ export const statusDescToStatusIDMap = Object.fromEntries(
     Object.entries(statusDesc).map(([k, v]) => [v.toLowerCase(), k])
 );
 
-export const statusIcon = {
-    [STATUS_CLEAR]: { icon: MdVisibility, color: 'blue.600', size: 'xl' },
-    [STATUS_STARTED]: { icon: FaPlay, color: 'yellow.500', size: 'md' },
-    [STATUS_ABORTED]: { icon: FaTimesCircle, color: 'red.600', size: 'lg' },
-    [STATUS_SOLVED]: { icon: FaCheckCircle, color: 'green.500', size: 'lg' },
-    [STATUS_IGNORED]: { icon: MdVisibilityOff, color: 'gray.400', size: 'xl' }
+export const statusBadge = {
+    [STATUS_CLEAR]: <></>,
+    [STATUS_STARTED]: <Badge colorScheme='yellow'>{statusDesc[STATUS_STARTED]}</Badge>,
+    [STATUS_ABORTED]: <Badge colorScheme='red'>{statusDesc[STATUS_ABORTED]}</Badge>,
+    [STATUS_SOLVED]: <Badge colorScheme='green'>{statusDesc[STATUS_SOLVED]}</Badge>,
+    [STATUS_IGNORED]: <Badge colorScheme='gray'>{statusDesc[STATUS_IGNORED]}</Badge>
 };
