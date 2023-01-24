@@ -154,18 +154,18 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
                                 {page}
                             </PaginationButton>
                         );
-                    case 'previous':
-                        return (
-                            <PaginationButton key={index} fn={onClick} isDisabled={isDisabled}>
-                                <MdChevronLeft />
-                            </PaginationButton>
-                        );
-                    case 'next':
-                        return (
-                            <PaginationButton key={index} fn={onClick} isDisabled={isDisabled}>
-                                <MdChevronRight />
-                            </PaginationButton>
-                        );
+                    // case 'previous':
+                    //     return (
+                    //         <PaginationButton key={index} fn={onClick} isDisabled={isDisabled}>
+                    //             <MdChevronLeft />
+                    //         </PaginationButton>
+                    //     );
+                    // case 'next':
+                    //     return (
+                    //         <PaginationButton key={index} fn={onClick} isDisabled={isDisabled}>
+                    //             <MdChevronRight />
+                    //         </PaginationButton>
+                    //     );
                     case 'start-ellipsis':
                     case 'end-ellipsis':
                         return <Ellipsis key={index} />;
