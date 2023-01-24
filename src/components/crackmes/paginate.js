@@ -10,7 +10,6 @@ const PaginationButton = ({ children, fn, ...props }) => {
             colorScheme={'teal'}
             _focus={{ outline: 'none' }}
             _hover={{ bg: 'teal.300' }}
-            transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
             onClick={fn}
             {...props}
         >
@@ -21,7 +20,7 @@ const PaginationButton = ({ children, fn, ...props }) => {
 
 const Ellipsis = () => {
     return (
-        <Flex size={'xs'} w={8} m={0} justifyContent={'center'}>
+        <Flex size={'xs'} w={6} m={0} justifyContent={'center'}>
             ...
         </Flex>
     );
@@ -141,7 +140,7 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
     });
 
     return (
-        <HStack mt={0} spacing={1}>
+        <HStack mt={4} spacing={1}>
             {items.map((item, index) => {
                 const { type, selected, disabled, page, onClick } = item;
                 const isDisabled = selected || disabled;
@@ -170,7 +169,7 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
                     case 'end-ellipsis':
                         return <Ellipsis key={index} />;
                     default:
-                        return <></>
+                        return <span key={index}></span>
                 }
             })}
         </HStack>

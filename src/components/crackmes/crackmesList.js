@@ -66,14 +66,14 @@ export const CrackmesList = ({ tasksWithActions }) => {
             <Text mb={5} mt={1}>
                 {filteredTasks.length} results
             </Text>
-            <Paginate totalPages={totalPages} currentPage={page} setCurrentPage={setPage} />
-            <Flex w={'full'} justifyContent={'center'} flexDirection={'column'} mt={3}>
+            <Flex w={'full'} justifyContent={'center'} flexDirection={'column'}>
                 <Accordion w={'full'} allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems[page] || []}>
                     {filteredTasks.slice(indexOfFirstItem, indexOfLastItem).map((t, i) => (
                         <Crackme crackme={t} updateTask={updateTask} key={indexOfFirstItem + i} />
                     ))}
                 </Accordion>
             </Flex>
+            <Paginate totalPages={totalPages} currentPage={page} setCurrentPage={setPage} />
         </>
     );
 };

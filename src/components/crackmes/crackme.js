@@ -8,6 +8,7 @@ import {
     HStack,
     Box,
     Text,
+    Hide,
 } from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
 import { statusBadge, STATUS_CLEAR } from './const/statuses';
@@ -36,10 +37,12 @@ export const Crackme = ({ crackme, updateTask }) => {
                 rounded="md"
             >
                 <HStack ml={1} flex={8} overflow={'hidden'}>
-                    <Text noOfLines={1}>
+                    <Text noOfLines={1} textAlign={'left'}>
                         {name}
                     </Text>
-                    {lastActionStatus !== STATUS_CLEAR && statusBadge[lastActionStatus]}
+                    <Hide below={'sm'}>
+                        {lastActionStatus !== STATUS_CLEAR && statusBadge[lastActionStatus]}
+                    </Hide>
                 </HStack>
                 <Box flex={3} overflow={'hidden'}>
                     {formatDate(date)}
