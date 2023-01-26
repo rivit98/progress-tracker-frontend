@@ -6,6 +6,7 @@ import Login from './components/auth/login';
 import { CrackmesFetcher } from './components/crackmes/crackmesFetcher';
 import Home from './components/home/home';
 import { withStore } from './context/store';
+import { MapsFetcher } from './components/heroes-maps/mapsFetcher';
 
 const App = () => {
     return (
@@ -17,6 +18,7 @@ const App = () => {
                 <Route path={'/register'} element={<Register />} />
 
                 <Route path={'/crackmes'} element={<CrackmesFetcher />} />
+                <Route path={'/heroes-maps'} element={<MapsFetcher />} />
             </Routes>
         </Container>
     );

@@ -10,8 +10,8 @@ import {
     selectFieldStyles,
     sortOptions,
     statusesOptions
-} from './const/filters';
-import { STATUS_CLEAR } from './const/statuses';
+} from './filterOpts';
+import { STATUS_CLEAR } from '../generic/statuses';
 
 const Control = ({ children, ...props }) => {
     const { label } = props.selectProps;

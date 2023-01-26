@@ -18,6 +18,7 @@ import { TopNavbar } from './topNavbar';
 import { currentUserData, isLoggedIn, removeUser } from '../../context/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { VscKey } from 'react-icons/vsc';
+import { FiMap } from 'react-icons/fi';
 import { resetFilters } from '../crackmes/redux/crackmesReducer';
 
 const hasPermissions = (userGroups, requiredPermissions) => {
@@ -42,6 +43,7 @@ export function Navigation({ children }) {
     const linkItems = [
         { name: 'Home', to: '/', icon: FiHome },
         { name: 'Crackmes', to: '/crackmes', icon: VscKey },
+        { name: 'Heroes maps', to: '/heroes-maps', icon: FiMap },
         { name: 'Login', to: '/login', icon: FiLogIn, show: !logged },
         { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
 

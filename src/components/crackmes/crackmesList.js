@@ -3,7 +3,7 @@ import { Crackme } from './crackme';
 import { crackmesFilters, resetFilters } from './redux/crackmesReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { Paginate } from './paginate';
+import { Paginate } from '../generic/paginate';
 import { filterTasks } from './filters';
 
 const EmptyList = () => {

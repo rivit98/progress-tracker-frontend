@@ -28,7 +28,7 @@ const Ellipsis = () => {
 
 // code adapted from material UI pagination component
 export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
-    if (totalPages <= 0) {
+    if (totalPages <= 1) {
         return <></>;
     }
 

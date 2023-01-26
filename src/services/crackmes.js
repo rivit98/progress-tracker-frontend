@@ -1,21 +1,22 @@
 import axiosInstance from '../utils/axiosConfig';
-import { apiUrls } from './apiUrls';
 
+const API_PREFIX = 'crackmes'
+const API_VERSION = 'v1'
 
 const getCrackmes = async (options = undefined) => {
-    return axiosInstance.get(apiUrls.CRACKMES, options)
+    return axiosInstance.get(`/${API_PREFIX}/${API_VERSION}/`, options)
 };
 
 const getActions = async (options = undefined) => {
-    return axiosInstance.get(apiUrls.ACTIONS, options)
+    return axiosInstance.get(`/${API_PREFIX}/${API_VERSION}/actions/`, options)
 };
 
 const lastUpdated = async (options = undefined) => {
-    return axiosInstance.get(apiUrls.LAST_UPDATED, options)
+    return axiosInstance.get(`/${API_PREFIX}/${API_VERSION}/lastUpdated/`, options)
 };
 
-const updateStatus = async (crackmeID, statusData) => {
-    return axiosInstance.post(apiUrls.UPDATE_STATUS.replace('%d', crackmeID), statusData)
+const updateStatus = async (crackmeID, statusData, options = undefined) => {
+    return axiosInstance.post(`/${API_PREFIX}/${API_VERSION}/%d/status/`.replace('%d', crackmeID), statusData, options)
 };
 
 export const crackmesService = {

@@ -9,7 +9,7 @@ const STATUS_IGNORED = 4;
 export { STATUS_CLEAR, STATUS_STARTED, STATUS_ABORTED, STATUS_SOLVED, STATUS_IGNORED };
 
 export const statusDesc = {
-    [STATUS_CLEAR]: 'Cleared',
+    [STATUS_CLEAR]: 'Clear',
     [STATUS_STARTED]: 'Started',
     [STATUS_ABORTED]: 'Aborted',
     [STATUS_SOLVED]: 'Solved',

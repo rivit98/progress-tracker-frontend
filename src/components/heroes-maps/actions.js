@@ -1,32 +1,28 @@
 import {
-    Box,
     Button,
     Divider,
     Flex,
     FormControl,
     FormErrorMessage,
     HStack,
-    IconButton,
     Link,
     Select,
     Table,
     TableContainer,
     Tbody,
     Td,
-    Text,
     Tr
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import formatDate from '../../utils/dateformatter';
 import { MdArrowDropDown } from 'react-icons/md';
-import { FaDownload } from 'react-icons/fa';
 import { statusDescToStatusIDMap, statusBadge } from '../generic/statuses';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { crackmesService } from '../../services/crackmes';
 import { possibleActionsMap } from '../generic/actionOptions';
+import { heroesMapsService } from '../../services/heroesMaps';
 
-export const CrackmeActionsNotLogged = () => {
+export const ActionsNotLogged = () => {
     return (
         <div>
             <Link as={ReactRouterLink} to={'/login'} mr={1} color={'teal.500'}>
@@ -37,7 +33,7 @@ export const CrackmeActionsNotLogged = () => {
     );
 };
 
-const UpdateActionPanel = ({ id, updateTask, lastAction }) => {
+const UpdateActionPanel = ({ id, updateFunc, lastAction }) => {
     const {
         register,
         handleSubmit,
@@ -49,7 +45,7 @@ const UpdateActionPanel = ({ id, updateTask, lastAction }) => {
 
     const successCallback = (action) => {
         setLoading(false);
-        updateTask(id, { ...action, date: new Date(action.date) });
+        updateFunc(id, { ...action, date: new Date(action.date) });
         reset();
     };
 
@@ -73,7 +69,7 @@ const UpdateActionPanel = ({ id, updateTask, lastAction }) => {
         setLoading(true);
         const status = data['status'];
         const statusID = statusDescToStatusIDMap[status];
-        crackmesService.updateStatus(id, { status: statusID }).then(successCallback).catch(errorCallback);
+        heroesMapsService.updateStatus(id, { status: statusID }).then(successCallback).catch(errorCallback);
     };
 
     const lastActionStatus = lastAction && lastAction.status;
@@ -109,10 +105,8 @@ const UpdateActionPanel = ({ id, updateTask, lastAction }) => {
     );
 };
 
-export const ActionsList = ({ crackme, updateTask }) => {
-    const { id, actions, comments_num, hexid, writeups_num, lastAction } = crackme;
-    const challengeLink = `https://crackmes.one/crackme/${hexid}`;
-    const downloadLink = `https://crackmes.one/static/crackme/${hexid}.zip`;
+export const ActionsList = ({ item, updateFunc }) => {
+    const { id, link, lastAction, actions } = item;
 
     return (
         <>
@@ -122,25 +116,11 @@ export const ActionsList = ({ crackme, updateTask }) => {
                 mx={'auto'}
                 mb={2}
                 whiteSpace={'nowrap'}
+                justifyContent={'center'}
             >
-                <HStack flex={1} justifyContent={'center'}>
-                    <Link href={challengeLink} isExternal color={'teal.500'}>
-                        Description
-                    </Link>
-                    <IconButton as={Link} href={downloadLink} icon={<FaDownload />} variant={'link'} color={'teal.500'} />
-                </HStack>
-                <HStack flex={1} justifyContent={'center'}>
-                    <Text>Writeups:{' '}</Text>
-                    <Text fontWeight={'bold'}>
-                        {writeups_num}
-                    </Text>
-                </HStack>
-                <HStack flex={1} justifyContent={'center'}>
-                    <Text>Comments:{' '}</Text>
-                    <Text fontWeight={'bold'}>
-                        {comments_num}
-                    </Text>
-                </HStack>
+                <Link href={link} isExternal color={'teal.500'}>
+                    Download
+                </Link>
             </Flex>
             <Divider colorScheme={'gray'} my={1} />
             <TableContainer mb={1}>
@@ -161,7 +141,7 @@ export const ActionsList = ({ crackme, updateTask }) => {
                     </Tbody>
                 </Table>
             </TableContainer>
-            <UpdateActionPanel id={id} updateTask={updateTask} lastAction={lastAction} />
+            <UpdateActionPanel id={id} updateFunc={updateFunc} lastAction={lastAction} />
         </>
     );
 };

@@ -10,13 +10,12 @@ import {
     Text,
     Hide,
 } from '@chakra-ui/react';
-import formatDate from '../../utils/dateformatter';
 import { statusBadge, STATUS_CLEAR } from '../generic/statuses';
-import { ActionsList, CrackmeActionsNotLogged } from './actions';
+import { ActionsList, ActionsNotLogged } from './actions';
 
-export const Crackme = ({ crackme, updateTask }) => {
+export const Map = ({ item, updateFunc }) => {
     const logged = useSelector(isLoggedIn);
-    const { date, name, lastAction, id } = crackme;
+    const { name, heroes_version, lastAction, id } = item;
     const lastActionStatus = lastAction && lastAction.status;
 
     return (
@@ -27,7 +26,7 @@ export const Crackme = ({ crackme, updateTask }) => {
             mx={'auto'}
             textAlign={'center'}
             isDisabled={false}
-            id={`crackme-${id}`}
+            id={`item-${id}`}
         >
             <AccordionButton
                 _hover={{
@@ -45,12 +44,12 @@ export const Crackme = ({ crackme, updateTask }) => {
                     </Hide>
                 </HStack>
                 <Box flex={3} overflow={'hidden'}>
-                    {formatDate(date)}
+                    {heroes_version}
                 </Box>
                 <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={2} w={'full'} mb={2}>
-                {logged ? <ActionsList crackme={crackme} updateTask={updateTask} /> : <CrackmeActionsNotLogged />}
+                {logged ? <ActionsList item={item} updateFunc={updateFunc} /> : <ActionsNotLogged />}
             </AccordionPanel>
         </AccordionItem>
     );

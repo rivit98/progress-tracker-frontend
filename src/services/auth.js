@@ -1,11 +1,12 @@
 import axiosInstance from '../utils/axiosConfig';
-import { apiUrls } from './apiUrls';
 import { store } from '../context/store';
 import { updateUser } from '../context/userReducer';
 
+const API_VERSION = 'v1'
+
 const me = async (token) => {
     return axiosInstance
-        .get(apiUrls.ME, {
+        .get(`/user/${API_VERSION}/me/`, {
             headers: { Authorization: `Bearer ${token}` }
         })
 };
@@ -19,14 +20,14 @@ const login = async (loginData) => {
 
 const getToken = async (username, password) => {
     return axiosInstance
-        .post(apiUrls.TOKEN, {
+        .post(`/auth/${API_VERSION}/login/`, {
             username: username,
             password: password
         })
 };
 
 const register = async (registerData) => {
-    const user = await axiosInstance.post(apiUrls.REGISTER, registerData)
+    const user = await axiosInstance.post(`/user/${API_VERSION}/register/`, registerData)
     const token = await getToken(user.username, registerData.password);
 
     return { ...user, ...token };
@@ -42,7 +43,7 @@ const getRefreshToken = () => {
 
 const getNewAccessToken = async (refreshToken) => {
     return axiosInstance
-        .post(apiUrls.REFRESH_TOKEN, {
+        .post(`/auth/${API_VERSION}/refresh/`, {
             refresh: refreshToken
         })
 };
