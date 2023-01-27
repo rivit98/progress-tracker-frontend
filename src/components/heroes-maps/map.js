@@ -1,5 +1,4 @@
-import { useSelector } from 'react-redux';
-import { isLoggedIn } from '../../context/userReducer';
+
 import {
     AccordionButton,
     AccordionIcon,
@@ -11,10 +10,10 @@ import {
     Hide,
 } from '@chakra-ui/react';
 import { statusBadge, STATUS_CLEAR } from '../generic/statuses';
-import { ActionsList, ActionsNotLogged } from './actions';
+import { ActionsList } from './actions';
+
 
 export const Map = ({ item, updateFunc }) => {
-    const logged = useSelector(isLoggedIn);
     const { name, heroes_version, lastAction, id } = item;
     const lastActionStatus = lastAction && lastAction.status;
 
@@ -49,7 +48,7 @@ export const Map = ({ item, updateFunc }) => {
                 <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={2} w={'full'} mb={2}>
-                {logged ? <ActionsList item={item} updateFunc={updateFunc} /> : <ActionsNotLogged />}
+                <ActionsList item={item} updateFunc={updateFunc} />
             </AccordionPanel>
         </AccordionItem>
     );

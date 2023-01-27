@@ -13,7 +13,6 @@ import {
     Td,
     Tr
 } from '@chakra-ui/react';
-import { Link as ReactRouterLink } from 'react-router-dom';
 import formatDate from '../../utils/dateformatter';
 import { MdArrowDropDown } from 'react-icons/md';
 import { statusDescToStatusIDMap, statusBadge } from '../generic/statuses';
@@ -21,17 +20,8 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { possibleActionsMap } from '../generic/actionOptions';
 import { heroesMapsService } from '../../services/heroesMaps';
-
-export const ActionsNotLogged = () => {
-    return (
-        <div>
-            <Link as={ReactRouterLink} to={'/login'} mr={1} color={'teal.500'}>
-                Log in
-            </Link>
-            to track progress
-        </div>
-    );
-};
+import { useSelector } from 'react-redux';
+import { isLoggedIn } from '../../context/userReducer';
 
 const UpdateActionPanel = ({ id, updateFunc, lastAction }) => {
     const {
@@ -107,21 +97,30 @@ const UpdateActionPanel = ({ id, updateFunc, lastAction }) => {
 
 export const ActionsList = ({ item, updateFunc }) => {
     const { id, link, lastAction, actions } = item;
+    const logged = useSelector(isLoggedIn);
+
+    const commonSection = (
+        <Flex
+            flexDirection={'row'}
+            w={'full'}
+            mx={'auto'}
+            mb={2}
+            whiteSpace={'nowrap'}
+            justifyContent={'center'}
+        >
+            <Link href={link} isExternal color={'teal.500'}>
+                Download
+            </Link>
+        </Flex>
+    )
+
+    if (!logged) {  
+        return commonSection
+    }
 
     return (
         <>
-            <Flex
-                flexDirection={'row'}
-                w={'full'}
-                mx={'auto'}
-                mb={2}
-                whiteSpace={'nowrap'}
-                justifyContent={'center'}
-            >
-                <Link href={link} isExternal color={'teal.500'}>
-                    Download
-                </Link>
-            </Flex>
+            {commonSection}
             <Divider colorScheme={'gray'} my={1} />
             <TableContainer mb={1}>
                 <Table size='sm' variant={'unstyled'}>

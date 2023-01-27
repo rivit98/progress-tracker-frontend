@@ -25,17 +25,8 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { crackmesService } from '../../services/crackmes';
 import { possibleActionsMap } from '../generic/actionOptions';
-
-export const CrackmeActionsNotLogged = () => {
-    return (
-        <div>
-            <Link as={ReactRouterLink} to={'/login'} mr={1} color={'teal.500'}>
-                Log in
-            </Link>
-            to track progress
-        </div>
-    );
-};
+import { useSelector } from 'react-redux';
+import { isLoggedIn } from '../../context/userReducer';
 
 const UpdateActionPanel = ({ id, updateTask, lastAction }) => {
     const {
@@ -113,35 +104,45 @@ export const ActionsList = ({ crackme, updateTask }) => {
     const { id, actions, comments_num, hexid, writeups_num, lastAction } = crackme;
     const challengeLink = `https://crackmes.one/crackme/${hexid}`;
     const downloadLink = `https://crackmes.one/static/crackme/${hexid}.zip`;
+    const logged = useSelector(isLoggedIn);
+
+    const commonSection = (
+        <Flex
+            flexDirection={'row'}
+            w={'full'}
+            mx={'auto'}
+            mb={2}
+            whiteSpace={'nowrap'}
+        >
+            <HStack flex={1} justifyContent={'center'}>
+                <Link href={challengeLink} isExternal color={'teal.500'}>
+                    Description
+                </Link>
+                <IconButton as={Link} href={downloadLink} icon={<FaDownload />} variant={'link'} color={'teal.500'} />
+            </HStack>
+            <HStack flex={1} justifyContent={'center'}>
+                <Text>Writeups:{' '}</Text>
+                <Text fontWeight={'bold'}>
+                    {writeups_num}
+                </Text>
+            </HStack>
+            <HStack flex={1} justifyContent={'center'}>
+                <Text>Comments:{' '}</Text>
+                <Text fontWeight={'bold'}>
+                    {comments_num}
+                </Text>
+            </HStack>
+        </Flex>
+    )
+
+    if (!logged) {
+        return commonSection
+    }
+
 
     return (
         <>
-            <Flex
-                flexDirection={'row'}
-                w={'full'}
-                mx={'auto'}
-                mb={2}
-                whiteSpace={'nowrap'}
-            >
-                <HStack flex={1} justifyContent={'center'}>
-                    <Link href={challengeLink} isExternal color={'teal.500'}>
-                        Description
-                    </Link>
-                    <IconButton as={Link} href={downloadLink} icon={<FaDownload />} variant={'link'} color={'teal.500'} />
-                </HStack>
-                <HStack flex={1} justifyContent={'center'}>
-                    <Text>Writeups:{' '}</Text>
-                    <Text fontWeight={'bold'}>
-                        {writeups_num}
-                    </Text>
-                </HStack>
-                <HStack flex={1} justifyContent={'center'}>
-                    <Text>Comments:{' '}</Text>
-                    <Text fontWeight={'bold'}>
-                        {comments_num}
-                    </Text>
-                </HStack>
-            </Flex>
+            {commonSection}
             <Divider colorScheme={'gray'} my={1} />
             <TableContainer mb={1}>
                 <Table size='sm' variant={'unstyled'}>

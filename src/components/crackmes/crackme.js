@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-import { isLoggedIn } from '../../context/userReducer';
 import {
     AccordionButton,
     AccordionIcon,
@@ -12,10 +10,9 @@ import {
 } from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
 import { statusBadge, STATUS_CLEAR } from '../generic/statuses';
-import { ActionsList, CrackmeActionsNotLogged } from './actions';
+import { ActionsList } from './actions';
 
 export const Crackme = ({ crackme, updateTask }) => {
-    const logged = useSelector(isLoggedIn);
     const { date, name, lastAction, id } = crackme;
     const lastActionStatus = lastAction && lastAction.status;
 
@@ -50,7 +47,7 @@ export const Crackme = ({ crackme, updateTask }) => {
                 <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={2} w={'full'} mb={2}>
-                {logged ? <ActionsList crackme={crackme} updateTask={updateTask} /> : <CrackmeActionsNotLogged />}
+                <ActionsList crackme={crackme} updateTask={updateTask} />
             </AccordionPanel>
         </AccordionItem>
     );

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Paginate } from '../generic/paginate';
 import { filterTasks } from './filters';
+import { isLoggedIn } from '../../context/userReducer';
+import { NotLoggedInfo } from '../generic/notLoggedBanner';
 
 const EmptyList = () => {
     return (
@@ -19,6 +21,7 @@ const perPage = 40;
 export const CrackmesList = ({ tasksWithActions }) => {
     //FIXME, when updating crackme action and having filters set, crackme disappears from the list (it is excluded by the filters)
     const dispatch = useDispatch();
+    const logged = useSelector(isLoggedIn);
     const [tasks, setTasks] = useState([]);
 
     const [expandedItems, setExpandedItems] = useState({});
@@ -63,11 +66,13 @@ export const CrackmesList = ({ tasksWithActions }) => {
 
     return (
         <>
+            {!logged && <NotLoggedInfo/>}
+
             <Text mb={5} mt={1}>
                 {filteredTasks.length} results
             </Text>
             <Flex w={'full'} justifyContent={'center'} flexDirection={'column'}>
-                <Accordion w={'full'} allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems[page] || []}>
+                <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems[page] || []}>
                     {filteredTasks.slice(indexOfFirstItem, indexOfLastItem).map((t, i) => (
                         <Crackme crackme={t} updateTask={updateTask} key={indexOfFirstItem + i} />
                     ))}

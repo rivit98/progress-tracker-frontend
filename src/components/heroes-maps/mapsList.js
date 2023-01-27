@@ -1,9 +1,11 @@
-import { Accordion, Box, Flex, Text } from '@chakra-ui/react';
+import { Accordion, Alert, AlertIcon, Box, Flex, Text } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Paginate } from '../generic/paginate';
 import { Map } from './map';
 import { heroesMapsService } from '../../services/heroesMaps';
+import { isLoggedIn } from '../../context/userReducer';
+import { NotLoggedInfo } from '../generic/notLoggedBanner';
 
 const EmptyList = () => {
     return (
@@ -18,6 +20,7 @@ const perPage = 40;
 export const MapsList = ({ itemsWithActions }) => {
     //FIXME, when updating crackme action and having filters set, crackme disappears from the list (it is excluded by the filters)
     const dispatch = useDispatch();
+    const logged = useSelector(isLoggedIn);
     const [items, setItems] = useState([]);
 
     const [expandedItems, setExpandedItems] = useState({});
@@ -40,7 +43,7 @@ export const MapsList = ({ itemsWithActions }) => {
     // }, [dispatch, filterStatuses.length, searchTerm, sortMethod]);
 
     // let filteredItems = filterTasks(maps, filters);
-	const filteredItems = itemsWithActions;
+    const filteredItems = itemsWithActions;
 
     if (filteredItems.length === 0) {
         return <EmptyList />;
@@ -64,11 +67,13 @@ export const MapsList = ({ itemsWithActions }) => {
 
     return (
         <>
+            {!logged && <NotLoggedInfo/>}
+
             <Text mb={5} mt={1}>
                 {filteredItems.length} results
             </Text>
             <Flex w={'full'} justifyContent={'center'} flexDirection={'column'}>
-                <Accordion w={'full'} allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems[page] || []}>
+                <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems[page] || []}>
                     {filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((item, i) => (
                         <Map item={item} updateFunc={updateItem} key={indexOfFirstItem + i} />
                     ))}
