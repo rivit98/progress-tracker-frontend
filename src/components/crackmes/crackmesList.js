@@ -24,7 +24,6 @@ export const CrackmesList = ({ tasksWithActions }) => {
 
     useEffect(() => {
         // set the initial data set and reset the filters
-        setFilters(defaultFilters)
         setTasks(tasksWithActions);
     }, [tasksWithActions]);
 

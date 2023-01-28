@@ -1,4 +1,4 @@
-import { Box, Card, CardBody, CardHeader, Center, Container, Divider, Heading, Link, SimpleGrid, Text, VStack } from '@chakra-ui/react';
+import { Card, CardBody, CardHeader, Center, Container, Divider, Heading, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
 const HomeCard = ({ header, target, children }) => {
@@ -22,11 +22,7 @@ const Home = () => {
                 <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
                     <HomeCard header={'crackmes'} target={'/crackmes'}>
                         <Text>
-                            Tracker for{' '}
-                            <Link href={'https://crackmes.one'} isExternal color={'teal.500'}>
-                                crackmes.one
-                            </Link>.{' '}
-                            Original site does not allow you to mark challenges as solved or hide the bad ones
+                            Tracker for crackmes.one. Original site does not allow you to mark challenges as solved or hide the bad ones
                             so I made a custom tracker for it :)
                         </Text>
                     </HomeCard>

@@ -19,7 +19,7 @@ export const CrackmesFetcher = () => {
 
     const actionsLoader = async (options) => {
         if (!logged) {
-            return new Promise((resolve) => resolve([]));
+            return Promise.resolve([])
         }
 
         return crackmesService.getActions(options);

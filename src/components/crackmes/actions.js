@@ -16,7 +16,6 @@ import {
     Text,
     Tr
 } from '@chakra-ui/react';
-import { Link as ReactRouterLink } from 'react-router-dom';
 import formatDate from '../../utils/dateformatter';
 import { MdArrowDropDown } from 'react-icons/md';
 import { FaDownload } from 'react-icons/fa';
@@ -139,7 +138,6 @@ export const ActionsList = ({ crackme, updateTask }) => {
         return commonSection
     }
 
-
     return (
         <>
             {commonSection}
@@ -147,7 +145,7 @@ export const ActionsList = ({ crackme, updateTask }) => {
             <TableContainer mb={1}>
                 <Table size='sm' variant={'unstyled'}>
                     <Tbody>
-                        {actions.map((a, index) => {
+                        {actions.slice(0, 10).map((a, index) => {
                             return (
                                 <Tr key={index}>
                                     <Td w={'1%'} pr={1}>
