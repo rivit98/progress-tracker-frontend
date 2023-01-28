@@ -11,7 +11,6 @@ export const crackmesSlice = createSlice({
             return { ...state, lastUpdated: action.payload };
         },
         setCrackmes: (state, action) => {
-            
             return { ...action.payload };
         },
         clearState: (state, action) => {

@@ -6,6 +6,7 @@ import { Map } from './map';
 import { isLoggedIn } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
 import { EmptyResultSet } from '../generic/emptyResultSet';
+import { defaultFilters, filterItems, Filters } from './filters';
 
 const perPage = 40;
 
@@ -14,23 +15,22 @@ export const MapsList = ({ itemsWithActions }) => {
     const [items, setItems] = useState(itemsWithActions);
 
     const [expandedItems, setExpandedItems] = useState({});
-    // const [filters, setFilters] = useState(defaultFilters);
+    const [filters, setFilters] = useState(defaultFilters);
     const [page, setPage] = useState(1);
 
-    // const updateFilters = (newFilters) => {
-    //     setFilters({...filters, ...newFilters})
-    // }
+    const updateFilters = (newFilters) => {
+        setFilters({...filters, ...newFilters})
+    }
 
-    // useEffect(() => {
-    //     // set first page after filtering (if not already there)
-    //     if (page !== 1) {
-    //         setPage(1);
-    //     }
-    //     setExpandedItems({}); // clear expended items after filtering
-    // }, [filters]);
+    useEffect(() => {
+        // set first page after filtering (if not already there)
+        if (page !== 1) {
+            setPage(1);
+        }
+        setExpandedItems({}); // clear expended items after filtering
+    }, [filters]);
 
-    // let filteredItems = filterTasks(items, filters);
-    let filteredItems = items;
+    let filteredItems = filterItems(items, filters);
     if (filteredItems.length === 0) {
         return <EmptyResultSet />;
     }
@@ -53,7 +53,7 @@ export const MapsList = ({ itemsWithActions }) => {
 
     return (
         <>
-            {/* <Filters updateFilters={updateFilters} /> */}
+            <Filters updateFilters={updateFilters} />
             {!logged && <NotLoggedInfo/>}
             <Text mb={5} mt={1}>
                 {filteredItems.length} results
