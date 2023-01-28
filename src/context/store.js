@@ -8,7 +8,7 @@ import React from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { __DEV__ } from '../utils/env';
 import userReducer from './userReducer';
-import crackmesReducer from '../components/crackmes/redux/crackmesReducer';
+import crackmesReducer from '../components/crackmes/crackmesReducer';
 import { configureStore } from '@reduxjs/toolkit';
 
 const persistConfig = {

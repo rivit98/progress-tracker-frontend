@@ -1,6 +1,6 @@
 import { Flex, Text, Tooltip } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { crackmes } from './redux/crackmesReducer';
+import { crackmes } from './crackmesReducer';
 import formatDate from '../../utils/dateformatter';
 import { FiChevronsUp, FiMinus, FiPlus } from 'react-icons/fi';
 

@@ -9,6 +9,7 @@ import {
     Text,
     Hide,
 } from '@chakra-ui/react';
+import { arabToRoman } from 'roman-numbers';
 import { statusBadge, STATUS_CLEAR } from '../generic/statuses';
 import { ActionsList } from './actions';
 
@@ -43,7 +44,7 @@ export const Map = ({ item, updateFunc }) => {
                     </Hide>
                 </HStack>
                 <Box flex={3} overflow={'hidden'}>
-                    {heroes_version}
+                    {arabToRoman(heroes_version)}
                 </Box>
                 <AccordionIcon />
             </AccordionButton>

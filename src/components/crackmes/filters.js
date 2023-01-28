@@ -1,15 +1,11 @@
 import { Box, Flex, Input } from '@chakra-ui/react';
 import Select, { components } from 'react-select';
 import debounce from 'debounce';
-import {
-    DEFAULT_SORT_OPTION,
-    defaultFilterStatuses,
-    getSortOption,
-    selectFieldStyles,
-    sortOptions,
-    statusesOptions
-} from './filterOpts';
-import { STATUS_CLEAR } from '../generic/statuses';
+
+import { statusesOptions, STATUS_CLEAR } from '../generic/statuses';
+import { defaultFilterStatuses, DEFAULT_SORT_OPTION } from './config';
+import { getSortOption, sortOptions } from './filterOpts';
+import { selectFieldStyles } from '../generic/filters';
 
 export const defaultFilters = {
     filterStatuses: defaultFilterStatuses.map((v) => v['value']),
@@ -77,22 +73,22 @@ export const Filters = ({updateFilters}) => {
 };
 
 export const filterTasks = (tasks, { filterStatuses, searchTerm, sortMethod }) => {
-    let filteredTasks = [...tasks];
+    let filteredItems = [...tasks];
     if (searchTerm.length > 2) {
-        filteredTasks = filteredTasks.filter((t) => t.name.toLowerCase().includes(searchTerm));
+        filteredItems = filteredItems.filter((t) => t.name.toLowerCase().includes(searchTerm));
     }
 
     if (filterStatuses.length > 0) {
         if (filterStatuses.includes(STATUS_CLEAR)) {
             // task has no actions (or cleared state)
-            filteredTasks = filteredTasks.filter(
+            filteredItems = filteredItems.filter(
                 (t) => t.lastAction === undefined || filterStatuses.includes(t.lastAction.status)
             );
         } else {
-            filteredTasks = filteredTasks.filter((t) => t.lastAction && filterStatuses.includes(t.lastAction.status));
+            filteredItems = filteredItems.filter((t) => t.lastAction && filterStatuses.includes(t.lastAction.status));
         }
     }
 
-    filteredTasks = filteredTasks.sort(getSortOption(sortMethod).sortFn);
-    return filteredTasks;
+    filteredItems = filteredItems.sort(getSortOption(sortMethod).sortFn);
+    return filteredItems;
 };

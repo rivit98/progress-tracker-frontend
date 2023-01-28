@@ -27,3 +27,7 @@ export const statusBadge = {
     [STATUS_SOLVED]: <Badge colorScheme='green'>{statusDesc[STATUS_SOLVED]}</Badge>,
     [STATUS_IGNORED]: <Badge colorScheme='gray'>{statusDesc[STATUS_IGNORED]}</Badge>
 };
+
+export const statusesOptions = Object.keys(statusDesc).map((k) => {
+    return { value: parseInt(k, 10), label: statusDesc[k].toLowerCase() };
+});

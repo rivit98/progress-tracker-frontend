@@ -1,12 +1,9 @@
 import { Box, Flex, Input } from '@chakra-ui/react';
 import Select, { components } from 'react-select';
 import debounce from 'debounce';
-import {
-    defaultFilterStatuses,
-    selectFieldStyles,
-    statusesOptions
-} from './filterOpts';
-import { STATUS_CLEAR } from '../generic/statuses';
+import { statusesOptions, STATUS_CLEAR } from '../generic/statuses';
+import { defaultFilterStatuses } from './config';
+import { byName, selectFieldStyles } from '../generic/filters';
 
 export const defaultFilters = {
     filterStatuses: defaultFilterStatuses.map((v) => v['value']),
@@ -57,21 +54,22 @@ export const Filters = ({updateFilters}) => {
 };
 
 export const filterItems = (maps, { filterStatuses, searchTerm }) => {
-    let filteredMaps = [...maps];
+    let filteredItems = [...maps];
     if (searchTerm.length > 2) {
-        filteredMaps = filteredMaps.filter((t) => t.name.toLowerCase().includes(searchTerm));
+        filteredItems = filteredItems.filter((t) => t.name.toLowerCase().includes(searchTerm));
     }
 
     if (filterStatuses.length > 0) {
         if (filterStatuses.includes(STATUS_CLEAR)) {
             // task has no actions (or cleared state)
-            filteredMaps = filteredMaps.filter(
+            filteredItems = filteredItems.filter(
                 (t) => t.lastAction === undefined || filterStatuses.includes(t.lastAction.status)
             );
         } else {
-            filteredMaps = filteredMaps.filter((t) => t.lastAction && filterStatuses.includes(t.lastAction.status));
+            filteredItems = filteredItems.filter((t) => t.lastAction && filterStatuses.includes(t.lastAction.status));
         }
     }
 
-    return filteredMaps;
+    filteredItems = filteredItems.sort(byName);
+    return filteredItems;
 };

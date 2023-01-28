@@ -6,8 +6,7 @@ import { Paginate } from '../generic/paginate';
 import { defaultFilters, Filters, filterTasks } from './filters';
 import { isLoggedIn } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
-
-const perPage = 40;
+import { ITEMS_PER_PAGE } from './config';
 
 export const CrackmesList = ({ itemsWithActions }) => {
     const logged = useSelector(isLoggedIn);
@@ -31,9 +30,9 @@ export const CrackmesList = ({ itemsWithActions }) => {
 
     let filteredItems = filterTasks(items, filters);
 
-    const totalPages = Math.ceil(filteredItems.length / perPage);
-    const indexOfLastItem = page * perPage;
-    const indexOfFirstItem = indexOfLastItem - perPage;
+    const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
+    const indexOfLastItem = page * ITEMS_PER_PAGE;
+    const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
 
     const updateItem = (taskid, action) => {
         const index = items.findIndex((item) => item.id === taskid);

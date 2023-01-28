@@ -1,11 +1,3 @@
-import { STATUS_SOLVED, statusDesc } from '../generic/statuses';
-
-export const statusesOptions = Object.keys(statusDesc).map((k) => {
-    return { value: parseInt(k, 10), label: statusDesc[k].toLowerCase() };
-});
-
-export const defaultFilterStatuses = statusesOptions.filter((opt) => opt.value !== STATUS_SOLVED);
-
 export const selectFieldStyles = {
     option: (provided, state) => {
         return {
@@ -25,4 +17,20 @@ export const selectFieldStyles = {
         ...styles,
         color: 'black'
     })
+};
+
+export const byName = (t1, t2) => {
+    return t1.name.localeCompare(t2.name);
+};
+
+export const byDate = (t1, t2) => {
+    return t2.date.getTime() - t1.date.getTime();
+};
+
+export const byNumber = (t1, t2) => {
+    return t1 - t2
+};
+
+export const reverse = (res) => {
+    return -res;
 };

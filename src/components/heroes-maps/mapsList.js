@@ -6,8 +6,7 @@ import { Map } from './map';
 import { isLoggedIn } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
 import { defaultFilters, filterItems, Filters } from './filters';
-
-const perPage = 40;
+import { ITEMS_PER_PAGE } from './config';
 
 export const MapsList = ({ itemsWithActions }) => {
     const logged = useSelector(isLoggedIn);
@@ -31,9 +30,9 @@ export const MapsList = ({ itemsWithActions }) => {
 
     let filteredItems = filterItems(items, filters);
 
-    const totalPages = Math.ceil(filteredItems.length / perPage);
-    const indexOfLastItem = page * perPage;
-    const indexOfFirstItem = indexOfLastItem - perPage;
+    const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
+    const indexOfLastItem = page * ITEMS_PER_PAGE;
+    const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
 
     const updateItem = (taskid, action) => {
         const index = items.findIndex((item) => item.id === taskid);
