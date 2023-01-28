@@ -1,10 +1,9 @@
-import { Accordion, Box, Flex, Text } from '@chakra-ui/react';
+import { Accordion, Flex, Text } from '@chakra-ui/react';
 import { Crackme } from './crackme';
-import { crackmesFilters, resetFilters } from './redux/crackmesReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Paginate } from '../generic/paginate';
-import { filterTasks } from './filters';
+import { defaultFilters, Filters, filterTasks } from './filters';
 import { isLoggedIn } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
 import { EmptyResultSet } from '../generic/emptyResultSet';
@@ -12,21 +11,22 @@ import { EmptyResultSet } from '../generic/emptyResultSet';
 const perPage = 40;
 
 export const CrackmesList = ({ tasksWithActions }) => {
-    //FIXME, when updating crackme action and having filters set, crackme disappears from the list (it is excluded by the filters)
-    const dispatch = useDispatch();
     const logged = useSelector(isLoggedIn);
     const [tasks, setTasks] = useState([]);
 
     const [expandedItems, setExpandedItems] = useState({});
-    const filters = useSelector(crackmesFilters);
-    const { filterStatuses, searchTerm, sortMethod } = filters;
+    const [filters, setFilters] = useState(defaultFilters);
     const [page, setPage] = useState(1);
+
+    const updateFilters = (newFilters) => {
+        setFilters({...filters, ...newFilters})
+    }
 
     useEffect(() => {
         // set the initial data set and reset the filters
-        dispatch(resetFilters())
+        setFilters(defaultFilters)
         setTasks(tasksWithActions);
-    }, [dispatch, tasksWithActions]);
+    }, [tasksWithActions]);
 
     useEffect(() => {
         // set first page after filtering (if not already there)
@@ -34,7 +34,7 @@ export const CrackmesList = ({ tasksWithActions }) => {
             setPage(1);
         }
         setExpandedItems({}); // clear expended items after filtering
-    }, [dispatch, filterStatuses.length, searchTerm, sortMethod]);
+    }, [filters]);
 
     let filteredTasks = filterTasks(tasks, filters);
     if (filteredTasks.length === 0) {
@@ -59,8 +59,8 @@ export const CrackmesList = ({ tasksWithActions }) => {
 
     return (
         <>
+            <Filters updateFilters={updateFilters} />
             {!logged && <NotLoggedInfo/>}
-
             <Text mb={5} mt={1}>
                 {filteredTasks.length} results
             </Text>

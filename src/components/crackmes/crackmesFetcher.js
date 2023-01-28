@@ -6,7 +6,6 @@ import { crackmes, setCrackmes, setTasksLastUpdated } from './redux/crackmesRedu
 import { isLoggedIn } from '../../context/userReducer';
 import { WEEK } from 'time-constants';
 import { CrackmesList } from './crackmesList';
-import { Filters } from './filters';
 import { UpdateSummary } from './summary';
 
 export const CrackmesFetcher = () => {
@@ -18,7 +17,7 @@ export const CrackmesFetcher = () => {
         cachedTasks
     } = useSelector(crackmes);
 
-    const actionsLoader = (options) => {
+    const actionsLoader = async (options) => {
         if (!logged) {
             return new Promise((resolve) => resolve([]));
         }
@@ -26,7 +25,7 @@ export const CrackmesFetcher = () => {
         return crackmesService.getActions(options);
     };
 
-    const cacheResolver = (options) => {
+    const cacheResolver = async (options) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const lastUpdated = await crackmesService.lastUpdated(options);
@@ -54,7 +53,13 @@ export const CrackmesFetcher = () => {
         });
     };
 
-    const taskListLoader = getAggregatedState(cacheResolver, actionsLoader);
+    const tasksLoader = async (options) => {
+        const [lastUpdated, crackmes] = await Promise.all([crackmesService.lastUpdated(options), crackmesService.getCrackmes(options)]);
+        dispatch(setTasksLastUpdated(lastUpdated));
+        return crackmes;
+    }
+
+    const taskListLoader = getAggregatedState(tasksLoader, actionsLoader);
     const state = useAxiosEffect(taskListLoader, [], [[], {}]);
     const [crackmesList, actions] = state.data;
 
@@ -63,6 +68,7 @@ export const CrackmesFetcher = () => {
         taskActions = taskActions
             .map((action) => ({ ...action, date: new Date(action.date) }))
             .sort((a1, a2) => a2.date.getTime() - a1.date.getTime());
+        
         const lastAction = taskActions[0] || undefined;
         return {
             ...t,
@@ -74,7 +80,6 @@ export const CrackmesFetcher = () => {
 
     return (
         <ComponentStateHandler state={state}>
-            <Filters />
             <CrackmesList tasksWithActions={tasksWithActions} />
             <UpdateSummary />
         </ComponentStateHandler>

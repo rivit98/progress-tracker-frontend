@@ -1,8 +1,6 @@
 import { Box, Flex, Input } from '@chakra-ui/react';
 import Select, { components } from 'react-select';
 import debounce from 'debounce';
-import { useDispatch } from 'react-redux';
-import { updateFilters } from './redux/crackmesReducer';
 import {
     DEFAULT_SORT_OPTION,
     defaultFilterStatuses,
@@ -12,6 +10,12 @@ import {
     statusesOptions
 } from './filterOpts';
 import { STATUS_CLEAR } from '../generic/statuses';
+
+export const defaultFilters = {
+    filterStatuses: defaultFilterStatuses.map((v) => v['value']),
+    searchTerm: '',
+    sortMethod: DEFAULT_SORT_OPTION['value']
+}
 
 const Control = ({ children, ...props }) => {
     const { label } = props.selectProps;
@@ -23,21 +27,19 @@ const Control = ({ children, ...props }) => {
     );
 };
 
-export const Filters = () => {
-    const dispatch = useDispatch();
-
+export const Filters = ({updateFilters}) => {
     const onStatusChanged = (statuses) => {
         statuses = statuses.map((v) => v['value']);
-        dispatch(updateFilters({ filterStatuses: statuses }));
+        updateFilters({ filterStatuses: statuses });
     };
 
     const onSearchTermChanged = (event) => {
         const term = event.target.value;
-        dispatch(updateFilters({ searchTerm: term.toLowerCase() }));
+        updateFilters({ searchTerm: term.toLowerCase() });
     };
 
     const onSortMethodChanged = (method) => {
-        dispatch(updateFilters({ sortMethod: method.value }));
+        updateFilters({ sortMethod: method.value });
     };
 
     return (

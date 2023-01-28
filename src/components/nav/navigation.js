@@ -19,7 +19,6 @@ import { currentUserData, isLoggedIn, removeUser } from '../../context/userReduc
 import { useDispatch, useSelector } from 'react-redux';
 import { VscKey } from 'react-icons/vsc';
 import { FiMap } from 'react-icons/fi';
-import { resetFilters } from '../crackmes/redux/crackmesReducer';
 
 const hasPermissions = (userGroups, requiredPermissions) => {
     const groupNames = userGroups.map((g) => g.name);
@@ -59,7 +58,6 @@ export function Navigation({ children }) {
             isClosable: true
         });
         dispatch(removeUser());
-        dispatch(resetFilters());
     };
 
     return (
