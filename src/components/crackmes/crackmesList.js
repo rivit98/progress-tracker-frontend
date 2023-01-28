@@ -10,9 +10,9 @@ import { EmptyResultSet } from '../generic/emptyResultSet';
 
 const perPage = 40;
 
-export const CrackmesList = ({ tasksWithActions }) => {
+export const CrackmesList = ({ itemsWithActions }) => {
     const logged = useSelector(isLoggedIn);
-    const [tasks, setTasks] = useState(tasksWithActions);
+    const [items, setItems] = useState(itemsWithActions);
 
     const [expandedItems, setExpandedItems] = useState({});
     const [filters, setFilters] = useState(defaultFilters);
@@ -30,21 +30,21 @@ export const CrackmesList = ({ tasksWithActions }) => {
         setExpandedItems({}); // clear expended items after filtering
     }, [filters]);
 
-    let filteredTasks = filterTasks(tasks, filters);
-    if (filteredTasks.length === 0) {
+    let filteredItems = filterTasks(items, filters);
+    if (filteredItems.length === 0) {
         return <EmptyResultSet />;
     }
 
-    const totalPages = Math.ceil(filteredTasks.length / perPage);
+    const totalPages = Math.ceil(filteredItems.length / perPage);
     const indexOfLastItem = page * perPage;
     const indexOfFirstItem = indexOfLastItem - perPage;
 
-    const updateTask = (taskid, action) => {
-        const index = tasks.findIndex((t) => t.id === taskid);
-        const newTasks = [...tasks];
-        newTasks[index].actions.unshift(action);
-        newTasks[index].lastAction = action;
-        setTasks(newTasks);
+    const updateItem = (taskid, action) => {
+        const index = items.findIndex((item) => item.id === taskid);
+        const newItems = [...items];
+        newItems[index].actions.unshift(action);
+        newItems[index].lastAction = action;
+        setItems(newItems);
     };
 
     const updateOpenedItems = (opened_items) => {
@@ -56,12 +56,12 @@ export const CrackmesList = ({ tasksWithActions }) => {
             <Filters updateFilters={updateFilters} />
             {!logged && <NotLoggedInfo/>}
             <Text mb={5} mt={1}>
-                {filteredTasks.length} results
+                {filteredItems.length} results
             </Text>
             <Flex w={'full'} justifyContent={'center'} flexDirection={'column'}>
                 <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems[page] || []}>
-                    {filteredTasks.slice(indexOfFirstItem, indexOfLastItem).map((t, i) => (
-                        <Crackme crackme={t} updateTask={updateTask} key={indexOfFirstItem + i} />
+                    {filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((t, i) => (
+                        <Crackme crackme={t} updateFunc={updateItem} key={indexOfFirstItem + i} />
                     ))}
                 </Accordion>
             </Flex>

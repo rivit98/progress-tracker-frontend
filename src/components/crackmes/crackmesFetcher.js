@@ -80,7 +80,7 @@ export const CrackmesFetcher = () => {
 
     return (
         <ComponentStateHandler state={state}>
-            <CrackmesList tasksWithActions={tasksWithActions} />
+            <CrackmesList itemsWithActions={tasksWithActions} />
             <UpdateSummary />
         </ComponentStateHandler>
     );

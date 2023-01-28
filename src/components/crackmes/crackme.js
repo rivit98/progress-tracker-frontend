@@ -12,7 +12,7 @@ import formatDate from '../../utils/dateformatter';
 import { statusBadge, STATUS_CLEAR } from '../generic/statuses';
 import { ActionsList } from './actions';
 
-export const Crackme = ({ crackme, updateTask }) => {
+export const Crackme = ({ crackme, updateFunc }) => {
     const { date, name, lastAction, id } = crackme;
     const lastActionStatus = lastAction && lastAction.status;
 
@@ -47,7 +47,7 @@ export const Crackme = ({ crackme, updateTask }) => {
                 <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={2} w={'full'} mb={2}>
-                <ActionsList crackme={crackme} updateTask={updateTask} />
+                <ActionsList crackme={crackme} updateFunc={updateFunc} />
             </AccordionPanel>
         </AccordionItem>
     );
