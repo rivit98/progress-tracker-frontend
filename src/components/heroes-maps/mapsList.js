@@ -5,7 +5,6 @@ import { Paginate } from '../generic/paginate';
 import { Map } from './map';
 import { isLoggedIn } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
-import { EmptyResultSet } from '../generic/emptyResultSet';
 import { defaultFilters, filterItems, Filters } from './filters';
 
 const perPage = 40;
@@ -31,9 +30,6 @@ export const MapsList = ({ itemsWithActions }) => {
     }, [filters]);
 
     let filteredItems = filterItems(items, filters);
-    if (filteredItems.length === 0) {
-        return <EmptyResultSet />;
-    }
 
     const totalPages = Math.ceil(filteredItems.length / perPage);
     const indexOfLastItem = page * perPage;

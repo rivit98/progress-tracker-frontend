@@ -6,7 +6,6 @@ import { Paginate } from '../generic/paginate';
 import { defaultFilters, Filters, filterTasks } from './filters';
 import { isLoggedIn } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
-import { EmptyResultSet } from '../generic/emptyResultSet';
 
 const perPage = 40;
 
@@ -31,9 +30,6 @@ export const CrackmesList = ({ itemsWithActions }) => {
     }, [filters]);
 
     let filteredItems = filterTasks(items, filters);
-    if (filteredItems.length === 0) {
-        return <EmptyResultSet />;
-    }
 
     const totalPages = Math.ceil(filteredItems.length / perPage);
     const indexOfLastItem = page * perPage;
