@@ -6,14 +6,7 @@ import { Map } from './map';
 import { heroesMapsService } from '../../services/heroesMaps';
 import { isLoggedIn } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
-
-const EmptyList = () => {
-    return (
-        <Box w={'full'} maxW={'xl'} mx={'auto'} mb={20} mt={10} fontWeight={'bold'} fontSize={'lg'}>
-            <Text align={'center'}>No items matching your search criteria</Text>
-        </Box>
-    );
-};
+import { EmptyResultSet } from '../generic/emptyResultSet';
 
 const perPage = 40;
 
@@ -46,7 +39,7 @@ export const MapsList = ({ itemsWithActions }) => {
     const filteredItems = itemsWithActions;
 
     if (filteredItems.length === 0) {
-        return <EmptyList />;
+        return <EmptyResultSet />;
     }
 
     const totalPages = Math.ceil(filteredItems.length / perPage);

@@ -7,12 +7,9 @@ export const NotLoggedInfo = () => {
         <Box w={'full'} maxW={'xl'} mx={'auto'} mb={5} mt={5} color={'black'}>
             <Alert status='info' >
                 <AlertIcon />
-                <Text mr={1}>
-                    You have to
-                </Text>
                 <Link as={ReactRouterLink} to={'/login'}>
                     <Text color={'teal'} fontWeight={'bold'}>
-                        log in
+                        Log in
                     </Text>
                 </Link>
                 <Text ml={1}>

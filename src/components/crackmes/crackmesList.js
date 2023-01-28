@@ -7,14 +7,7 @@ import { Paginate } from '../generic/paginate';
 import { filterTasks } from './filters';
 import { isLoggedIn } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
-
-const EmptyList = () => {
-    return (
-        <Box w={'full'} maxW={'xl'} mx={'auto'} mb={20} mt={10} fontWeight={'bold'} fontSize={'lg'}>
-            <Text align={'center'}>No tasks matching your search criteria</Text>
-        </Box>
-    );
-};
+import { EmptyResultSet } from '../generic/emptyResultSet';
 
 const perPage = 40;
 
@@ -45,7 +38,7 @@ export const CrackmesList = ({ tasksWithActions }) => {
 
     let filteredTasks = filterTasks(tasks, filters);
     if (filteredTasks.length === 0) {
-        return <EmptyList />;
+        return <EmptyResultSet />;
     }
 
     const totalPages = Math.ceil(filteredTasks.length / perPage);
