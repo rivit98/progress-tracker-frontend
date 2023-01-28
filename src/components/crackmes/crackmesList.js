@@ -12,7 +12,7 @@ const perPage = 40;
 
 export const CrackmesList = ({ tasksWithActions }) => {
     const logged = useSelector(isLoggedIn);
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState(tasksWithActions);
 
     const [expandedItems, setExpandedItems] = useState({});
     const [filters, setFilters] = useState(defaultFilters);
@@ -21,11 +21,6 @@ export const CrackmesList = ({ tasksWithActions }) => {
     const updateFilters = (newFilters) => {
         setFilters({...filters, ...newFilters})
     }
-
-    useEffect(() => {
-        // set the initial data set and reset the filters
-        setTasks(tasksWithActions);
-    }, [tasksWithActions]);
 
     useEffect(() => {
         // set first page after filtering (if not already there)
