@@ -24,3 +24,8 @@ A simple react app made to track progress on weird stuff.
 3. Run `npm run build`
 4. Serve app using `serve` (check [Dockerfile](./prod.Dockerfile))
 
+
+
+## Notes
+
+This app was created very fast, so expect low-quality code ;)
