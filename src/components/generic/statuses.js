@@ -20,12 +20,17 @@ export const statusDescToStatusIDMap = Object.fromEntries(
     Object.entries(statusDesc).map(([k, v]) => [v.toLowerCase(), k])
 );
 
+const badgeStyles = {
+    w: '64px',
+    textAlign: 'center'
+}
+
 export const statusBadge = {
-    [STATUS_CLEAR]: <Badge colorScheme='blue'>{statusDesc[STATUS_CLEAR]}</Badge>,
-    [STATUS_STARTED]: <Badge colorScheme='yellow'>{statusDesc[STATUS_STARTED]}</Badge>,
-    [STATUS_ABORTED]: <Badge colorScheme='red'>{statusDesc[STATUS_ABORTED]}</Badge>,
-    [STATUS_SOLVED]: <Badge colorScheme='green'>{statusDesc[STATUS_SOLVED]}</Badge>,
-    [STATUS_IGNORED]: <Badge colorScheme='gray'>{statusDesc[STATUS_IGNORED]}</Badge>
+    [STATUS_CLEAR]: <Badge colorScheme='blue' {...badgeStyles}>{statusDesc[STATUS_CLEAR]}</Badge>,
+    [STATUS_STARTED]: <Badge colorScheme='yellow' {...badgeStyles}>{statusDesc[STATUS_STARTED]}</Badge>,
+    [STATUS_ABORTED]: <Badge colorScheme='red' {...badgeStyles}>{statusDesc[STATUS_ABORTED]}</Badge>,
+    [STATUS_SOLVED]: <Badge colorScheme='green' {...badgeStyles}>{statusDesc[STATUS_SOLVED]}</Badge>,
+    [STATUS_IGNORED]: <Badge colorScheme='gray' {...badgeStyles}>{statusDesc[STATUS_IGNORED]}</Badge>
 };
 
 export const statusesOptions = Object.keys(statusDesc).map((k) => {

@@ -15,11 +15,11 @@ export const ActionsTable = ({actions}) => {
             <Tbody>
                 {actions.slice(0, 10).map((a, index) => {
                     return (
-                        <Tr key={index}>
-                            <Td w={'1%'} pr={1}>
+                        <Tr key={index} >
+                            <Td w={'1%'} py={1} px={1}>
                                 {statusBadge[a.status]}
                             </Td>
-                            <Td pl={1}>
+                            <Td ml={3} py={1} px={1}>
                                 {formatDate(a.date, 'dd.mm.yyyy HH:MM:ss')}
                             </Td>
                         </Tr>

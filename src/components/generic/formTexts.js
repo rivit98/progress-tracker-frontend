@@ -1,10 +1,10 @@
 const requiredField = 'This field is required';
-const genericError = 'Error occurred, try again later :(';
+const genericError = 'Error occurred, try again';
 const textTooShort = 'Entered text is too short';
 const passwordTooShort = 'Password cannot be shorter than 8 characters';
 const passwordsDontMatch = 'Passwords do not match';
 const accountDeleted = 'Account deleted';
-const invalidPassword = 'Invalid login or password!'
+const invalidCredentials = 'Invalid login or password!'
 
 export const formTexts = {
     requiredField,
@@ -13,5 +13,5 @@ export const formTexts = {
     passwordTooShort,
     passwordsDontMatch,
     accountDeleted,
-    invalidPassword
+    invalidCredentials
 };

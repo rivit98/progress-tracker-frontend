@@ -39,13 +39,11 @@ const Register = () => {
     const dispatch = useDispatch();
 
     const registeredCallback = (user) => {
-        setLoading(false);
         dispatch(updateUser(user));
         navigate('/');
     };
 
     const errorCallback = (e) => {
-        setLoading(false);
         dispatch(removeUser());
 
         const err = e.response?.data;
@@ -74,7 +72,7 @@ const Register = () => {
             return;
         }
         setLoading(true);
-        authService.register(data).then(registeredCallback).catch(errorCallback);
+        authService.register(data).then(registeredCallback).catch(errorCallback).finally(() => setLoading(false));
     };
 
     return (

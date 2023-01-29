@@ -20,9 +20,6 @@ export const ActionsList = ({ crackme, updateFunc }) => {
 
     const commonSection = (
         <Flex
-            flexDirection={'row'}
-            w={'full'}
-            mx={'auto'}
             mb={2}
             whiteSpace={'nowrap'}
         >

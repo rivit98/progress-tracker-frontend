@@ -11,7 +11,6 @@ import {
     Link,
     Stack,
     Text,
-    useToast,
     VStack
 } from '@chakra-ui/react';
 import { formTexts } from '../generic/formTexts';
@@ -30,35 +29,21 @@ const Login = () => {
     } = useForm({ mode: 'all' });
 
     const [loading, setLoading] = useState(false);
-    const toast = useToast();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const loggedCallback = (user) => {
-        setLoading(false);
         dispatch(updateUser(user));
         navigate('/');
     };
 
     const errorCallback = (e) => {
-        setLoading(false);
         dispatch(removeUser());
 
-        const err = e.response?.data;
-        if (err) {
-            setError('password', {
-                type: 'manual',
-                message: formTexts.invalidPassword
-            });
-        } else {
-            toast({
-                title: 'Error',
-                description: formTexts.genericError,
-                status: 'error',
-                duration: 3000,
-                isClosable: true
-            });
-        }
+        setError('password', {
+            type: 'manual',
+            message: formTexts.invalidCredentials
+        });
     };
 
     const onSubmit = (data) => {
@@ -66,7 +51,7 @@ const Login = () => {
             return;
         }
         setLoading(true);
-        authService.login(data).then(loggedCallback).catch(errorCallback);
+        authService.login(data).then(loggedCallback).catch(errorCallback).finally(() => setLoading(false));
     };
 
     return (

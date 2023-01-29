@@ -25,7 +25,6 @@ export const Map = ({ item, updateFunc }) => {
             w={'full'}
             mx={'auto'}
             textAlign={'center'}
-            isDisabled={false}
             id={`item-${id}`}
         >
             <AccordionButton
@@ -48,7 +47,7 @@ export const Map = ({ item, updateFunc }) => {
                 </Box>
                 <AccordionIcon />
             </AccordionButton>
-            <AccordionPanel pb={2} w={'full'} mb={2}>
+            <AccordionPanel>
                 <ActionsList item={item} updateFunc={updateFunc} />
             </AccordionPanel>
         </AccordionItem>

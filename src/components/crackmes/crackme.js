@@ -46,7 +46,7 @@ export const Crackme = ({ crackme, updateFunc }) => {
                 </Box>
                 <AccordionIcon />
             </AccordionButton>
-            <AccordionPanel pb={2} w={'full'} mb={2}>
+            <AccordionPanel>
                 <ActionsList crackme={crackme} updateFunc={updateFunc} />
             </AccordionPanel>
         </AccordionItem>
