@@ -20,23 +20,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { VscKey } from 'react-icons/vsc';
 import { FiMap } from 'react-icons/fi';
 
-const hasPermissions = (userGroups, requiredPermissions) => {
-    const groupNames = userGroups.map((g) => g.name);
-    for (const perm of requiredPermissions) {
-        if (!groupNames.includes(perm)) {
-            return false;
-        }
-    }
-
-    return true;
-};
-
 export function Navigation({ children }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const dispatch = useDispatch();
     const toast = useToast();
     const logged = useSelector(isLoggedIn) || false;
-    // const groups = useSelector(userGroups) || [];
     const { username } = useSelector(currentUserData);
 
     const linkItems = [
@@ -84,9 +72,6 @@ export function Navigation({ children }) {
                     </Flex>
                     {linkItems
                         .filter((link) => link.show === undefined || link.show === true)
-                        // .filter(
-                        //     (link) => link.requiredGroups === undefined || hasPermissions(groups, link.requiredGroups)
-                        // )
                         .map((link) => (
                             <SideBarItem
                                 key={link.name}

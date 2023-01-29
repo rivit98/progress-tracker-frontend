@@ -20,3 +20,14 @@ export const currentUserData = (state) => state.userReducer;
 export const userGroups = (state) => state.userReducer.groups;
 
 export default userSlice.reducer;
+
+export const hasPermissions = (userGroups, requiredPermissions) => {
+    const groupNames = userGroups.map((g) => g.name);
+    for (const perm of requiredPermissions) {
+        if (!groupNames.includes(perm)) {
+            return false;
+        }
+    }
+
+    return true;
+};
