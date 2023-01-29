@@ -15,11 +15,11 @@ import {
     useToast,
     VStack
 } from '@chakra-ui/react';
-import { formTexts } from './formTexts';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { removeUser, updateUser } from '../../context/userReducer';
 import { authService } from '../../services/auth';
+import { formTexts } from '../generic/formTexts';
 
 const Register = () => {
     const {

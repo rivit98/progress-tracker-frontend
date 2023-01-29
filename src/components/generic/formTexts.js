@@ -4,6 +4,7 @@ const textTooShort = 'Entered text is too short';
 const passwordTooShort = 'Password cannot be shorter than 8 characters';
 const passwordsDontMatch = 'Passwords do not match';
 const accountDeleted = 'Account deleted';
+const invalidPassword = 'Invalid login or password!'
 
 export const formTexts = {
     requiredField,
@@ -11,5 +12,6 @@ export const formTexts = {
     textTooShort,
     passwordTooShort,
     passwordsDontMatch,
-    accountDeleted
+    accountDeleted,
+    invalidPassword
 };

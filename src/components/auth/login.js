@@ -14,7 +14,7 @@ import {
     useToast,
     VStack
 } from '@chakra-ui/react';
-import { formTexts } from './formTexts';
+import { formTexts } from '../generic/formTexts';
 import { authService } from '../../services/auth';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -48,7 +48,7 @@ const Login = () => {
         if (err) {
             setError('password', {
                 type: 'manual',
-                message: 'Invalid login or password!'
+                message: formTexts.invalidPassword
             });
         } else {
             toast({
