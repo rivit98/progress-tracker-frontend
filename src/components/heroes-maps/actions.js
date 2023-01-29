@@ -10,9 +10,10 @@ import { UpdateActionPanel } from '../generic/updateActionPanel';
 import { heroesMapsService } from '../../services/heroesMaps'
 import { ActionsTable } from '../generic/actionsTable';
 import { DeleteMap } from './deleteMap';
+import { UpdateMap } from './updateMap';
 
 export const ActionsList = ({ item, updateFunc }) => {
-    const { id, link, lastAction, actions, name } = item;
+    const { id, link, lastAction, actions } = item;
     const logged = useSelector(isLoggedIn);
 
     const updateFuncWrapper = (itemId, action) => {
@@ -44,7 +45,8 @@ export const ActionsList = ({ item, updateFunc }) => {
             <ActionsTable actions={actions} />
             <UpdateActionPanel itemId={id} updateFunc={updateFuncWrapper} lastAction={lastAction} updateService={heroesMapsService.updateStatus} />
             <Flex justifyContent={'flex-end'} my={2}>
-                <DeleteMap name={name} itemId={id} updateFunc={updateFunc} />
+                <DeleteMap item={item} updateFunc={updateFunc} />
+                <UpdateMap item={item} updateFunc={updateFunc} />
             </Flex>
         </>
     );

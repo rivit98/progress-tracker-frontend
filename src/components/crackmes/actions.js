@@ -5,12 +5,12 @@ import {
     IconButton,
     Link,
     Text} from '@chakra-ui/react';
-import { FaDownload } from 'react-icons/fa';
 import { crackmesService } from '../../services/crackmes';
 import { useSelector } from 'react-redux';
 import { isLoggedIn } from '../../context/userReducer';
 import { UpdateActionPanel } from '../generic/updateActionPanel';
 import { ActionsTable } from '../generic/actionsTable';
+import { DownloadIcon } from '@chakra-ui/icons';
 
 export const ActionsList = ({ crackme, updateFunc }) => {
     const { id, actions, comments_num, hexid, writeups_num, lastAction } = crackme;
@@ -27,7 +27,7 @@ export const ActionsList = ({ crackme, updateFunc }) => {
                 <Link href={challengeLink} isExternal color={'teal.500'}>
                     Description
                 </Link>
-                <IconButton as={Link} href={downloadLink} icon={<FaDownload />} variant={'link'} color={'teal.500'} />
+                <IconButton as={Link} href={downloadLink} icon={<DownloadIcon />} variant={'link'} color={'teal.500'} />
             </HStack>
             <HStack flex={1} justifyContent={'center'}>
                 <Text>Writeups:{' '}</Text>

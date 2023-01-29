@@ -74,7 +74,7 @@ export const MapsList = ({ itemsWithActions }) => {
         }
 
         if (type === 'update') {
-
+            // TODO: similar to newaction
         }
     };
 

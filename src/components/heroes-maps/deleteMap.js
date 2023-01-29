@@ -15,8 +15,10 @@ import {
 import { heroesMapsService } from '../../services/heroesMaps'
 import { useState } from 'react';
 import { formTexts } from '../generic/formTexts';
+import { DeleteIcon } from '@chakra-ui/icons';
 
-export const DeleteMap = ({ name, itemId, updateFunc }) => {
+export const DeleteMap = ({ item, updateFunc }) => {
+    const { itemId, name } = item;
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(undefined);
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -43,7 +45,7 @@ export const DeleteMap = ({ name, itemId, updateFunc }) => {
 
     return (
         <>
-            <Button colorScheme={'red'} size={'sm'} onClick={onOpen}>Delete</Button>
+            <Button colorScheme={'red'} size={'sm'} onClick={onOpen} leftIcon={<DeleteIcon />}>Delete</Button>
             <Modal isOpen={isOpen} onClose={onClose} isCentered size={'sm'}>
                 <ModalOverlay />
                 <ModalContent >
@@ -54,7 +56,7 @@ export const DeleteMap = ({ name, itemId, updateFunc }) => {
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme="red" isLoading={loading} onClick={onSubmit} mr={2}>
+                        <Button colorScheme="red" isLoading={loading} onClick={onSubmit} leftIcon={<DeleteIcon />} mr={2}>
                             Delete
                         </Button>
                         <Button colorScheme='teal' mr={3} onClick={onClose}>
