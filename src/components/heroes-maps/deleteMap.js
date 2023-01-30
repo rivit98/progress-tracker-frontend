@@ -18,7 +18,7 @@ import { formTexts } from '../generic/formTexts';
 import { DeleteIcon } from '@chakra-ui/icons';
 
 export const DeleteMap = ({ item, updateFunc }) => {
-    const { itemId, name } = item;
+    const { id: itemId, name } = item;
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(undefined);
     const { isOpen, onOpen, onClose } = useDisclosure();
