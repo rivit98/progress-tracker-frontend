@@ -13,25 +13,25 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": ["react", "testing-library"],
+    "plugins": ["react"],
     "settings": {
         "react": {
             "version": "detect"
-        },
-        "import/resolver": {
-            "alias": {
-                "map": [
-                    ["@/components", "./src/components/"],
-                    ["@/services", "./src/services/"],
-                    ["@/context", "./src/context/"],
-                    ["@/utils", "./src/utils/"]
-                ],
-                "extensions": [".js", ".jsx"]
-            }
         }
     },
     "rules": {
-        // error out formatting not matching prettier rule
-        "prettier/prettier": ["error", { "singleQuote": true }]
+        "prettier/prettier": "error",
+        "react/function-component-definition": [
+            "error",
+            {
+                "namedComponents": "arrow-function",
+                "unnamedComponents": "arrow-function"
+            }
+        ],
+        "react/prop-types": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-props-no-spreading": "off",
+        "camelcase": "off",
+        "import/prefer-default-export": "off"
     }
 }

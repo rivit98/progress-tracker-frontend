@@ -10,15 +10,15 @@ import { MapsFetcher } from './components/heroes-maps/mapsFetcher';
 
 const App = () => {
     return (
-        <Container mt={6} p={0} maxW={'container.xl'} centerContent>
+        <Container mt={6} p={0} maxW="container.xl" centerContent>
             <Routes>
-                <Route path={'/'} element={<Home />} />
+                <Route path="/" element={<Home />} />
 
-                <Route path={'/login'} element={<Login />} />
-                <Route path={'/register'} element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
 
-                <Route path={'/crackmes'} element={<CrackmesFetcher />} />
-                <Route path={'/heroes-maps'} element={<MapsFetcher />} />
+                <Route path="/crackmes" element={<CrackmesFetcher />} />
+                <Route path="/heroes-maps" element={<MapsFetcher />} />
             </Routes>
         </Container>
     );

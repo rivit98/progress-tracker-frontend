@@ -2,14 +2,12 @@ import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { authService } from '../services/auth';
 
-const axiosInstance = axios.create({
-    // baseURL: 'http://localhost:8000/'
-    baseURL: 'https://ptb.rivit.dev/',
-});
+axios.defaults.baseURL = 'https://ptb.rivit.dev/';
+// axios.defaults.baseURL = 'http://localhost:8000/';
 
-axiosInstance.interceptors.response.use((response) => response.data);
+axios.interceptors.response.use((response) => response.data);
 
-axiosInstance.interceptors.request.use((request) => {
+axios.interceptors.request.use((request) => {
     const token = authService.getAccessToken();
     if (token != null) {
         request.headers.Authorization = `Bearer ${token}`;
@@ -18,6 +16,4 @@ axiosInstance.interceptors.request.use((request) => {
     return request;
 });
 
-createAuthRefreshInterceptor(axiosInstance, (failedRequest) => authService.refreshUserToken(failedRequest));
-
-export default axiosInstance;
+createAuthRefreshInterceptor(axios, (failedRequest) => authService.refreshUserToken(failedRequest));

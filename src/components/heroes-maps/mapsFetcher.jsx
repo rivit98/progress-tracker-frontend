@@ -1,6 +1,6 @@
+import { useSelector } from 'react-redux';
 import { useAxiosEffect } from '../../hooks/useAxiosEffect';
 import { ComponentStateHandler, getAggregatedState } from '../generic/componentStateHandler';
-import { useSelector } from 'react-redux';
 import { isLoggedIn } from '../../context/userReducer';
 import { heroesMapsService } from '../../services/heroesMaps';
 import { MapsList } from './mapsList';
@@ -10,17 +10,13 @@ export const MapsFetcher = () => {
 
     const actionsLoader = (options) => {
         if (!logged) {
-            return new Promise((resolve) => resolve([]));
+            return Promise.resolve([]);
         }
 
         return heroesMapsService.getActions(options);
     };
 
-    const mapsLoader = (options) => {
-        return heroesMapsService.getMaps(options);
-    };
-
-    const taskListLoader = getAggregatedState(mapsLoader, actionsLoader);
+    const taskListLoader = getAggregatedState((options) => heroesMapsService.getMaps(options), actionsLoader);
     const state = useAxiosEffect(taskListLoader, [], [[], {}]);
     const [maps, actions] = state.data;
 
@@ -33,7 +29,7 @@ export const MapsFetcher = () => {
         return {
             ...m,
             actions: mapsActions,
-            lastAction: lastAction,
+            lastAction,
         };
     });
 

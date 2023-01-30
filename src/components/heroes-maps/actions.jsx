@@ -19,8 +19,8 @@ export const ActionsList = ({ item, updateFunc }) => {
     };
 
     const commonSection = (
-        <Flex mb={2} whiteSpace={'nowrap'}>
-            <Link href={link} isExternal color={'teal.500'}>
+        <Flex mb={2} whiteSpace="nowrap">
+            <Link href={link} isExternal color="teal.500">
                 Download
             </Link>
         </Flex>
@@ -33,7 +33,7 @@ export const ActionsList = ({ item, updateFunc }) => {
     return (
         <>
             {commonSection}
-            <Divider colorScheme={'gray'} my={1} />
+            <Divider colorScheme="gray" my={1} />
             <ActionsTable actions={actions} />
             <UpdateActionPanel
                 itemId={id}
@@ -41,7 +41,7 @@ export const ActionsList = ({ item, updateFunc }) => {
                 lastAction={lastAction}
                 updateService={heroesMapsService.updateStatus}
             />
-            <Flex justifyContent={'flex-end'} my={2}>
+            <Flex justifyContent="flex-end" my={2}>
                 <DeleteMap item={item} updateFunc={updateFunc} />
                 <UpdateMap item={item} updateFunc={updateFunc} />
             </Flex>

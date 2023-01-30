@@ -3,24 +3,22 @@ import {
     Alert,
     AlertIcon,
     Button,
+    FormControl,
+    FormErrorMessage,
+    Input,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
     ModalHeader,
     ModalOverlay,
-    NumberDecrementStepper,
-    NumberIncrementStepper,
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
+    Stack,
     useDisclosure,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormControl, FormErrorMessage, Input, Stack } from '@chakra-ui/react';
-import { formTexts } from '../generic/formTexts';
 import { heroesMapsService } from '../../services/heroesMaps';
+import { formTexts } from '../generic/formTexts';
 
 export const AddMap = ({ updateFunc }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -56,7 +54,7 @@ export const AddMap = ({ updateFunc }) => {
                 name: err?.name?.slice(0, 1)[0],
                 link: err?.link?.slice(0, 1)[0],
             })
-                .filter(([key, value]) => value !== undefined)
+                .filter(([, value]) => value !== undefined)
                 .forEach(([key, value]) => {
                     setError(key, {
                         type: 'manual',
@@ -85,22 +83,22 @@ export const AddMap = ({ updateFunc }) => {
 
     return (
         <>
-            <Button onClick={open} colorScheme="teal" size={'sm'} leftIcon={<AddIcon />}>
+            <Button onClick={open} colorScheme="teal" size="sm" leftIcon={<AddIcon />}>
                 Add map
             </Button>
 
-            <Modal isOpen={isOpen} onClose={onClose} isCentered size={'lg'}>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Add new map</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
-                            <Stack spacing={2} color={'black'}>
+                        <form onSubmit={handleSubmit(onSubmit)} method="POST">
+                            <Stack spacing={2} color="black">
                                 <FormControl isInvalid={errors.name}>
                                     <Input
-                                        bg={'white'}
-                                        placeholder={'Map name'}
+                                        bg="white"
+                                        placeholder="Map name"
                                         {...register('name', {
                                             required: formTexts.requiredField,
                                         })}
@@ -109,23 +107,23 @@ export const AddMap = ({ updateFunc }) => {
                                 </FormControl>
                                 <FormControl isInvalid={errors.heroes_version}>
                                     <Input
-                                        bg={'white'}
-                                        type={'number'}
+                                        bg="white"
+                                        type="number"
                                         defaultValue={3}
-                                        placeholder={'Heroes version'}
+                                        placeholder="Heroes version"
                                         {...register('heroes_version', {
                                             required: formTexts.requiredField,
                                         })}
-                                    ></Input>
+                                    />
                                     <FormErrorMessage>
                                         {errors.heroes_version && errors.heroes_version.message}
                                     </FormErrorMessage>
                                 </FormControl>
                                 <FormControl isInvalid={errors.link}>
                                     <Input
-                                        bg={'white'}
-                                        type={'url'}
-                                        placeholder={'Link'}
+                                        bg="white"
+                                        type="url"
+                                        placeholder="Link"
                                         {...register('link', {
                                             required: formTexts.requiredField,
                                         })}
@@ -134,7 +132,7 @@ export const AddMap = ({ updateFunc }) => {
                                 </FormControl>
                             </Stack>
 
-                            <Button mt={4} w={'full'} colorScheme="teal" isLoading={loading} type="submit">
+                            <Button mt={4} w="full" colorScheme="teal" isLoading={loading} type="submit">
                                 Submit
                             </Button>
                             {result.message !== undefined && (

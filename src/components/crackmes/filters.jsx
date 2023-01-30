@@ -2,16 +2,16 @@ import { Box, Flex, Input, InputGroup, InputLeftElement } from '@chakra-ui/react
 import Select, { components } from 'react-select';
 import debounce from 'debounce';
 
+import { Search2Icon } from '@chakra-ui/icons';
 import { statusesOptions, STATUS_CLEAR } from '../generic/statuses';
 import { defaultFilterStatuses, DEFAULT_SORT_OPTION } from './config';
 import { getSortOption, sortOptions } from './filterOpts';
 import { selectFieldStyles } from '../generic/filters';
-import { Search2Icon } from '@chakra-ui/icons';
 
 export const defaultFilters = {
-    filterStatuses: defaultFilterStatuses.map((v) => v['value']),
+    filterStatuses: defaultFilterStatuses.map((v) => v.value),
     searchTerm: '',
-    sortMethod: DEFAULT_SORT_OPTION['value'],
+    sortMethod: DEFAULT_SORT_OPTION.value,
 };
 
 const Control = ({ children, ...props }) => {
@@ -26,8 +26,7 @@ const Control = ({ children, ...props }) => {
 
 export const Filters = ({ updateFilters }) => {
     const onStatusChanged = (statuses) => {
-        statuses = statuses.map((v) => v['value']);
-        updateFilters({ filterStatuses: statuses });
+        updateFilters({ filterStatuses: statuses.map((v) => v.value) });
     };
 
     const onSearchTermChanged = (event) => {
@@ -40,12 +39,14 @@ export const Filters = ({ updateFilters }) => {
     };
 
     return (
-        <Flex maxW={'xl'} w={'full'} flexDir={'column'} mx={'auto'}>
+        <Flex maxW="xl" w="full" flexDir="column" mx="auto">
             <InputGroup>
-                <InputLeftElement pointerEvents="none" children={<Search2Icon color="gray.300" />} />
-                <Input placeholder={'Search by name'} onChange={debounce((event) => onSearchTermChanged(event), 300)} />
+                <InputLeftElement pointerEvents="none">
+                    <Search2Icon color="gray.300" />
+                </InputLeftElement>
+                <Input placeholder="Search by name" onChange={debounce((event) => onSearchTermChanged(event), 300)} />
             </InputGroup>
-            <Flex mt={2} direction={'column'} experimental_spaceY={1}>
+            <Flex mt={2} direction="column" experimental_spaceY={1}>
                 <Box>
                     <Select
                         name="sort"
@@ -53,7 +54,7 @@ export const Filters = ({ updateFilters }) => {
                         isSearchable={false}
                         defaultValue={DEFAULT_SORT_OPTION}
                         components={{ Control }}
-                        label={'Sort by'}
+                        label="Sort by"
                         styles={selectFieldStyles}
                         onChange={onSortMethodChanged}
                     />
@@ -65,7 +66,7 @@ export const Filters = ({ updateFilters }) => {
                         options={statusesOptions}
                         isSearchable={false}
                         components={{ Control }}
-                        label={'Status:'}
+                        label="Status:"
                         styles={selectFieldStyles}
                         onChange={onStatusChanged}
                         defaultValue={defaultFilterStatuses}

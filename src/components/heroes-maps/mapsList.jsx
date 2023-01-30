@@ -1,18 +1,17 @@
 import { Accordion, Flex, Text } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { Paginate } from '../generic/paginate';
-import { Map } from './map';
-import { isLoggedIn, userGroups } from '../../context/userReducer';
+import { useSelector } from 'react-redux';
+import { isLoggedIn } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
-import { defaultFilters, filterItems, Filters } from './filters';
-import { ITEMS_PER_PAGE } from './config';
+import { Paginate } from '../generic/paginate';
 import { AddMap } from './addMap';
-import { heroesMapsService } from '../../services/heroesMaps';
+import { ITEMS_PER_PAGE } from './config';
+import { defaultFilters, filterItems, Filters } from './filters';
+import { Map } from './map';
 
 export const MapsList = ({ itemsWithActions }) => {
     const logged = useSelector(isLoggedIn);
-    const groups = useSelector(userGroups) || [];
+    // const groups = useSelector(userGroups) || [];
 
     const [items, setItems] = useState(itemsWithActions);
 
@@ -32,14 +31,14 @@ export const MapsList = ({ itemsWithActions }) => {
         setExpandedItems({}); // clear expended items after filtering
     }, [filters]);
 
-    let filteredItems = filterItems(items, filters);
+    const filteredItems = filterItems(items, filters);
 
     const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
     const indexOfLastItem = page * ITEMS_PER_PAGE;
     const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
 
-    const updateItem = (action) => {
-        const { type, payload } = action;
+    const updateItem = (message) => {
+        const { type, payload } = message;
 
         if (type === 'delete') {
             const itemId = payload;
@@ -50,14 +49,6 @@ export const MapsList = ({ itemsWithActions }) => {
         }
 
         if (type === 'add') {
-            // for (let i = 0; i < 60; i++) {
-            //     heroesMapsService.createMap({
-            //         name: `test${i}`,
-            //         heroes_version: (i % 3) + 1,
-            //         link: `http://a${i}.pl`
-            //     })
-            // }
-
             setItems([...items, payload]);
             return;
         }
@@ -78,7 +69,6 @@ export const MapsList = ({ itemsWithActions }) => {
             const newItems = [...items];
             newItems[index] = { ...newItems[index], ...payload };
             setItems(newItems);
-            return;
         }
     };
 
@@ -96,10 +86,10 @@ export const MapsList = ({ itemsWithActions }) => {
             <Text mb={5} mt={1}>
                 {filteredItems.length} results
             </Text>
-            <Flex w={'full'} justifyContent={'center'} flexDirection={'column'}>
+            <Flex w="full" justifyContent="center" flexDirection="column">
                 <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems[page] || []}>
-                    {filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((item, i) => (
-                        <Map item={item} updateFunc={updateItem} key={indexOfFirstItem + i} />
+                    {filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((item) => (
+                        <Map item={item} updateFunc={updateItem} key={item.id} />
                     ))}
                 </Accordion>
             </Flex>

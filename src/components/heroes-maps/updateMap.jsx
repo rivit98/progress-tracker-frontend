@@ -1,26 +1,24 @@
-import { ArrowUpIcon, EditIcon } from '@chakra-ui/icons';
+import { EditIcon } from '@chakra-ui/icons';
 import {
     Alert,
     AlertIcon,
     Button,
+    FormControl,
+    FormErrorMessage,
+    Input,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
     ModalHeader,
     ModalOverlay,
-    NumberDecrementStepper,
-    NumberIncrementStepper,
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
+    Stack,
     useDisclosure,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormControl, FormErrorMessage, Input, Stack } from '@chakra-ui/react';
-import { formTexts } from '../generic/formTexts';
 import { heroesMapsService } from '../../services/heroesMaps';
+import { formTexts } from '../generic/formTexts';
 
 export const UpdateMap = ({ item, updateFunc }) => {
     const { id: itemId, name, link, heroes_version } = item;
@@ -56,7 +54,7 @@ export const UpdateMap = ({ item, updateFunc }) => {
                 name: err?.name?.slice(0, 1)[0],
                 link: err?.link?.slice(0, 1)[0],
             })
-                .filter(([key, value]) => value !== undefined)
+                .filter(([, value]) => value !== undefined)
                 .forEach(([key, value]) => {
                     setError(key, {
                         type: 'manual',
@@ -85,22 +83,22 @@ export const UpdateMap = ({ item, updateFunc }) => {
 
     return (
         <>
-            <Button mx={1} onClick={open} colorScheme="teal" size={'sm'} leftIcon={<EditIcon />}>
+            <Button mx={1} onClick={open} colorScheme="teal" size="sm" leftIcon={<EditIcon />}>
                 Update
             </Button>
 
-            <Modal isOpen={isOpen} onClose={onClose} isCentered size={'lg'}>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Update map</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
-                            <Stack spacing={2} color={'black'}>
+                        <form onSubmit={handleSubmit(onSubmit)} method="POST">
+                            <Stack spacing={2} color="black">
                                 <FormControl isInvalid={errors.name}>
                                     <Input
-                                        bg={'white'}
-                                        placeholder={'Map name'}
+                                        bg="white"
+                                        placeholder="Map name"
                                         defaultValue={name}
                                         {...register('name', {
                                             required: formTexts.requiredField,
@@ -110,24 +108,24 @@ export const UpdateMap = ({ item, updateFunc }) => {
                                 </FormControl>
                                 <FormControl isInvalid={errors.heroes_version}>
                                     <Input
-                                        bg={'white'}
-                                        type={'number'}
+                                        bg="white"
+                                        type="number"
                                         defaultValue={heroes_version}
-                                        placeholder={'Heroes version'}
+                                        placeholder="Heroes version"
                                         {...register('heroes_version', {
                                             required: formTexts.requiredField,
                                         })}
-                                    ></Input>
+                                    />
                                     <FormErrorMessage>
                                         {errors.heroes_version && errors.heroes_version.message}
                                     </FormErrorMessage>
                                 </FormControl>
                                 <FormControl isInvalid={errors.link}>
                                     <Input
-                                        bg={'white'}
-                                        type={'url'}
+                                        bg="white"
+                                        type="url"
                                         defaultValue={link}
-                                        placeholder={'Link'}
+                                        placeholder="Link"
                                         {...register('link', {
                                             required: formTexts.requiredField,
                                         })}
@@ -136,11 +134,11 @@ export const UpdateMap = ({ item, updateFunc }) => {
                                 </FormControl>
                             </Stack>
 
-                            <Button mt={4} w={'full'} colorScheme="teal" isLoading={loading} type="submit">
+                            <Button mt={4} w="full" colorScheme="teal" isLoading={loading} type="submit">
                                 Submit
                             </Button>
                             {errorText !== undefined && (
-                                <Alert status={'error'} mt={3}>
+                                <Alert status="error" mt={3}>
                                     <AlertIcon />
                                     {errorText}
                                 </Alert>

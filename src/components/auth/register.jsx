@@ -80,24 +80,24 @@ const Register = () => {
     };
 
     return (
-        <Box maxW={'md'} w={'full'} justifyContent={'center'}>
-            <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
+        <Box maxW="md" w="full" justifyContent="center">
+            <form onSubmit={handleSubmit(onSubmit)} method="POST">
                 <Center mb={4}>
                     <VStack>
                         <Heading>Register</Heading>
                         <HStack>
                             <Text>Already have an account?</Text>
-                            <Link as={ReactRouterLink} to={'/login'} mr={1} color={'teal.500'}>
+                            <Link as={ReactRouterLink} to="/login" mr={1} color="teal.500">
                                 Log in!
                             </Link>
                         </HStack>
                     </VStack>
                 </Center>
-                <Stack spacing={2} color={'black'}>
+                <Stack spacing={2} color="black">
                     <FormControl isInvalid={errors.username}>
                         <Input
-                            bg={'white'}
-                            placeholder={'Nick'}
+                            bg="white"
+                            placeholder="Nick"
                             {...register('username', {
                                 required: formTexts.requiredField,
                                 minLength: {
@@ -110,9 +110,9 @@ const Register = () => {
                     </FormControl>
                     <FormControl isInvalid={errors.password}>
                         <Input
-                            bg={'white'}
-                            type={'password'}
-                            placeholder={'Password'}
+                            bg="white"
+                            type="password"
+                            placeholder="Password"
                             {...register('password', {
                                 required: formTexts.requiredField,
                                 minLength: {
@@ -125,9 +125,9 @@ const Register = () => {
                     </FormControl>
                     <FormControl isInvalid={errors.password2}>
                         <Input
-                            bg={'white'}
-                            type={'password'}
-                            placeholder={'Repeat password'}
+                            bg="white"
+                            type="password"
+                            placeholder="Repeat password"
                             {...register('password2', {
                                 required: formTexts.requiredField,
                                 minLength: {
@@ -141,7 +141,7 @@ const Register = () => {
                     </FormControl>
                 </Stack>
 
-                <Button mt={4} w={'full'} colorScheme="teal" isLoading={loading} type="submit">
+                <Button mt={4} w="full" colorScheme="teal" isLoading={loading} type="submit">
                     Submit
                 </Button>
             </form>

@@ -5,7 +5,7 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 
 export const TopNavbar = ({ onOpen }) => {
     return (
-        <Flex px={4} height="12" alignItems="center" bg={'gray.700'} justifyContent={'space-between'}>
+        <Flex px={4} height="12" alignItems="center" bg="gray.700" justifyContent="space-between">
             <Box flex={1}>
                 <IconButton
                     onClick={onOpen}
@@ -20,19 +20,19 @@ export const TopNavbar = ({ onOpen }) => {
             </Box>
 
             <Text
-                display={'flex'}
+                display="flex"
                 flex={3}
                 fontSize="xl"
                 fontFamily="monospace"
                 fontWeight="bold"
-                justifyContent={'center'}
+                justifyContent="center"
             >
-                <Link as={ReactRouterLink} to={'/'} style={{ textDecoration: 'none' }}>
+                <Link as={ReactRouterLink} to="/" style={{ textDecoration: 'none' }}>
                     ProgressTracker
                 </Link>
             </Text>
 
-            <Box display={'flex'} flex={1} justifyContent={'flex-end'} />
+            <Box display="flex" flex={1} justifyContent="flex-end" />
         </Flex>
     );
 };

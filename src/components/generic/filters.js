@@ -1,19 +1,19 @@
 export const selectFieldStyles = {
-    option: (provided, state) => {
+    option: (provided) => {
         return {
             ...provided,
             color: 'black',
         };
     },
-    multiValueLabel: (styles, { data }) => ({
+    multiValueLabel: (styles) => ({
         ...styles,
         color: 'black',
     }),
-    multiValueRemove: (styles, { data }) => ({
+    multiValueRemove: (styles) => ({
         ...styles,
         color: 'black',
     }),
-    singleValueLabel: (styles, { data }) => ({
+    singleValueLabel: (styles) => ({
         ...styles,
         color: 'black',
     }),

@@ -1,10 +1,10 @@
 import { Divider, Flex, HStack, IconButton, Link, Text } from '@chakra-ui/react';
-import { crackmesService } from '../../services/crackmes';
 import { useSelector } from 'react-redux';
+import { DownloadIcon } from '@chakra-ui/icons';
+import { crackmesService } from '../../services/crackmes';
 import { isLoggedIn } from '../../context/userReducer';
 import { UpdateActionPanel } from '../generic/updateActionPanel';
 import { ActionsTable } from '../generic/actionsTable';
-import { DownloadIcon } from '@chakra-ui/icons';
 
 export const ActionsList = ({ crackme, updateFunc }) => {
     const { id, actions, comments_num, hexid, writeups_num, lastAction } = crackme;
@@ -13,20 +13,20 @@ export const ActionsList = ({ crackme, updateFunc }) => {
     const logged = useSelector(isLoggedIn);
 
     const commonSection = (
-        <Flex mb={2} whiteSpace={'nowrap'}>
-            <HStack flex={1} justifyContent={'center'}>
-                <Link href={challengeLink} isExternal color={'teal.500'}>
+        <Flex mb={2} whiteSpace="nowrap">
+            <HStack flex={1} justifyContent="center">
+                <Link href={challengeLink} isExternal color="teal.500">
                     Description
                 </Link>
-                <IconButton as={Link} href={downloadLink} icon={<DownloadIcon />} variant={'link'} color={'teal.500'} />
+                <IconButton as={Link} href={downloadLink} icon={<DownloadIcon />} variant="link" color="teal.500" />
             </HStack>
-            <HStack flex={1} justifyContent={'center'}>
+            <HStack flex={1} justifyContent="center">
                 <Text>Writeups: </Text>
-                <Text fontWeight={'bold'}>{writeups_num}</Text>
+                <Text fontWeight="bold">{writeups_num}</Text>
             </HStack>
-            <HStack flex={1} justifyContent={'center'}>
+            <HStack flex={1} justifyContent="center">
                 <Text>Comments: </Text>
-                <Text fontWeight={'bold'}>{comments_num}</Text>
+                <Text fontWeight="bold">{comments_num}</Text>
             </HStack>
         </Flex>
     );
@@ -38,7 +38,7 @@ export const ActionsList = ({ crackme, updateFunc }) => {
     return (
         <>
             {commonSection}
-            <Divider colorScheme={'gray'} my={1} />
+            <Divider colorScheme="gray" my={1} />
             <ActionsTable actions={actions} />
             <UpdateActionPanel
                 itemId={id}

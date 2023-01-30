@@ -8,14 +8,14 @@ export const ComponentStateHandler = ({ children, state: { error, isLoading, dat
     if (error || data === undefined) {
         console.error(error);
         return (
-            <Alert status="error" color={'gray.700'}>
+            <Alert status="error" color="gray.700">
                 <AlertIcon />
                 {error?.message}
             </Alert>
         );
     }
 
-    return <>{children}</>;
+    return { children };
 };
 
 export const getAggregatedState = (...funcs) => {

@@ -13,11 +13,11 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react';
-import { formTexts } from '../generic/formTexts';
-import { authService } from '../../services/auth';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { authService } from '../../services/auth';
+import { formTexts } from '../generic/formTexts';
 import { removeUser, updateUser } from '../../context/userReducer';
 
 const Login = () => {
@@ -37,7 +37,7 @@ const Login = () => {
         navigate('/');
     };
 
-    const errorCallback = (e) => {
+    const errorCallback = () => {
         dispatch(removeUser());
 
         setError('password', {
@@ -59,24 +59,24 @@ const Login = () => {
     };
 
     return (
-        <Box maxW={'md'} w={'full'} justifyContent={'center'}>
-            <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
+        <Box maxW="md" w="full" justifyContent="center">
+            <form onSubmit={handleSubmit(onSubmit)} method="POST">
                 <Center mb={4}>
                     <VStack>
                         <Heading>Login</Heading>
                         <HStack>
-                            <Text>Don't have an account?</Text>
-                            <Link as={ReactRouterLink} to={'/register'} color={'teal.500'}>
+                            <Text>Don&apos;t have an account?</Text>
+                            <Link as={ReactRouterLink} to="/register" color="teal.500">
                                 Create it
                             </Link>
                         </HStack>
                     </VStack>
                 </Center>
-                <Stack spacing={2} color={'black'}>
+                <Stack spacing={2} color="black">
                     <FormControl isInvalid={errors.username}>
                         <Input
-                            bg={'white'}
-                            placeholder={'Nick'}
+                            bg="white"
+                            placeholder="Nick"
                             {...register('username', {
                                 required: formTexts.requiredField,
                             })}
@@ -85,9 +85,9 @@ const Login = () => {
                     </FormControl>
                     <FormControl isInvalid={errors.password}>
                         <Input
-                            bg={'white'}
-                            type={'password'}
-                            placeholder={'Password'}
+                            bg="white"
+                            type="password"
+                            placeholder="Password"
                             {...register('password', {
                                 required: formTexts.requiredField,
                             })}
@@ -96,7 +96,7 @@ const Login = () => {
                     </FormControl>
                 </Stack>
 
-                <Button mt={4} w={'full'} colorScheme="teal" isLoading={loading} type="submit">
+                <Button mt={4} w="full" colorScheme="teal" isLoading={loading} type="submit">
                     Submit
                 </Button>
             </form>

@@ -11,31 +11,20 @@ import {
     useDisclosure,
     useToast,
 } from '@chakra-ui/react';
-import { FiHome, FiLogIn, FiLogOut, FiUserPlus } from 'react-icons/fi';
+import { FiHome, FiLogIn, FiLogOut, FiUserPlus, FiMap } from 'react-icons/fi';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { TopNavbar } from './topNavbar';
-import { currentUserData, isLoggedIn, removeUser } from '../../context/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { VscKey } from 'react-icons/vsc';
-import { FiMap } from 'react-icons/fi';
+import { TopNavbar } from './topNavbar';
+import { currentUserData, isLoggedIn, removeUser } from '../../context/userReducer';
 
-export function Navigation({ children }) {
+export const Navigation = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const dispatch = useDispatch();
     const toast = useToast();
     const logged = useSelector(isLoggedIn) || false;
     const { username } = useSelector(currentUserData);
-
-    const linkItems = [
-        { name: 'Home', to: '/', icon: FiHome },
-        { name: 'Crackmes', to: '/crackmes', icon: VscKey },
-        { name: 'Heroes maps', to: '/heroes-maps', icon: FiMap },
-        { name: 'Login', to: '/login', icon: FiLogIn, show: !logged },
-        { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
-
-        { name: 'Log out', to: '/', icon: FiLogOut, onClick: () => logOut(), show: logged },
-    ];
 
     const logOut = () => {
         toast({
@@ -48,27 +37,37 @@ export function Navigation({ children }) {
         dispatch(removeUser());
     };
 
+    const linkItems = [
+        { name: 'Home', to: '/', icon: FiHome },
+        { name: 'Crackmes', to: '/crackmes', icon: VscKey },
+        { name: 'Heroes maps', to: '/heroes-maps', icon: FiMap },
+        { name: 'Login', to: '/login', icon: FiLogIn, show: !logged },
+        { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
+
+        { name: 'Log out', to: '/', icon: FiLogOut, onClick: logOut, show: logged },
+    ];
+
     return (
-        <Box minH="100vh" bg={'blackAlpha.900'} color={'whiteAlpha.500'}>
+        <Box minH="100vh" bg="blackAlpha.900" color="whiteAlpha.500">
             <Drawer
                 autoFocus={false}
                 isOpen={isOpen}
                 placement="left"
-                size={'xs'}
+                size="xs"
                 onClose={onClose}
                 returnFocusOnClose={false}
                 onOverlayClick={onClose}
-                closeOnEsc={true}
-                closeOnOverlayClick={true}
-                isFullHeight={true}
+                closeOnEsc
+                closeOnOverlayClick
+                isFullHeight
             >
                 <DrawerOverlay />
-                <DrawerContent overflowY={'auto'} bg={'gray.700'} color={'whiteAlpha.500'}>
-                    <Flex h="20" w="full" alignItems="center" justify={'space-between'}>
+                <DrawerContent overflowY="auto" bg="gray.700" color="whiteAlpha.500">
+                    <Flex h="20" w="full" alignItems="center" justify="space-between">
                         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" ml={5}>
                             ProgressTracker
                         </Text>
-                        <CloseButton mr={4} display={'flex'} onClick={onClose} />
+                        <CloseButton mr={4} display="flex" onClick={onClose} />
                     </Flex>
                     {linkItems
                         .filter((link) => link.show === undefined || link.show === true)
@@ -93,9 +92,9 @@ export function Navigation({ children }) {
                             outline: 'none',
                         }}
                     >
-                        <HStack align={'start'}>
+                        <HStack align="start">
                             <Text>Logged as:</Text>
-                            {logged ? <Text fontWeight={'bold'}>{username}</Text> : <Text>nobody</Text>}
+                            {logged ? <Text fontWeight="bold">{username}</Text> : <Text>nobody</Text>}
                         </HStack>
                     </Flex>
                 </DrawerContent>
@@ -106,7 +105,7 @@ export function Navigation({ children }) {
             </Box>
         </Box>
     );
-}
+};
 
 const SideBarItem = ({ icon, children, to, onClickActions }) => {
     const onClickCall = () => {

@@ -1,7 +1,7 @@
 import { Accordion, Flex, Text } from '@chakra-ui/react';
-import { Crackme } from './crackme';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { Crackme } from './crackme';
 import { Paginate } from '../generic/paginate';
 import { defaultFilters, Filters, filterTasks } from './filters';
 import { isLoggedIn } from '../../context/userReducer';
@@ -28,7 +28,7 @@ export const CrackmesList = ({ itemsWithActions }) => {
         setExpandedItems({}); // clear expended items after filtering
     }, [filters]);
 
-    let filteredItems = filterTasks(items, filters);
+    const filteredItems = filterTasks(items, filters);
 
     const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
     const indexOfLastItem = page * ITEMS_PER_PAGE;
@@ -53,10 +53,10 @@ export const CrackmesList = ({ itemsWithActions }) => {
             <Text mb={5} mt={1}>
                 {filteredItems.length} results
             </Text>
-            <Flex w={'full'} justifyContent={'center'} flexDirection={'column'}>
+            <Flex w="full" justifyContent="center" flexDirection="column">
                 <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems[page] || []}>
-                    {filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((t, i) => (
-                        <Crackme crackme={t} updateFunc={updateItem} key={indexOfFirstItem + i} />
+                    {filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((item) => (
+                        <Crackme crackme={item} updateFunc={updateItem} key={item.id} />
                     ))}
                 </Accordion>
             </Flex>

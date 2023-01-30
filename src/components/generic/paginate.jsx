@@ -3,10 +3,10 @@ import { Button, Flex, HStack } from '@chakra-ui/react';
 const PaginationButton = ({ children, fn, ...props }) => {
     return (
         <Button
-            size={'xs'}
+            size="xs"
             w={8}
             m={0}
-            colorScheme={'teal'}
+            colorScheme="teal"
             _focus={{ outline: 'none' }}
             _hover={{ bg: 'teal.300' }}
             onClick={fn}
@@ -19,7 +19,7 @@ const PaginationButton = ({ children, fn, ...props }) => {
 
 const Ellipsis = () => {
     return (
-        <Flex size={'xs'} w={6} m={0} justifyContent={'center'}>
+        <Flex size="xs" w={6} m={0} justifyContent="center">
             ...
         </Flex>
     );
@@ -28,7 +28,7 @@ const Ellipsis = () => {
 // code adapted from material UI pagination component
 export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
     if (totalPages <= 1) {
-        return <></>;
+        return null;
     }
 
     const boundaryCount = 1;
@@ -70,9 +70,8 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
     );
 
     // Basic list of items to render
-    // e.g. itemList = ['first', 'previous', 1, 'ellipsis', 4, 5, 6, 'ellipsis', 10, 'next', 'last']
+    // e.g. itemList = ['first', 1, 'ellipsis', 4, 5, 6, 'ellipsis', 10, 'last']
     const itemList = [
-        // ...['previous'],
         ...startPages,
 
         // Start ellipsis
@@ -95,7 +94,6 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
             : []),
 
         ...endPages,
-        // ...['next']
     ];
 
     // Map the button type to its page number
@@ -103,10 +101,6 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
         switch (type) {
             case 'first':
                 return 1;
-            case 'previous':
-                return currentPage - 1;
-            case 'next':
-                return currentPage + 1;
             case 'last':
                 return totalPages;
             default:
@@ -140,7 +134,7 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
 
     return (
         <HStack mt={4} spacing={1}>
-            {items.map((item, index) => {
+            {items.map((item) => {
                 const { type, selected, disabled, page, onClick } = item;
                 const isDisabled = selected || disabled;
                 switch (type) {
@@ -148,27 +142,15 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
                     case 'first':
                     case 'last':
                         return (
-                            <PaginationButton key={index} fn={onClick} isDisabled={isDisabled}>
+                            <PaginationButton key={`${type}-${page}`} fn={onClick} isDisabled={isDisabled}>
                                 {page}
                             </PaginationButton>
                         );
-                    // case 'previous':
-                    //     return (
-                    //         <PaginationButton key={index} fn={onClick} isDisabled={isDisabled}>
-                    //             <MdChevronLeft />
-                    //         </PaginationButton>
-                    //     );
-                    // case 'next':
-                    //     return (
-                    //         <PaginationButton key={index} fn={onClick} isDisabled={isDisabled}>
-                    //             <MdChevronRight />
-                    //         </PaginationButton>
-                    //     );
                     case 'start-ellipsis':
                     case 'end-ellipsis':
-                        return <Ellipsis key={index} />;
+                        return <Ellipsis key={type} />;
                     default:
-                        return <span key={index}></span>;
+                        return null;
                 }
             })}
         </HStack>

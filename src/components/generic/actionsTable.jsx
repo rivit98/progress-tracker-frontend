@@ -1,16 +1,16 @@
 import { Table, TableContainer, Tbody, Td, Tr } from '@chakra-ui/react';
 import formatDate from '../../utils/dateformatter';
-import { statusBadge } from '../generic/statuses';
+import { statusBadge } from './statuses';
 
 export const ActionsTable = ({ actions }) => {
     return (
         <TableContainer mb={1}>
-            <Table size="sm" variant={'unstyled'}>
+            <Table size="sm" variant="unstyled">
                 <Tbody>
-                    {actions.slice(0, 10).map((a, index) => {
+                    {actions.slice(0, 10).map((a) => {
                         return (
-                            <Tr key={index}>
-                                <Td w={'1%'} py={1} px={1}>
+                            <Tr key={`${a.date}-${a.status}`}>
+                                <Td w="1%" py={1} px={1}>
                                     {statusBadge[a.status]}
                                 </Td>
                                 <Td ml={3} py={1} px={1}>

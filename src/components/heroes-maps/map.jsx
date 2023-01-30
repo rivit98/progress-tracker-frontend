@@ -17,7 +17,7 @@ export const Map = ({ item, updateFunc }) => {
     const lastActionStatus = lastAction && lastAction.status;
 
     return (
-        <AccordionItem border={0} maxW={'xl'} w={'full'} mx={'auto'} textAlign={'center'} id={`item-${id}`}>
+        <AccordionItem border={0} maxW="xl" w="full" mx="auto" textAlign="center" id={`item-${id}`}>
             <AccordionButton
                 _hover={{
                     background: 'blackAlpha.600',
@@ -25,13 +25,13 @@ export const Map = ({ item, updateFunc }) => {
                 }}
                 rounded="md"
             >
-                <HStack ml={1} flex={8} overflow={'hidden'}>
-                    <Text noOfLines={1} textAlign={'left'}>
+                <HStack ml={1} flex={8} overflow="hidden">
+                    <Text noOfLines={1} textAlign="left">
                         {name}
                     </Text>
-                    <Hide below={'sm'}>{lastActionStatus !== STATUS_CLEAR && statusBadge[lastActionStatus]}</Hide>
+                    <Hide below="sm">{lastActionStatus !== STATUS_CLEAR && statusBadge[lastActionStatus]}</Hide>
                 </HStack>
-                <Box flex={3} overflow={'hidden'}>
+                <Box flex={3} overflow="hidden">
                     {arabToRoman(heroes_version)}
                 </Box>
                 <AccordionIcon />

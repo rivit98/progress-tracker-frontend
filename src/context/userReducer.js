@@ -7,7 +7,7 @@ export const userSlice = createSlice({
         updateUser: (state, action) => {
             return { ...state, ...action.payload };
         },
-        removeUser: (state) => {
+        removeUser: () => {
             return {};
         },
     },
@@ -21,13 +21,7 @@ export const userGroups = (state) => state.userReducer.groups;
 
 export default userSlice.reducer;
 
-export const hasPermissions = (userGroups, requiredPermissions) => {
-    const groupNames = userGroups.map((g) => g.name);
-    for (const perm of requiredPermissions) {
-        if (!groupNames.includes(perm)) {
-            return false;
-        }
-    }
-
-    return true;
+export const hasPermissions = (groups, requiredPermissions) => {
+    const groupNames = groups.map((g) => g.name);
+    return requiredPermissions.every((perm) => groupNames.includes(perm));
 };

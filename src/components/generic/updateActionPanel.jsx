@@ -1,9 +1,9 @@
 import { Button, FormControl, FormErrorMessage, HStack, Select } from '@chakra-ui/react';
 import { MdArrowDropDown } from 'react-icons/md';
-import { statusDescToStatusIDMap } from '../generic/statuses';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { possibleActionsMap } from '../generic/actionOptions';
+import { statusDescToStatusIDMap } from './statuses';
+import { possibleActionsMap } from './actionOptions';
 
 export const UpdateActionPanel = ({ itemId, updateFunc, lastAction, updateService }) => {
     const {
@@ -39,7 +39,7 @@ export const UpdateActionPanel = ({ itemId, updateFunc, lastAction, updateServic
         }
 
         setLoading(true);
-        const status = data['status'];
+        const { status } = data;
         const statusID = statusDescToStatusIDMap[status];
         updateService(itemId, { status: statusID }).then(successCallback).catch(errorCallback);
     };
@@ -47,12 +47,12 @@ export const UpdateActionPanel = ({ itemId, updateFunc, lastAction, updateServic
     const lastActionStatus = lastAction && lastAction.status;
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} method={'POST'}>
+        <form onSubmit={handleSubmit(onSubmit)} method="POST">
             <HStack>
-                <FormControl isInvalid={errors.status} w={'150px'}>
+                <FormControl isInvalid={errors.status} w="150px">
                     <Select
                         icon={<MdArrowDropDown />}
-                        size={'sm'}
+                        size="sm"
                         border={0}
                         bg="gray.700"
                         color="whiteAlpha.500"
@@ -64,9 +64,9 @@ export const UpdateActionPanel = ({ itemId, updateFunc, lastAction, updateServic
                 </FormControl>
                 <Button
                     colorScheme="teal"
-                    fontSize={'md'}
-                    fontWeight={'normal'}
-                    size={'sm'}
+                    fontSize="md"
+                    fontWeight="normal"
+                    size="sm"
                     isLoading={loading}
                     type="submit"
                 >

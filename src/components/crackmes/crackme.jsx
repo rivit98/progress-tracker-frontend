@@ -19,10 +19,10 @@ export const Crackme = ({ crackme, updateFunc }) => {
     return (
         <AccordionItem
             border={0}
-            maxW={'xl'}
-            w={'full'}
-            mx={'auto'}
-            textAlign={'center'}
+            maxW="xl"
+            w="full"
+            mx="auto"
+            textAlign="center"
             isDisabled={false}
             id={`crackme-${id}`}
         >
@@ -33,13 +33,13 @@ export const Crackme = ({ crackme, updateFunc }) => {
                 }}
                 rounded="md"
             >
-                <HStack ml={1} flex={8} overflow={'hidden'}>
-                    <Text noOfLines={1} textAlign={'left'}>
+                <HStack ml={1} flex={8} overflow="hidden">
+                    <Text noOfLines={1} textAlign="left">
                         {name}
                     </Text>
-                    <Hide below={'sm'}>{lastActionStatus !== STATUS_CLEAR && statusBadge[lastActionStatus]}</Hide>
+                    <Hide below="sm">{lastActionStatus !== STATUS_CLEAR && statusBadge[lastActionStatus]}</Hide>
                 </HStack>
-                <Box flex={3} overflow={'hidden'}>
+                <Box flex={3} overflow="hidden">
                     {formatDate(date)}
                 </Box>
                 <AccordionIcon />

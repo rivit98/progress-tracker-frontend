@@ -1,31 +1,28 @@
-import axiosInstance from '../utils/axiosConfig';
+import axios from 'axios';
 import { store } from '../context/store';
 import { updateUser } from '../context/userReducer';
 
 const API_VERSION = 'v1';
 
+const getToken = async (loginData) => {
+    return axios.post(`/auth/${API_VERSION}/login/`, loginData);
+};
+
 const me = async (token) => {
-    return axiosInstance.get(`/user/${API_VERSION}/me/`, {
+    return axios.get(`/user/${API_VERSION}/me/`, {
         headers: { Authorization: `Bearer ${token}` },
     });
 };
 
 const login = async (loginData) => {
-    const token = await getToken(loginData.username, loginData.password);
+    const token = await getToken(loginData);
     const user = await me(token.access);
 
     return { ...user, ...token };
 };
 
-const getToken = async (username, password) => {
-    return axiosInstance.post(`/auth/${API_VERSION}/login/`, {
-        username: username,
-        password: password,
-    });
-};
-
 const register = async (registerData) => {
-    const user = await axiosInstance.post(`/user/${API_VERSION}/register/`, registerData);
+    const user = await axios.post(`/user/${API_VERSION}/register/`, registerData);
     const token = await getToken(user.username, registerData.password);
 
     return { ...user, ...token };
@@ -40,7 +37,7 @@ const getRefreshToken = () => {
 };
 
 const getNewAccessToken = async (refreshToken) => {
-    return axiosInstance.post(`/auth/${API_VERSION}/refresh/`, {
+    return axios.post(`/auth/${API_VERSION}/refresh/`, {
         refresh: refreshToken,
     });
 };
@@ -48,12 +45,12 @@ const getNewAccessToken = async (refreshToken) => {
 const refreshUserToken = async (failedRequest) => {
     const refreshToken = getRefreshToken();
     if (refreshToken == null) {
-        return Promise.reject('Your session expired, please login again');
+        return Promise.reject(new Error('Your session expired, please login again'));
     }
 
     const token = await getNewAccessToken(refreshToken);
     store.dispatch(updateUser(token));
-    failedRequest.response.config.headers['Authorization'] = `Bearer ${token.access}`;
+    failedRequest.response.config.headers.Authorization = `Bearer ${token.access}`; // eslint-disable-line no-param-reassign
     return Promise.resolve();
 };
 

@@ -11,10 +11,10 @@ import {
     ModalOverlay,
     useDisclosure,
 } from '@chakra-ui/react';
-import { heroesMapsService } from '../../services/heroesMaps';
 import { useState } from 'react';
-import { formTexts } from '../generic/formTexts';
 import { DeleteIcon } from '@chakra-ui/icons';
+import { heroesMapsService } from '../../services/heroesMaps';
+import { formTexts } from '../generic/formTexts';
 
 export const DeleteMap = ({ item, updateFunc }) => {
     const { id: itemId, name } = item;
@@ -26,7 +26,7 @@ export const DeleteMap = ({ item, updateFunc }) => {
         setLoading(false);
     };
 
-    const successCallback = (data) => {
+    const successCallback = () => {
         updateFunc({
             type: 'delete',
             payload: itemId,
@@ -34,11 +34,11 @@ export const DeleteMap = ({ item, updateFunc }) => {
         onClose();
     };
 
-    const errorCallback = (e) => {
+    const errorCallback = () => {
         setError(formTexts.genericError);
     };
 
-    const onSubmit = (data) => {
+    const onSubmit = () => {
         if (loading) {
             return;
         }
@@ -49,10 +49,10 @@ export const DeleteMap = ({ item, updateFunc }) => {
 
     return (
         <>
-            <Button colorScheme={'red'} size={'sm'} onClick={onOpen} leftIcon={<DeleteIcon />}>
+            <Button colorScheme="red" size="sm" onClick={onOpen} leftIcon={<DeleteIcon />}>
                 Delete
             </Button>
-            <Modal isOpen={isOpen} onClose={onClose} isCentered size={'sm'}>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered size="sm">
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Delete map?</ModalHeader>
@@ -75,7 +75,7 @@ export const DeleteMap = ({ item, updateFunc }) => {
                         </ModalFooter>
 
                         {error !== undefined && (
-                            <Alert status={'error'} mb={2}>
+                            <Alert status="error" mb={2}>
                                 <AlertIcon />
                                 {error}
                             </Alert>
