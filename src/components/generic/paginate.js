@@ -1,5 +1,4 @@
 import { Button, Flex, HStack } from '@chakra-ui/react';
-import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 const PaginationButton = ({ children, fn, ...props }) => {
     return (
@@ -73,7 +72,7 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
     // Basic list of items to render
     // e.g. itemList = ['first', 'previous', 1, 'ellipsis', 4, 5, 6, 'ellipsis', 10, 'next', 'last']
     const itemList = [
-        ...['previous'],
+        // ...['previous'],
         ...startPages,
 
         // Start ellipsis
@@ -96,7 +95,7 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
             : []),
 
         ...endPages,
-        ...['next']
+        // ...['next']
     ];
 
     // Map the button type to its page number

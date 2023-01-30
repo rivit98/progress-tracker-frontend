@@ -1,4 +1,4 @@
-import { ArrowUpIcon } from "@chakra-ui/icons"
+import { ArrowUpIcon, EditIcon } from "@chakra-ui/icons"
 import { Alert, AlertIcon, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, useDisclosure } from "@chakra-ui/react"
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -24,26 +24,23 @@ export const UpdateMap = ({ item, updateFunc }) => {
 	} = useForm({ mode: 'all' });
 
 	const [loading, setLoading] = useState(false);
-	const [result, setResult] = useState({ message: undefined, type: undefined });
+	const [errorText, setErrorText] = useState(undefined);
 
 	const resetCallback = () => {
 		setLoading(false);
 	}
 
 	const successCallback = (data) => {
-		// TODO: display / autohide
-		// TODO: update payload
-		setResult({ message: 'Map updated', type: 'success' });
 		updateFunc({
 			type: 'update',
-			payload: { ...data, actions: [], lastAction: undefined }
+			payload: data
 		});
-		reset();
+		onClose();
 	};
 
 	const errorCallback = (e) => {
 		const err = e.response?.data;
-		if (err) {
+		try {
 			Object.entries({
 				name: err?.name?.slice(0, 1)[0],
 				link: err?.link?.slice(0, 1)[0]
@@ -55,8 +52,8 @@ export const UpdateMap = ({ item, updateFunc }) => {
 						message: value
 					})
 				});
-		} else {
-			setResult({ message: formTexts.genericError, type: 'error' });
+		} catch {
+			setErrorText(formTexts.genericError)
 		}
 	};
 
@@ -65,18 +62,19 @@ export const UpdateMap = ({ item, updateFunc }) => {
 			return;
 		}
 		setLoading(true);
+		setErrorText(undefined);
 		heroesMapsService.updateMap(itemId, data).then(successCallback).catch(errorCallback).finally(resetCallback);
 	};
 
 	const open = () => {
 		reset();
 		onOpen();
-		setResult('');
+		setErrorText(undefined);
 	}
 
 	return (
 		<>
-			<Button mx={1} onClick={open} colorScheme="teal" size={'sm'} leftIcon={<ArrowUpIcon />}>Update</Button>
+			<Button mx={1} onClick={open} colorScheme="teal" size={'sm'} leftIcon={<EditIcon />}>Update</Button>
 
 			<Modal isOpen={isOpen} onClose={onClose} isCentered size={'lg'}>
 				<ModalOverlay />
@@ -132,13 +130,13 @@ export const UpdateMap = ({ item, updateFunc }) => {
 								</FormControl>
 							</Stack>
 
-							<Button size={'sm'} mt={4} w={'full'} colorScheme="teal" isLoading={loading} type="submit">
+							<Button mt={4} w={'full'} colorScheme="teal" isLoading={loading} type="submit">
 								Submit
 							</Button>
-							{result.message !== undefined && (
-								<Alert status={result.type} mt={3}>
+							{errorText !== undefined && (
+								<Alert status={'error'} mt={3}>
 									<AlertIcon />
-									{result.message}
+									{errorText}
 								</Alert>
 							)}
 						</form>

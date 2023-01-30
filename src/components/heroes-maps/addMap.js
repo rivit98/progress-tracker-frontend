@@ -61,6 +61,7 @@ export const AddMap = ({ updateFunc }) => {
 		if (loading) {
 			return;
 		}
+		setResult({ message: undefined, type: undefined });
 		setLoading(true);
 		heroesMapsService.createMap(data).then(successCallback).catch(errorCallback).finally(resetCallback);
 	};
@@ -68,7 +69,7 @@ export const AddMap = ({ updateFunc }) => {
 	const open = () => {
 		reset();
 		onOpen();
-		setResult('');
+		setResult({ message: undefined, type: undefined });
 	}
 
 	return (

@@ -27,6 +27,14 @@ export const DeleteMap = ({ item, updateFunc }) => {
         setLoading(false);
     }
 
+	const successCallback = (data) => {
+        updateFunc({
+            type: 'delete',
+            payload: itemId
+        });
+		onClose();
+	};
+
     const errorCallback = (e) => {
         setError(formTexts.genericError);
     };
@@ -35,12 +43,9 @@ export const DeleteMap = ({ item, updateFunc }) => {
         if (loading) {
             return;
         }
+		setError(undefined);
         setLoading(true);
-        heroesMapsService.deleteMap(itemId).then(onClose).catch(errorCallback).finally(resetCallback);
-        updateFunc({
-            type: 'delete',
-            payload: itemId
-        });
+        heroesMapsService.deleteMap(itemId).then(successCallback).catch(errorCallback).finally(resetCallback);
     };
 
     return (
@@ -53,9 +58,7 @@ export const DeleteMap = ({ item, updateFunc }) => {
                     <ModalCloseButton />
                     <ModalBody>
                         {name}
-                    </ModalBody>
-
-                    <ModalFooter>
+						<ModalFooter>
                         <Button colorScheme="red" isLoading={loading} onClick={onSubmit} leftIcon={<DeleteIcon />} mr={2}>
                             Delete
                         </Button>
@@ -65,11 +68,12 @@ export const DeleteMap = ({ item, updateFunc }) => {
                     </ModalFooter>
 
                     {error !== undefined && (
-                        <Alert status={'error'} mt={3}>
+                        <Alert status={'error'} mb={2}>
                             <AlertIcon />
                             {error}
                         </Alert>
                     )}
+                    </ModalBody>
                 </ModalContent>
             </Modal>
         </>

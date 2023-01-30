@@ -74,7 +74,12 @@ export const MapsList = ({ itemsWithActions }) => {
         }
 
         if (type === 'update') {
-            // TODO: similar to newaction
+            const {id: itemId} = payload
+            const index = items.findIndex((item) => item.id === itemId);
+            const newItems = [...items];
+            newItems[index] = {...newItems[index], ...payload}
+            setItems(newItems);
+            return;
         }
     };
 

@@ -1,9 +1,10 @@
-import { Box, Flex, Input } from '@chakra-ui/react';
+import { Box, Flex, Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
 import Select, { components } from 'react-select';
 import debounce from 'debounce';
 import { statusesOptions, STATUS_CLEAR } from '../generic/statuses';
 import { defaultFilterStatuses } from './config';
 import { byName, selectFieldStyles } from '../generic/filters';
+import { Search2Icon } from '@chakra-ui/icons';
 
 export const defaultFilters = {
     filterStatuses: defaultFilterStatuses.map((v) => v['value']),
@@ -20,7 +21,7 @@ const Control = ({ children, ...props }) => {
     );
 };
 
-export const Filters = ({updateFilters}) => {
+export const Filters = ({ updateFilters }) => {
     const onStatusChanged = (statuses) => {
         statuses = statuses.map((v) => v['value']);
         updateFilters({ filterStatuses: statuses });
@@ -33,7 +34,13 @@ export const Filters = ({updateFilters}) => {
 
     return (
         <Flex maxW={'xl'} w={'full'} flexDir={'column'} mx={'auto'}>
-            <Input placeholder={'Search by name'} onChange={debounce((event) => onSearchTermChanged(event), 300)} />
+            <InputGroup>
+                <InputLeftElement
+                    pointerEvents='none'
+                    children={<Search2Icon color='gray.300' />}
+                />
+                <Input placeholder={'Search by name'} onChange={debounce((event) => onSearchTermChanged(event), 300)} />
+            </InputGroup>
             <Flex mt={2} direction={'column'} experimental_spaceY={1}>
                 <Box>
                     <Select
