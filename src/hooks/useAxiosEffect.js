@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 export const useAxiosEffect = (getData, deps, defaultState = undefined) => {
     const [data, setData] = useState(defaultState);
@@ -8,10 +7,10 @@ export const useAxiosEffect = (getData, deps, defaultState = undefined) => {
 
     useEffect(() => {
         let unmounted = false;
-        let source = axios.CancelToken.source();
+        const controller = new AbortController();
 
         getData({
-            cancelToken: source.token
+            signal: controller.signal
         })
             .then((res) => {
                 if (!unmounted) {
@@ -28,7 +27,7 @@ export const useAxiosEffect = (getData, deps, defaultState = undefined) => {
 
         return () => {
             unmounted = true;
-            source.cancel();
+            controller.abort();
         };
     }, deps);
 
