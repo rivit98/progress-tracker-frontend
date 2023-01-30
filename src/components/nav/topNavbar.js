@@ -14,7 +14,7 @@ export const TopNavbar = ({ onOpen }) => {
                     icon={<HamburgerIcon />}
                     _hover={{
                         background: 'blackAlpha.600',
-                        color: 'teal.500'
+                        color: 'teal.500',
                     }}
                 />
             </Box>

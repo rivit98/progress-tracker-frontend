@@ -9,7 +9,7 @@ import { Search2Icon } from '@chakra-ui/icons';
 export const defaultFilters = {
     filterStatuses: defaultFilterStatuses.map((v) => v['value']),
     searchTerm: '',
-}
+};
 
 const Control = ({ children, ...props }) => {
     const { label } = props.selectProps;
@@ -35,10 +35,7 @@ export const Filters = ({ updateFilters }) => {
     return (
         <Flex maxW={'xl'} w={'full'} flexDir={'column'} mx={'auto'}>
             <InputGroup>
-                <InputLeftElement
-                    pointerEvents='none'
-                    children={<Search2Icon color='gray.300' />}
-                />
+                <InputLeftElement pointerEvents="none" children={<Search2Icon color="gray.300" />} />
                 <Input placeholder={'Search by name'} onChange={debounce((event) => onSearchTermChanged(event), 300)} />
             </InputGroup>
             <Flex mt={2} direction={'column'} experimental_spaceY={1}>

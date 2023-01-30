@@ -123,7 +123,7 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
                   },
                   type: 'page',
                   page: item,
-                  selected: item === currentPage
+                  selected: item === currentPage,
               }
             : {
                   onClick: () => {
@@ -134,7 +134,7 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
                   selected: false,
                   disabled:
                       item.indexOf('ellipsis') === -1 &&
-                      (item === 'next' || item === 'last' ? currentPage >= totalPages : currentPage <= 1)
+                      (item === 'next' || item === 'last' ? currentPage >= totalPages : currentPage <= 1),
               };
     });
 
@@ -168,7 +168,7 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
                     case 'end-ellipsis':
                         return <Ellipsis key={index} />;
                     default:
-                        return <span key={index}></span>
+                        return <span key={index}></span>;
                 }
             })}
         </HStack>

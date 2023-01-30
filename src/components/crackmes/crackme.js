@@ -29,7 +29,7 @@ export const Crackme = ({ crackme, updateFunc }) => {
             <AccordionButton
                 _hover={{
                     background: 'blackAlpha.600',
-                    color: 'teal.500'
+                    color: 'teal.500',
                 }}
                 rounded="md"
             >
@@ -37,9 +37,7 @@ export const Crackme = ({ crackme, updateFunc }) => {
                     <Text noOfLines={1} textAlign={'left'}>
                         {name}
                     </Text>
-                    <Hide below={'sm'}>
-                        {lastActionStatus !== STATUS_CLEAR && statusBadge[lastActionStatus]}
-                    </Hide>
+                    <Hide below={'sm'}>{lastActionStatus !== STATUS_CLEAR && statusBadge[lastActionStatus]}</Hide>
                 </HStack>
                 <Box flex={3} overflow={'hidden'}>
                     {formatDate(date)}

@@ -17,7 +17,7 @@ const SummaryLabel = ({ icon, content, tooltipText }) => {
 
 export const UpdateSummary = () => {
     const {
-        lastUpdated: { created, date, deleted, updated }
+        lastUpdated: { created, date, deleted, updated },
     } = useSelector(crackmes);
     const cacheDate = new Date(date);
 

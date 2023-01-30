@@ -17,8 +17,8 @@ export const CrackmesList = ({ itemsWithActions }) => {
     const [page, setPage] = useState(1);
 
     const updateFilters = (newFilters) => {
-        setFilters({...filters, ...newFilters})
-    }
+        setFilters({ ...filters, ...newFilters });
+    };
 
     useEffect(() => {
         // set first page after filtering (if not already there)
@@ -49,7 +49,7 @@ export const CrackmesList = ({ itemsWithActions }) => {
     return (
         <>
             <Filters updateFilters={updateFilters} />
-            {!logged && <NotLoggedInfo/>}
+            {!logged && <NotLoggedInfo />}
             <Text mb={5} mt={1}>
                 {filteredItems.length} results
             </Text>

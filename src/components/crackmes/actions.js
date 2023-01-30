@@ -1,10 +1,4 @@
-import {
-    Divider,
-    Flex,
-    HStack,
-    IconButton,
-    Link,
-    Text} from '@chakra-ui/react';
+import { Divider, Flex, HStack, IconButton, Link, Text } from '@chakra-ui/react';
 import { crackmesService } from '../../services/crackmes';
 import { useSelector } from 'react-redux';
 import { isLoggedIn } from '../../context/userReducer';
@@ -19,10 +13,7 @@ export const ActionsList = ({ crackme, updateFunc }) => {
     const logged = useSelector(isLoggedIn);
 
     const commonSection = (
-        <Flex
-            mb={2}
-            whiteSpace={'nowrap'}
-        >
+        <Flex mb={2} whiteSpace={'nowrap'}>
             <HStack flex={1} justifyContent={'center'}>
                 <Link href={challengeLink} isExternal color={'teal.500'}>
                     Description
@@ -30,22 +21,18 @@ export const ActionsList = ({ crackme, updateFunc }) => {
                 <IconButton as={Link} href={downloadLink} icon={<DownloadIcon />} variant={'link'} color={'teal.500'} />
             </HStack>
             <HStack flex={1} justifyContent={'center'}>
-                <Text>Writeups:{' '}</Text>
-                <Text fontWeight={'bold'}>
-                    {writeups_num}
-                </Text>
+                <Text>Writeups: </Text>
+                <Text fontWeight={'bold'}>{writeups_num}</Text>
             </HStack>
             <HStack flex={1} justifyContent={'center'}>
-                <Text>Comments:{' '}</Text>
-                <Text fontWeight={'bold'}>
-                    {comments_num}
-                </Text>
+                <Text>Comments: </Text>
+                <Text fontWeight={'bold'}>{comments_num}</Text>
             </HStack>
         </Flex>
-    )
+    );
 
     if (!logged) {
-        return commonSection
+        return commonSection;
     }
 
     return (
@@ -53,7 +40,12 @@ export const ActionsList = ({ crackme, updateFunc }) => {
             {commonSection}
             <Divider colorScheme={'gray'} my={1} />
             <ActionsTable actions={actions} />
-            <UpdateActionPanel itemId={id} updateFunc={updateFunc} lastAction={lastAction} updateService={crackmesService.updateStatus} />
+            <UpdateActionPanel
+                itemId={id}
+                updateFunc={updateFunc}
+                lastAction={lastAction}
+                updateService={crackmesService.updateStatus}
+            />
         </>
     );
 };

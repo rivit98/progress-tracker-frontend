@@ -2,7 +2,7 @@ import { STATUS_CLEAR, STATUS_ABORTED, STATUS_IGNORED, STATUS_SOLVED, STATUS_STA
 
 const optFactory = (kv, text) => {
     return (
-        <option value={kv} key={kv} style={{"backgroundColor": "var(--chakra-colors-gray-700)"}}>
+        <option value={kv} key={kv} style={{ backgroundColor: 'var(--chakra-colors-gray-700)' }}>
             {text}
         </option>
     );
@@ -14,12 +14,11 @@ const optSolve = optFactory('solved', 'Mark as solved');
 const optIgnore = optFactory('ignored', 'Ignore');
 const optUnignore = optFactory('clear', 'Unignore');
 
-
 export const possibleActionsMap = {
     undefined: [optStart, optSolve, optStop, optIgnore],
     [STATUS_CLEAR]: [optStart, optSolve, optIgnore],
     [STATUS_STARTED]: [optSolve, optStop, optIgnore],
     [STATUS_ABORTED]: [optStart, optSolve, optIgnore],
     [STATUS_SOLVED]: [optStart],
-    [STATUS_IGNORED]: [optUnignore, optStart, optSolve, optStop]
+    [STATUS_IGNORED]: [optUnignore, optStart, optSolve, optStop],
 };

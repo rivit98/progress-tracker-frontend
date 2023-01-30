@@ -13,7 +13,7 @@ export const statusDesc = {
     [STATUS_STARTED]: 'Started',
     [STATUS_ABORTED]: 'Aborted',
     [STATUS_SOLVED]: 'Solved',
-    [STATUS_IGNORED]: 'Ignored'
+    [STATUS_IGNORED]: 'Ignored',
 };
 
 export const statusDescToStatusIDMap = Object.fromEntries(
@@ -22,15 +22,35 @@ export const statusDescToStatusIDMap = Object.fromEntries(
 
 const badgeStyles = {
     w: '64px',
-    textAlign: 'center'
-}
+    textAlign: 'center',
+};
 
 export const statusBadge = {
-    [STATUS_CLEAR]: <Badge colorScheme='blue' {...badgeStyles}>{statusDesc[STATUS_CLEAR]}</Badge>,
-    [STATUS_STARTED]: <Badge colorScheme='yellow' {...badgeStyles}>{statusDesc[STATUS_STARTED]}</Badge>,
-    [STATUS_ABORTED]: <Badge colorScheme='red' {...badgeStyles}>{statusDesc[STATUS_ABORTED]}</Badge>,
-    [STATUS_SOLVED]: <Badge colorScheme='green' {...badgeStyles}>{statusDesc[STATUS_SOLVED]}</Badge>,
-    [STATUS_IGNORED]: <Badge colorScheme='gray' {...badgeStyles}>{statusDesc[STATUS_IGNORED]}</Badge>
+    [STATUS_CLEAR]: (
+        <Badge colorScheme="blue" {...badgeStyles}>
+            {statusDesc[STATUS_CLEAR]}
+        </Badge>
+    ),
+    [STATUS_STARTED]: (
+        <Badge colorScheme="yellow" {...badgeStyles}>
+            {statusDesc[STATUS_STARTED]}
+        </Badge>
+    ),
+    [STATUS_ABORTED]: (
+        <Badge colorScheme="red" {...badgeStyles}>
+            {statusDesc[STATUS_ABORTED]}
+        </Badge>
+    ),
+    [STATUS_SOLVED]: (
+        <Badge colorScheme="green" {...badgeStyles}>
+            {statusDesc[STATUS_SOLVED]}
+        </Badge>
+    ),
+    [STATUS_IGNORED]: (
+        <Badge colorScheme="gray" {...badgeStyles}>
+            {statusDesc[STATUS_IGNORED]}
+        </Badge>
+    ),
 };
 
 export const statusesOptions = Object.keys(statusDesc).map((k) => {

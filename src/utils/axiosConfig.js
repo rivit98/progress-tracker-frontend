@@ -4,10 +4,10 @@ import { authService } from '../services/auth';
 
 const axiosInstance = axios.create({
     // baseURL: 'http://localhost:8000/'
-    baseURL: 'https://ptb.rivit.dev/'
+    baseURL: 'https://ptb.rivit.dev/',
 });
 
-axiosInstance.interceptors.response.use(response => response.data);
+axiosInstance.interceptors.response.use((response) => response.data);
 
 axiosInstance.interceptors.request.use((request) => {
     const token = authService.getAccessToken();

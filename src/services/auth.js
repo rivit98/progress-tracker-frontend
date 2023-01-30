@@ -2,13 +2,12 @@ import axiosInstance from '../utils/axiosConfig';
 import { store } from '../context/store';
 import { updateUser } from '../context/userReducer';
 
-const API_VERSION = 'v1'
+const API_VERSION = 'v1';
 
 const me = async (token) => {
-    return axiosInstance
-        .get(`/user/${API_VERSION}/me/`, {
-            headers: { Authorization: `Bearer ${token}` }
-        })
+    return axiosInstance.get(`/user/${API_VERSION}/me/`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
 };
 
 const login = async (loginData) => {
@@ -19,15 +18,14 @@ const login = async (loginData) => {
 };
 
 const getToken = async (username, password) => {
-    return axiosInstance
-        .post(`/auth/${API_VERSION}/login/`, {
-            username: username,
-            password: password
-        })
+    return axiosInstance.post(`/auth/${API_VERSION}/login/`, {
+        username: username,
+        password: password,
+    });
 };
 
 const register = async (registerData) => {
-    const user = await axiosInstance.post(`/user/${API_VERSION}/register/`, registerData)
+    const user = await axiosInstance.post(`/user/${API_VERSION}/register/`, registerData);
     const token = await getToken(user.username, registerData.password);
 
     return { ...user, ...token };
@@ -42,10 +40,9 @@ const getRefreshToken = () => {
 };
 
 const getNewAccessToken = async (refreshToken) => {
-    return axiosInstance
-        .post(`/auth/${API_VERSION}/refresh/`, {
-            refresh: refreshToken
-        })
+    return axiosInstance.post(`/auth/${API_VERSION}/refresh/`, {
+        refresh: refreshToken,
+    });
 };
 
 const refreshUserToken = async (failedRequest) => {
@@ -60,10 +57,9 @@ const refreshUserToken = async (failedRequest) => {
     return Promise.resolve();
 };
 
-
 export const authService = {
     login,
     register,
     getAccessToken,
-    refreshUserToken
+    refreshUserToken,
 };

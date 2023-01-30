@@ -1,11 +1,4 @@
-import {
-    Button,
-    FormControl,
-    FormErrorMessage,
-    HStack,
-    Select,
-
-} from '@chakra-ui/react';
+import { Button, FormControl, FormErrorMessage, HStack, Select } from '@chakra-ui/react';
 import { MdArrowDropDown } from 'react-icons/md';
 import { statusDescToStatusIDMap } from '../generic/statuses';
 import { useForm } from 'react-hook-form';
@@ -18,7 +11,7 @@ export const UpdateActionPanel = ({ itemId, updateFunc, lastAction, updateServic
         handleSubmit,
         reset,
         setError,
-        formState: { errors }
+        formState: { errors },
     } = useForm();
     const [loading, setLoading] = useState(false);
 
@@ -35,7 +28,7 @@ export const UpdateActionPanel = ({ itemId, updateFunc, lastAction, updateServic
         if (err) {
             setError('status', {
                 type: 'manual',
-                message: 'Something went wrong, try again later'
+                message: 'Something went wrong, try again later',
             });
         }
     };

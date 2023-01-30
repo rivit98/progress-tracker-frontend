@@ -13,7 +13,7 @@ import {
     Stack,
     Text,
     useToast,
-    VStack
+    VStack,
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -27,7 +27,7 @@ const Register = () => {
         handleSubmit,
         watch,
         setError,
-        formState: { errors }
+        formState: { errors },
     } = useForm({ mode: 'all' });
 
     const password = useRef({});
@@ -49,11 +49,11 @@ const Register = () => {
         const err = e.response?.data;
         if (err) {
             Object.entries({
-                username: err?.username?.slice(0, 1)
+                username: err?.username?.slice(0, 1),
             }).forEach(([key, value]) =>
                 setError(key, {
                     type: 'manual',
-                    message: value
+                    message: value,
                 })
             );
         } else {
@@ -62,7 +62,7 @@ const Register = () => {
                 description: formTexts.genericError,
                 status: 'error',
                 duration: 3000,
-                isClosable: true
+                isClosable: true,
             });
         }
     };
@@ -72,7 +72,11 @@ const Register = () => {
             return;
         }
         setLoading(true);
-        authService.register(data).then(registeredCallback).catch(errorCallback).finally(() => setLoading(false));
+        authService
+            .register(data)
+            .then(registeredCallback)
+            .catch(errorCallback)
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -98,8 +102,8 @@ const Register = () => {
                                 required: formTexts.requiredField,
                                 minLength: {
                                     value: 3,
-                                    message: formTexts.textTooShort
-                                }
+                                    message: formTexts.textTooShort,
+                                },
                             })}
                         />
                         <FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage>
@@ -113,8 +117,8 @@ const Register = () => {
                                 required: formTexts.requiredField,
                                 minLength: {
                                     value: 8,
-                                    message: formTexts.textTooShort
-                                }
+                                    message: formTexts.textTooShort,
+                                },
                             })}
                         />
                         <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
@@ -128,9 +132,9 @@ const Register = () => {
                                 required: formTexts.requiredField,
                                 minLength: {
                                     value: 8,
-                                    message: formTexts.textTooShort
+                                    message: formTexts.textTooShort,
                                 },
-                                validate: (value) => value === password.current || formTexts.passwordsDontMatch
+                                validate: (value) => value === password.current || formTexts.passwordsDontMatch,
                             })}
                         />
                         <FormErrorMessage>{errors.password2 && errors.password2.message}</FormErrorMessage>

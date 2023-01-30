@@ -1,13 +1,8 @@
-import {
-    Divider,
-    Flex,
-    Link,
-
-} from '@chakra-ui/react';
+import { Divider, Flex, Link } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { isLoggedIn } from '../../context/userReducer';
 import { UpdateActionPanel } from '../generic/updateActionPanel';
-import { heroesMapsService } from '../../services/heroesMaps'
+import { heroesMapsService } from '../../services/heroesMaps';
 import { ActionsTable } from '../generic/actionsTable';
 import { DeleteMap } from './deleteMap';
 import { UpdateMap } from './updateMap';
@@ -19,23 +14,20 @@ export const ActionsList = ({ item, updateFunc }) => {
     const updateFuncWrapper = (itemId, action) => {
         updateFunc({
             type: 'newaction',
-            payload: { itemId, action }
-        })
-    }
+            payload: { itemId, action },
+        });
+    };
 
     const commonSection = (
-        <Flex
-            mb={2}
-            whiteSpace={'nowrap'}
-        >
+        <Flex mb={2} whiteSpace={'nowrap'}>
             <Link href={link} isExternal color={'teal.500'}>
                 Download
             </Link>
         </Flex>
-    )
+    );
 
     if (!logged) {
-        return commonSection
+        return commonSection;
     }
 
     return (
@@ -43,7 +35,12 @@ export const ActionsList = ({ item, updateFunc }) => {
             {commonSection}
             <Divider colorScheme={'gray'} my={1} />
             <ActionsTable actions={actions} />
-            <UpdateActionPanel itemId={id} updateFunc={updateFuncWrapper} lastAction={lastAction} updateService={heroesMapsService.updateStatus} />
+            <UpdateActionPanel
+                itemId={id}
+                updateFunc={updateFuncWrapper}
+                lastAction={lastAction}
+                updateService={heroesMapsService.updateStatus}
+            />
             <Flex justifyContent={'flex-end'} my={2}>
                 <DeleteMap item={item} updateFunc={updateFunc} />
                 <UpdateMap item={item} updateFunc={updateFunc} />

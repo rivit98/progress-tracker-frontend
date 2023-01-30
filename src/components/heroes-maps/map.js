@@ -1,4 +1,3 @@
-
 import {
     AccordionButton,
     AccordionIcon,
@@ -13,24 +12,16 @@ import { arabToRoman } from 'roman-numbers';
 import { statusBadge, STATUS_CLEAR } from '../generic/statuses';
 import { ActionsList } from './actions';
 
-
 export const Map = ({ item, updateFunc }) => {
     const { name, heroes_version, lastAction, id } = item;
     const lastActionStatus = lastAction && lastAction.status;
 
     return (
-        <AccordionItem
-            border={0}
-            maxW={'xl'}
-            w={'full'}
-            mx={'auto'}
-            textAlign={'center'}
-            id={`item-${id}`}
-        >
+        <AccordionItem border={0} maxW={'xl'} w={'full'} mx={'auto'} textAlign={'center'} id={`item-${id}`}>
             <AccordionButton
                 _hover={{
                     background: 'blackAlpha.600',
-                    color: 'teal.500'
+                    color: 'teal.500',
                 }}
                 rounded="md"
             >
@@ -38,9 +29,7 @@ export const Map = ({ item, updateFunc }) => {
                     <Text noOfLines={1} textAlign={'left'}>
                         {name}
                     </Text>
-                    <Hide below={'sm'}>
-                        {lastActionStatus !== STATUS_CLEAR && statusBadge[lastActionStatus]}
-                    </Hide>
+                    <Hide below={'sm'}>{lastActionStatus !== STATUS_CLEAR && statusBadge[lastActionStatus]}</Hide>
                 </HStack>
                 <Box flex={3} overflow={'hidden'}>
                     {arabToRoman(heroes_version)}

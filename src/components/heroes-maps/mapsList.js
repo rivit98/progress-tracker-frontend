@@ -21,8 +21,8 @@ export const MapsList = ({ itemsWithActions }) => {
     const [page, setPage] = useState(1);
 
     const updateFilters = (newFilters) => {
-        setFilters({ ...filters, ...newFilters })
-    }
+        setFilters({ ...filters, ...newFilters });
+    };
 
     useEffect(() => {
         // set first page after filtering (if not already there)
@@ -38,14 +38,13 @@ export const MapsList = ({ itemsWithActions }) => {
     const indexOfLastItem = page * ITEMS_PER_PAGE;
     const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
 
-
     const updateItem = (action) => {
-        const { type, payload } = action
+        const { type, payload } = action;
 
         if (type === 'delete') {
             const itemId = payload;
             const index = filteredItems.findIndex((item) => item.id === itemId);
-            setExpandedItems({ ...expandedItems, [page]: expandedItems[page].filter(idx => idx !== index) });
+            setExpandedItems({ ...expandedItems, [page]: expandedItems[page].filter((idx) => idx !== index) });
             setItems(items.filter((item) => item.id !== itemId));
             return;
         }
@@ -64,7 +63,7 @@ export const MapsList = ({ itemsWithActions }) => {
         }
 
         if (type === 'newaction') {
-            const { itemId, action } = payload
+            const { itemId, action } = payload;
             const index = items.findIndex((item) => item.id === itemId);
             const newItems = [...items];
             newItems[index].actions.unshift(action);
@@ -74,10 +73,10 @@ export const MapsList = ({ itemsWithActions }) => {
         }
 
         if (type === 'update') {
-            const {id: itemId} = payload
+            const { id: itemId } = payload;
             const index = items.findIndex((item) => item.id === itemId);
             const newItems = [...items];
-            newItems[index] = {...newItems[index], ...payload}
+            newItems[index] = { ...newItems[index], ...payload };
             setItems(newItems);
             return;
         }

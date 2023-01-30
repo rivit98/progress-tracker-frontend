@@ -14,12 +14,12 @@ export const CrackmesFetcher = () => {
 
     const {
         lastUpdated: { date },
-        cachedTasks
+        cachedTasks,
     } = useSelector(crackmes);
 
     const actionsLoader = async (options) => {
         if (!logged) {
-            return Promise.resolve([])
+            return Promise.resolve([]);
         }
 
         return crackmesService.getActions(options);
@@ -29,7 +29,7 @@ export const CrackmesFetcher = () => {
         return new Promise(async (resolve, reject) => {
             try {
                 const lastUpdated = await crackmesService.lastUpdated(options);
-                const lastUpdatedDate = new Date(lastUpdated.date)
+                const lastUpdatedDate = new Date(lastUpdated.date);
                 if (
                     date !== undefined &&
                     new Date(date).getTime() >= lastUpdatedDate.getTime() && // if cache is newer or same as remote, load
@@ -42,7 +42,7 @@ export const CrackmesFetcher = () => {
                     dispatch(
                         setCrackmes({
                             lastUpdated: lastUpdated,
-                            cachedTasks: updatedTasks
+                            cachedTasks: updatedTasks,
                         })
                     );
                     resolve(updatedTasks);
@@ -54,10 +54,13 @@ export const CrackmesFetcher = () => {
     };
 
     const tasksLoader = async (options) => {
-        const [lastUpdated, crackmes] = await Promise.all([crackmesService.lastUpdated(options), crackmesService.getCrackmes(options)]);
+        const [lastUpdated, crackmes] = await Promise.all([
+            crackmesService.lastUpdated(options),
+            crackmesService.getCrackmes(options),
+        ]);
         dispatch(setTasksLastUpdated(lastUpdated));
         return crackmes;
-    }
+    };
 
     const taskListLoader = getAggregatedState(tasksLoader, actionsLoader);
     const state = useAxiosEffect(taskListLoader, [], [[], {}]);
@@ -68,13 +71,13 @@ export const CrackmesFetcher = () => {
         taskActions = taskActions
             .map((action) => ({ ...action, date: new Date(action.date) }))
             .sort((a1, a2) => a2.date.getTime() - a1.date.getTime());
-        
+
         const lastAction = taskActions[0] || undefined;
         return {
             ...t,
             date: new Date(t.date),
             actions: taskActions,
-            lastAction: lastAction
+            lastAction: lastAction,
         };
     });
 

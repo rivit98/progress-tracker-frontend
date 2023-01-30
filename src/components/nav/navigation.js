@@ -9,7 +9,7 @@ import {
     Icon,
     Text,
     useDisclosure,
-    useToast
+    useToast,
 } from '@chakra-ui/react';
 import { FiHome, FiLogIn, FiLogOut, FiUserPlus } from 'react-icons/fi';
 import React from 'react';
@@ -34,7 +34,7 @@ export function Navigation({ children }) {
         { name: 'Login', to: '/login', icon: FiLogIn, show: !logged },
         { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
 
-        { name: 'Log out', to: '/', icon: FiLogOut, onClick: () => logOut(), show: logged }
+        { name: 'Log out', to: '/', icon: FiLogOut, onClick: () => logOut(), show: logged },
     ];
 
     const logOut = () => {
@@ -43,7 +43,7 @@ export function Navigation({ children }) {
             description: 'Signed out',
             status: 'success',
             duration: 3000,
-            isClosable: true
+            isClosable: true,
         });
         dispatch(removeUser());
     };
@@ -90,7 +90,7 @@ export function Navigation({ children }) {
                         borderRadius="lg"
                         role="group"
                         _focus={{
-                            outline: 'none'
+                            outline: 'none',
                         }}
                     >
                         <HStack align={'start'}>
@@ -122,10 +122,10 @@ const SideBarItem = ({ icon, children, to, onClickActions }) => {
                 borderRadius="lg"
                 cursor="pointer"
                 _focus={{
-                    outline: 'none'
+                    outline: 'none',
                 }}
                 _hover={{
-                    color: 'white'
+                    color: 'white',
                 }}
             >
                 {icon && <Icon mr="4" fontSize="16" as={icon} />}

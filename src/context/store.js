@@ -13,23 +13,22 @@ import { configureStore } from '@reduxjs/toolkit';
 
 const persistConfig = {
     key: 'root',
-    storage
+    storage,
 };
 
 const appReducer = combineReducers({ userReducer, crackmesReducer });
 const persistedReducer = persistReducer(persistConfig, appReducer);
 
-const middlewares = []
-if(__DEV__){
-    middlewares.push(logger)
+const middlewares = [];
+if (__DEV__) {
+    middlewares.push(logger);
 }
 
 const store = configureStore({
-        reducer: persistedReducer,
-        devTools: __DEV__,
-        middleware: middlewares
-    }
-);
+    reducer: persistedReducer,
+    devTools: __DEV__,
+    middleware: middlewares,
+});
 const persistor = persistStore(store);
 
 const withStore = (Wrapped) => (props) => {

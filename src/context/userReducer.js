@@ -9,8 +9,8 @@ export const userSlice = createSlice({
         },
         removeUser: (state) => {
             return {};
-        }
-    }
+        },
+    },
 });
 
 export const { updateUser, removeUser } = userSlice.actions;

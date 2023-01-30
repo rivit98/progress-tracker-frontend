@@ -10,7 +10,7 @@ export const useAxiosEffect = (getData, deps, defaultState = undefined) => {
         const controller = new AbortController();
 
         getData({
-            signal: controller.signal
+            signal: controller.signal,
         })
             .then((res) => {
                 if (!unmounted) {

@@ -11,7 +11,7 @@ import {
     Link,
     Stack,
     Text,
-    VStack
+    VStack,
 } from '@chakra-ui/react';
 import { formTexts } from '../generic/formTexts';
 import { authService } from '../../services/auth';
@@ -25,7 +25,7 @@ const Login = () => {
         register,
         handleSubmit,
         setError,
-        formState: { errors }
+        formState: { errors },
     } = useForm({ mode: 'all' });
 
     const [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ const Login = () => {
 
         setError('password', {
             type: 'manual',
-            message: formTexts.invalidCredentials
+            message: formTexts.invalidCredentials,
         });
     };
 
@@ -51,7 +51,11 @@ const Login = () => {
             return;
         }
         setLoading(true);
-        authService.login(data).then(loggedCallback).catch(errorCallback).finally(() => setLoading(false));
+        authService
+            .login(data)
+            .then(loggedCallback)
+            .catch(errorCallback)
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -74,7 +78,7 @@ const Login = () => {
                             bg={'white'}
                             placeholder={'Nick'}
                             {...register('username', {
-                                required: formTexts.requiredField
+                                required: formTexts.requiredField,
                             })}
                         />
                         <FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage>
@@ -85,7 +89,7 @@ const Login = () => {
                             type={'password'}
                             placeholder={'Password'}
                             {...register('password', {
-                                required: formTexts.requiredField
+                                required: formTexts.requiredField,
                             })}
                         />
                         <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
