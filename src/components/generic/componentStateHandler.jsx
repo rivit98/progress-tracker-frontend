@@ -15,7 +15,7 @@ export const ComponentStateHandler = ({ children, state: { error, isLoading, dat
         );
     }
 
-    return { children };
+    return children;
 };
 
 export const getAggregatedState = (...funcs) => {
