@@ -96,24 +96,16 @@ export const UpdateMap = ({ item, updateFunc }) => {
 									<FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
 								</FormControl>
 								<FormControl isInvalid={errors.heroes_version}>
-									<NumberInput
+									<Input
 										bg={'white'}
 										type={'number'}
-										min={1}
-										max={7}
-										step={1}
 										defaultValue={heroes_version}
 										placeholder={'Heroes version'}
 										{...register('heroes_version', {
-											required: formTexts.requiredField
+											required: formTexts.requiredField,
 										})}
 									>
-										<NumberInputField />
-										<NumberInputStepper>
-											<NumberIncrementStepper />
-											<NumberDecrementStepper />
-										</NumberInputStepper>
-									</NumberInput>
+									</Input>
 									<FormErrorMessage>{errors.heroes_version && errors.heroes_version.message}</FormErrorMessage>
 								</FormControl>
 								<FormControl isInvalid={errors.link}>

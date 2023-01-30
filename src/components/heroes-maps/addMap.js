@@ -39,8 +39,8 @@ export const AddMap = ({ updateFunc }) => {
 	};
 
 	const errorCallback = (e) => {
-		const err = e.response?.data;
-		if (err) {
+		try {
+			const err = e.response?.data;
 			Object.entries({
 				name: err?.name?.slice(0, 1)[0],
 				link: err?.link?.slice(0, 1)[0]
@@ -52,7 +52,7 @@ export const AddMap = ({ updateFunc }) => {
 						message: value
 					})
 				});
-		} else {
+		} catch {
 			setResult({ message: formTexts.genericError, type: 'error' });
 		}
 	};
@@ -95,24 +95,16 @@ export const AddMap = ({ updateFunc }) => {
 									<FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
 								</FormControl>
 								<FormControl isInvalid={errors.heroes_version}>
-									<NumberInput
+									<Input
 										bg={'white'}
 										type={'number'}
-										min={1}
-										max={7}
-										step={1}
 										defaultValue={3}
 										placeholder={'Heroes version'}
 										{...register('heroes_version', {
-											required: formTexts.requiredField
+											required: formTexts.requiredField,
 										})}
 									>
-										<NumberInputField />
-										<NumberInputStepper>
-											<NumberIncrementStepper />
-											<NumberDecrementStepper />
-										</NumberInputStepper>
-									</NumberInput>
+									</Input>
 									<FormErrorMessage>{errors.heroes_version && errors.heroes_version.message}</FormErrorMessage>
 								</FormControl>
 								<FormControl isInvalid={errors.link}>
