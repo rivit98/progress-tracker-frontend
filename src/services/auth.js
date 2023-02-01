@@ -23,7 +23,7 @@ const login = async (loginData) => {
 
 const register = async (registerData) => {
     const user = await axios.post(`/user/${API_VERSION}/register/`, registerData);
-    const token = await getToken(user.username, registerData.password);
+    const token = await getToken({ username: user.username, password: registerData.password });
 
     return { ...user, ...token };
 };
