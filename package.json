@@ -33,7 +33,7 @@
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "prettier": "prettier --write \"**/*.+(js|jsx)\"",
-    "lint": "eslint --fix --ext .js,.jsx ."
+    "lint": "eslint --fix src"
   },
   "eslintConfig": {
     "extends": [

@@ -1,7 +1,7 @@
 import { Accordion, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { isLoggedIn } from '../../context/userReducer';
+import { hasPermissions, HEROES_MAPS_SPECIAL_PERMS, isLoggedIn, userGroups } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
 import { Paginate } from '../generic/paginate';
 import { AddMap } from './addMap';
@@ -11,7 +11,8 @@ import { Map } from './map';
 
 export const MapsList = ({ itemsWithActions }) => {
     const logged = useSelector(isLoggedIn);
-    // const groups = useSelector(userGroups) || [];
+    const groups = useSelector(userGroups);
+    const hasSpecialPerms = hasPermissions(groups, [HEROES_MAPS_SPECIAL_PERMS]);
 
     const [items, setItems] = useState(itemsWithActions);
 
@@ -80,7 +81,7 @@ export const MapsList = ({ itemsWithActions }) => {
         <>
             <Filters updateFilters={updateFilters} />
             <Flex experimental_spaceX={2} my={1}>
-                <AddMap updateFunc={updateItem} />
+                {hasSpecialPerms && <AddMap updateFunc={updateItem} />}
             </Flex>
             {!logged && <NotLoggedInfo />}
             <Text mb={5} mt={1}>

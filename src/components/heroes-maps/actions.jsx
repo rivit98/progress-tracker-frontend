@@ -1,6 +1,6 @@
 import { Divider, Flex, Link } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { isLoggedIn } from '../../context/userReducer';
+import { hasPermissions, HEROES_MAPS_SPECIAL_PERMS, isLoggedIn, userGroups } from '../../context/userReducer';
 import { UpdateActionPanel } from '../generic/updateActionPanel';
 import { heroesMapsService } from '../../services/heroesMaps';
 import { ActionsTable } from '../generic/actionsTable';
@@ -10,6 +10,8 @@ import { UpdateMap } from './updateMap';
 export const ActionsList = ({ item, updateFunc }) => {
     const { id, link, lastAction, actions } = item;
     const logged = useSelector(isLoggedIn);
+    const groups = useSelector(userGroups);
+    const hasSpecialPerms = hasPermissions(groups, [HEROES_MAPS_SPECIAL_PERMS]);
 
     const updateFuncWrapper = (itemId, action) => {
         updateFunc({
@@ -41,10 +43,12 @@ export const ActionsList = ({ item, updateFunc }) => {
                 lastAction={lastAction}
                 updateService={heroesMapsService.updateStatus}
             />
-            <Flex justifyContent="flex-end" my={2}>
-                <DeleteMap item={item} updateFunc={updateFunc} />
-                <UpdateMap item={item} updateFunc={updateFunc} />
-            </Flex>
+            {hasSpecialPerms && (
+                <Flex justifyContent="flex-end" my={2}>
+                    <DeleteMap item={item} updateFunc={updateFunc} />
+                    <UpdateMap item={item} updateFunc={updateFunc} />
+                </Flex>
+            )}
         </>
     );
 };
