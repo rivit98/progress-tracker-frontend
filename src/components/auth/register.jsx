@@ -44,6 +44,7 @@ const Register = () => {
     };
 
     const errorCallback = (e) => {
+        console.error(e);
         dispatch(removeUser());
 
         const err = e.response?.data;

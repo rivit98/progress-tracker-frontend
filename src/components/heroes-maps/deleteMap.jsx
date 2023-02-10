@@ -34,7 +34,8 @@ export const DeleteMap = ({ item, updateFunc }) => {
         onClose();
     };
 
-    const errorCallback = () => {
+    const errorCallback = (err) => {
+        console.error(err);
         setError(formTexts.genericError);
     };
 

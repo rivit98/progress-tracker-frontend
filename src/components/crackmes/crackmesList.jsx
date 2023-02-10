@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Crackme } from './crackme';
 import { Paginate } from '../generic/paginate';
-import { defaultFilters, Filters, filterTasks } from './filters';
+import { defaultFilters, Filters, filterItems } from './filters';
 import { isLoggedIn } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
 import { ITEMS_PER_PAGE } from './config';
@@ -12,7 +12,7 @@ export const CrackmesList = ({ itemsWithActions }) => {
     const logged = useSelector(isLoggedIn);
     const [items, setItems] = useState(itemsWithActions);
 
-    const [expandedItems, setExpandedItems] = useState({});
+    const [expandedItems, setExpandedItems] = useState([]);
     const [filters, setFilters] = useState(defaultFilters);
     const [page, setPage] = useState(1);
 
@@ -21,14 +21,16 @@ export const CrackmesList = ({ itemsWithActions }) => {
     };
 
     useEffect(() => {
-        // set first page after filtering (if not already there)
-        if (page !== 1) {
-            setPage(1);
-        }
-        setExpandedItems({}); // clear expended items after filtering
+        // set first page after filtering
+        setPage(1);
     }, [filters]);
 
-    const filteredItems = filterTasks(items, filters);
+    useEffect(() => {
+        // clear expended items after filtering and page change
+        setExpandedItems([]);
+    }, [page, filters]);
+
+    const filteredItems = filterItems(items, filters);
 
     const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
     const indexOfLastItem = page * ITEMS_PER_PAGE;
@@ -40,10 +42,15 @@ export const CrackmesList = ({ itemsWithActions }) => {
         newItems[index].actions.unshift(action);
         newItems[index].lastAction = action;
         setItems(newItems);
+        const isFilteredOut = filterItems([newItems[index]], filters).length === 0;
+        if (isFilteredOut) {
+            const itemIndex = filteredItems.findIndex((item) => item.id === taskid);
+            setExpandedItems(expandedItems.filter((idx) => idx !== itemIndex));
+        }
     };
 
     const updateOpenedItems = (opened_items) => {
-        setExpandedItems({ ...expandedItems, [page]: opened_items });
+        setExpandedItems(opened_items);
     };
 
     return (
@@ -54,7 +61,7 @@ export const CrackmesList = ({ itemsWithActions }) => {
                 {filteredItems.length} results
             </Text>
             <Flex w="full" justifyContent="center" flexDirection="column">
-                <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems[page] || []}>
+                <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems}>
                     {filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((item) => (
                         <Crackme crackme={item} updateFunc={updateItem} key={item.id} />
                     ))}

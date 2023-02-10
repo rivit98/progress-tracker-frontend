@@ -16,7 +16,7 @@ export const MapsList = ({ itemsWithActions }) => {
 
     const [items, setItems] = useState(itemsWithActions);
 
-    const [expandedItems, setExpandedItems] = useState({});
+    const [expandedItems, setExpandedItems] = useState([]);
     const [filters, setFilters] = useState(defaultFilters);
     const [page, setPage] = useState(1);
 
@@ -25,12 +25,14 @@ export const MapsList = ({ itemsWithActions }) => {
     };
 
     useEffect(() => {
-        // set first page after filtering (if not already there)
-        if (page !== 1) {
-            setPage(1);
-        }
-        setExpandedItems({}); // clear expended items after filtering
+        // set first page after filtering
+        setPage(1);
     }, [filters]);
+
+    useEffect(() => {
+        // clear expended items after filtering and page change
+        setExpandedItems([]);
+    }, [page, filters]);
 
     const filteredItems = filterItems(items, filters);
 
@@ -44,27 +46,23 @@ export const MapsList = ({ itemsWithActions }) => {
         if (type === 'delete') {
             const itemId = payload;
             const index = filteredItems.findIndex((item) => item.id === itemId);
-            setExpandedItems({ ...expandedItems, [page]: expandedItems[page].filter((idx) => idx !== index) });
+            setExpandedItems(expandedItems.filter((idx) => idx !== index));
             setItems(items.filter((item) => item.id !== itemId));
-            return;
-        }
-
-        if (type === 'add') {
+        } else if (type === 'add') {
             setItems([...items, payload]);
-            return;
-        }
-
-        if (type === 'newaction') {
+        } else if (type === 'newaction') {
             const { itemId, action } = payload;
             const index = items.findIndex((item) => item.id === itemId);
             const newItems = [...items];
             newItems[index].actions.unshift(action);
             newItems[index].lastAction = action;
+            const isFilteredOut = filterItems([newItems[index]], filters).length === 0;
+            if (isFilteredOut) {
+                const itemIndex = filteredItems.findIndex((item) => item.id === itemId);
+                setExpandedItems(expandedItems.filter((idx) => idx !== itemIndex));
+            }
             setItems(newItems);
-            return;
-        }
-
-        if (type === 'update') {
+        } else if (type === 'update') {
             const { id: itemId } = payload;
             const index = items.findIndex((item) => item.id === itemId);
             const newItems = [...items];
@@ -74,7 +72,7 @@ export const MapsList = ({ itemsWithActions }) => {
     };
 
     const updateOpenedItems = (opened_items) => {
-        setExpandedItems({ ...expandedItems, [page]: opened_items });
+        setExpandedItems(opened_items);
     };
 
     return (
@@ -88,7 +86,7 @@ export const MapsList = ({ itemsWithActions }) => {
                 {filteredItems.length} results
             </Text>
             <Flex w="full" justifyContent="center" flexDirection="column">
-                <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems[page] || []}>
+                <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems}>
                     {filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((item) => (
                         <Map item={item} updateFunc={updateItem} key={item.id} />
                     ))}

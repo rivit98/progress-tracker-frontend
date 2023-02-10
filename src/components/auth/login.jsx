@@ -37,7 +37,8 @@ const Login = () => {
         navigate('/');
     };
 
-    const errorCallback = () => {
+    const errorCallback = (err) => {
+        console.error(err);
         dispatch(removeUser());
 
         setError('password', {

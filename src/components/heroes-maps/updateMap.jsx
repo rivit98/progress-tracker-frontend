@@ -48,6 +48,7 @@ export const UpdateMap = ({ item, updateFunc }) => {
     };
 
     const errorCallback = (e) => {
+        console.error(e);
         const err = e.response?.data;
         try {
             Object.entries({

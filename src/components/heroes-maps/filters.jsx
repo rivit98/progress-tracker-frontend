@@ -59,10 +59,7 @@ export const Filters = ({ updateFilters }) => {
 };
 
 export const filterItems = (maps, { filterStatuses, searchTerm }) => {
-    let filteredItems = [...maps];
-    if (searchTerm.length > 2) {
-        filteredItems = filteredItems.filter((t) => t.name.toLowerCase().includes(searchTerm));
-    }
+    let filteredItems = maps.filter((t) => t.name.toLowerCase().includes(searchTerm));
 
     if (filterStatuses.length > 0) {
         if (filterStatuses.includes(STATUS_CLEAR)) {

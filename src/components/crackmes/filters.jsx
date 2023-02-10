@@ -77,11 +77,8 @@ export const Filters = ({ updateFilters }) => {
     );
 };
 
-export const filterTasks = (tasks, { filterStatuses, searchTerm, sortMethod }) => {
-    let filteredItems = [...tasks];
-    if (searchTerm.length > 2) {
-        filteredItems = filteredItems.filter((t) => t.name.toLowerCase().includes(searchTerm));
-    }
+export const filterItems = (tasks, { filterStatuses, searchTerm, sortMethod }) => {
+    let filteredItems = tasks.filter((t) => t.name.toLowerCase().includes(searchTerm));
 
     if (filterStatuses.length > 0) {
         if (filterStatuses.includes(STATUS_CLEAR)) {

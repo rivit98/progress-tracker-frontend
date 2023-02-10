@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { statusDescToStatusIDMap } from './statuses';
 import { possibleActionsMap } from './actionOptions';
+import { formTexts } from './formTexts';
 
 export const UpdateActionPanel = ({ itemId, updateFunc, lastAction, updateService }) => {
     const {
@@ -21,16 +22,14 @@ export const UpdateActionPanel = ({ itemId, updateFunc, lastAction, updateServic
         reset();
     };
 
-    const errorCallback = (e) => {
+    const errorCallback = (err) => {
+        console.error(err);
         setLoading(false);
 
-        const err = e.response?.data;
-        if (err) {
-            setError('status', {
-                type: 'manual',
-                message: 'Something went wrong, try again later',
-            });
-        }
+        setError('status', {
+            type: 'manual',
+            message: formTexts.genericError,
+        });
     };
 
     const onSubmit = (data) => {
