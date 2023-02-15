@@ -72,7 +72,9 @@ export const MapsList = ({ itemsWithActions }) => {
     };
 
     const updateOpenedItems = (opened_items) => {
-        setExpandedItems(opened_items);
+        if (logged) {
+            setExpandedItems(opened_items);
+        }
     };
 
     return (
@@ -86,7 +88,7 @@ export const MapsList = ({ itemsWithActions }) => {
                 {filteredItems.length} results
             </Text>
             <Flex w="full" justifyContent="center" flexDirection="column">
-                <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems}>
+                <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems} reduceMotion>
                     {filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((item) => (
                         <Map item={item} updateFunc={updateItem} key={item.id} />
                     ))}

@@ -21,7 +21,7 @@ import { heroesMapsService } from '../../services/heroesMaps';
 import { formTexts } from '../generic/formTexts';
 
 export const UpdateMap = ({ item, updateFunc }) => {
-    const { id: itemId, name, link, heroes_version } = item;
+    const { id: itemId, name, heroes_version } = item;
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const {
@@ -53,7 +53,6 @@ export const UpdateMap = ({ item, updateFunc }) => {
         try {
             Object.entries({
                 name: err?.name?.slice(0, 1)[0],
-                link: err?.link?.slice(0, 1)[0],
             })
                 .filter(([, value]) => value !== undefined)
                 .forEach(([key, value]) => {
@@ -120,18 +119,6 @@ export const UpdateMap = ({ item, updateFunc }) => {
                                     <FormErrorMessage>
                                         {errors.heroes_version && errors.heroes_version.message}
                                     </FormErrorMessage>
-                                </FormControl>
-                                <FormControl isInvalid={errors.link}>
-                                    <Input
-                                        bg="white"
-                                        type="url"
-                                        defaultValue={link}
-                                        placeholder="Link"
-                                        {...register('link', {
-                                            required: formTexts.requiredField,
-                                        })}
-                                    />
-                                    <FormErrorMessage>{errors.link && errors.link.message}</FormErrorMessage>
                                 </FormControl>
                             </Stack>
 

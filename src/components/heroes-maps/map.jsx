@@ -13,11 +13,11 @@ import { statusBadge, STATUS_CLEAR } from '../generic/statuses';
 import { ActionsList } from './actions';
 
 export const Map = ({ item, updateFunc }) => {
-    const { name, heroes_version, lastAction, id } = item;
+    const { name, heroes_version, lastAction } = item;
     const lastActionStatus = lastAction && lastAction.status;
 
     return (
-        <AccordionItem border={0} maxW="xl" w="full" mx="auto" textAlign="center" id={`item-${id}`}>
+        <AccordionItem border={0} maxW="xl" w="full" mx="auto" textAlign="center">
             <AccordionButton
                 _hover={{
                     background: 'blackAlpha.600',

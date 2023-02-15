@@ -53,7 +53,6 @@ export const AddMap = ({ updateFunc }) => {
             const err = e.response?.data;
             Object.entries({
                 name: err?.name?.slice(0, 1)[0],
-                link: err?.link?.slice(0, 1)[0],
             })
                 .filter(([, value]) => value !== undefined)
                 .forEach(([key, value]) => {
@@ -119,17 +118,6 @@ export const AddMap = ({ updateFunc }) => {
                                     <FormErrorMessage>
                                         {errors.heroes_version && errors.heroes_version.message}
                                     </FormErrorMessage>
-                                </FormControl>
-                                <FormControl isInvalid={errors.link}>
-                                    <Input
-                                        bg="white"
-                                        type="url"
-                                        placeholder="Link"
-                                        {...register('link', {
-                                            required: formTexts.requiredField,
-                                        })}
-                                    />
-                                    <FormErrorMessage>{errors.link && errors.link.message}</FormErrorMessage>
                                 </FormControl>
                             </Stack>
 

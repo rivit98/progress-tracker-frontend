@@ -61,7 +61,7 @@ export const CrackmesList = ({ itemsWithActions }) => {
                 {filteredItems.length} results
             </Text>
             <Flex w="full" justifyContent="center" flexDirection="column">
-                <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems}>
+                <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems} reduceMotion>
                     {filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((item) => (
                         <Crackme crackme={item} updateFunc={updateItem} key={item.id} />
                     ))}

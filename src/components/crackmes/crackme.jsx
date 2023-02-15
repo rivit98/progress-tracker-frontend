@@ -13,19 +13,11 @@ import { statusBadge, STATUS_CLEAR } from '../generic/statuses';
 import { ActionsList } from './actions';
 
 export const Crackme = ({ crackme, updateFunc }) => {
-    const { date, name, lastAction, id } = crackme;
+    const { date, name, lastAction } = crackme;
     const lastActionStatus = lastAction && lastAction.status;
 
     return (
-        <AccordionItem
-            border={0}
-            maxW="xl"
-            w="full"
-            mx="auto"
-            textAlign="center"
-            isDisabled={false}
-            id={`crackme-${id}`}
-        >
+        <AccordionItem border={0} maxW="xl" w="full" mx="auto" textAlign="center">
             <AccordionButton
                 _hover={{
                     background: 'blackAlpha.600',
