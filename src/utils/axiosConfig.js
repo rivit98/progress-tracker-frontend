@@ -17,5 +17,5 @@ export const setupAxios = () => {
         return request;
     });
 
-    createAuthRefreshInterceptor(axios, (failedRequest) => authService.refreshUserToken(failedRequest));
+    createAuthRefreshInterceptor(axios, authService.refreshUserToken);
 };
