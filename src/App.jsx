@@ -7,6 +7,7 @@ import { CrackmesFetcher } from './components/crackmes/crackmesFetcher';
 import Home from './components/home/home';
 import { withStore } from './context/store';
 import { MapsFetcher } from './components/heroes-maps/mapsFetcher';
+import { GamesFetcher } from './components/games/gamesFetcher';
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
 
                 <Route path="/crackmes" element={<CrackmesFetcher />} />
                 <Route path="/heroes-maps" element={<MapsFetcher />} />
+                <Route path="/games" element={<GamesFetcher />} />
             </Routes>
         </Container>
     );

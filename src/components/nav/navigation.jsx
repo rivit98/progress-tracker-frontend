@@ -16,6 +16,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { VscKey } from 'react-icons/vsc';
+import { LuGamepad2 } from 'react-icons/lu';
 import { TopNavbar } from './topNavbar';
 import { currentUserData, isLoggedIn, removeUser } from '../../context/userReducer';
 
@@ -41,6 +42,7 @@ export const Navigation = ({ children }) => {
         { name: 'Home', to: '/', icon: FiHome },
         { name: 'Crackmes', to: '/crackmes', icon: VscKey },
         { name: 'Heroes maps', to: '/heroes-maps', icon: FiMap },
+        { name: 'Games', to: '/games', icon: LuGamepad2 },
         { name: 'Login', to: '/login', icon: FiLogIn, show: !logged },
         { name: 'Register', to: '/register', icon: FiUserPlus, show: !logged },
 

@@ -8,9 +8,9 @@ const optFactory = (kv, text) => {
     );
 };
 
-const optStart = optFactory('started', 'Start solving');
-const optStop = optFactory('aborted', 'Stop solving');
-const optSolve = optFactory('solved', 'Mark as solved');
+const optStart = optFactory('started', 'Start');
+const optStop = optFactory('aborted', 'Stop');
+const optSolve = optFactory('solved', 'Done');
 const optIgnore = optFactory('ignored', 'Ignore');
 const optUnignore = optFactory('clear', 'Unignore');
 

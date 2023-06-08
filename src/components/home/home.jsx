@@ -43,6 +43,9 @@ const Home = () => {
                             There are so many HoMM maps I want to play so fancy tracker for them would be useful!
                         </Text>
                     </HomeCard>
+                    <HomeCard header="games" target="/games">
+                        <Text>TODO</Text>
+                    </HomeCard>
                 </SimpleGrid>
             </VStack>
         </Container>
