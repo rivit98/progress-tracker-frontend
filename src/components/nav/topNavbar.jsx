@@ -10,7 +10,6 @@ export const TopNavbar = ({ onOpen }) => {
                 <IconButton
                     onClick={onOpen}
                     variant="ghost"
-                    aria-label="open menu"
                     icon={<HamburgerIcon />}
                     _hover={{
                         background: 'blackAlpha.600',

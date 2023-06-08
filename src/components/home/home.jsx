@@ -1,27 +1,14 @@
-import {
-    Card,
-    CardBody,
-    CardHeader,
-    Center,
-    Container,
-    Divider,
-    Heading,
-    SimpleGrid,
-    Text,
-    VStack,
-} from '@chakra-ui/react';
+import { Card, CardHeader, Center, Container, Heading, SimpleGrid, VStack } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
-const HomeCard = ({ header, target, children }) => {
+const HomeCard = ({ header, target }) => {
     return (
-        <Card as={ReactRouterLink} to={target} bg="whiteAlpha.800">
+        <Card as={ReactRouterLink} to={target} bg="whiteAlpha.800" w="full">
             <CardHeader>
                 <Center>
                     <Heading size="md">{header}</Heading>
                 </Center>
             </CardHeader>
-            <Divider />
-            <CardBody>{children}</CardBody>
         </Card>
     );
 };
@@ -29,23 +16,11 @@ const HomeCard = ({ header, target, children }) => {
 const Home = () => {
     return (
         <Container maxW="container.sm">
-            <VStack experimental_spaceY={10} alignItems="start">
-                <SimpleGrid spacing={4} templateColumns="repeat(auto-fill, minmax(200px, 1fr))">
-                    <HomeCard header="crackmes" target="/crackmes">
-                        <Text>
-                            Tracker for crackmes.one. Original site does not allow you to mark challenges as solved or
-                            hide the bad ones so I made a custom tracker for it :)
-                        </Text>
-                    </HomeCard>
-
-                    <HomeCard header="heroes maps" target="/heroes-maps">
-                        <Text>
-                            There are so many HoMM maps I want to play so fancy tracker for them would be useful!
-                        </Text>
-                    </HomeCard>
-                    <HomeCard header="games" target="/games">
-                        <Text>TODO</Text>
-                    </HomeCard>
+            <VStack experimental_spaceY={10} alignItems="center">
+                <SimpleGrid spacing={4} columns={2}>
+                    <HomeCard header="crackmes" target="/crackmes" />
+                    <HomeCard header="heroes maps" target="/heroes-maps" />
+                    <HomeCard header="games" target="/games" />
                 </SimpleGrid>
             </VStack>
         </Container>
