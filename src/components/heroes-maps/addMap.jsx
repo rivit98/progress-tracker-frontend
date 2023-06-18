@@ -48,7 +48,6 @@ export const AddMap = ({ updateFunc }) => {
     };
 
     const errorCallback = (e) => {
-        console.error(e);
         try {
             const err = e.response?.data;
             Object.entries({
@@ -62,8 +61,9 @@ export const AddMap = ({ updateFunc }) => {
                     });
                 });
         } catch {
-            setResult({ message: formTexts.genericError, type: 'error' });
+            console.error(e);
         }
+        setResult({ message: formTexts.genericError, type: 'error' });
     };
 
     const onSubmit = (data) => {

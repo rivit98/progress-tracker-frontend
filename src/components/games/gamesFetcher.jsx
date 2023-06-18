@@ -20,11 +20,11 @@ export const GamesFetcher = () => {
     const games = state.data;
 
     const itemsWithActions = games.map((item) => {
-        const { id, name, game_actions: gamesActions } = item;
-        const sortedActions = gamesActions
+        const { id, name, game_actions: gameActions } = item;
+        const sortedActions = gameActions
             .map((action) => ({ ...action, date: new Date(action.date) }))
             .sort((a1, a2) => a2.date.getTime() - a1.date.getTime());
-        const lastAction = gamesActions[0] || undefined;
+        const lastAction = sortedActions[0] || undefined;
         return {
             id,
             name,
@@ -32,8 +32,6 @@ export const GamesFetcher = () => {
             lastAction,
         };
     });
-
-    console.log(itemsWithActions);
 
     return (
         <ComponentStateHandler state={state}>

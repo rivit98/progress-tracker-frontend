@@ -7,6 +7,10 @@ const getMaps = async (options = undefined) => {
     return axios.get(`/${API_PREFIX}/${API_VERSION}/maps/`, options);
 };
 
+const getMapsWithActions = async (options = undefined) => {
+    return axios.get(`/${API_PREFIX}/${API_VERSION}/maps-actions/`, options);
+};
+
 const createMap = async (map_data, options = undefined) => {
     return axios.post(`/${API_PREFIX}/${API_VERSION}/maps/`, map_data, options);
 };
@@ -33,6 +37,7 @@ const updateStatus = async (map_id, statusData, options = undefined) => {
 
 export const heroesMapsService = {
     getMaps,
+    getMapsWithActions,
     createMap,
     updateMap,
     deleteMap,
