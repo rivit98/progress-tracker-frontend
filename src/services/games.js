@@ -7,6 +7,10 @@ const getGames = async (options = undefined) => {
     return axios.get(`/${API_PREFIX}/${API_VERSION}/games/`, options);
 };
 
+const getGamesWithActions = async (options = undefined) => {
+    return axios.get(`/${API_PREFIX}/${API_VERSION}/games-actions/`, options);
+};
+
 const createGame = async (game_data, options = undefined) => {
     return axios.post(`/${API_PREFIX}/${API_VERSION}/games/`, game_data, options);
 };
@@ -33,6 +37,7 @@ const updateStatus = async (game_id, statusData, options = undefined) => {
 
 export const gamesService = {
     getGames,
+    getGamesWithActions,
     createGame,
     updateGame,
     deleteGame,

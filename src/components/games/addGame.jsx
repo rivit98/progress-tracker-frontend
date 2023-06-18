@@ -48,7 +48,6 @@ export const AddGame = ({ updateFunc }) => {
     };
 
     const errorCallback = (e) => {
-        console.error(e);
         try {
             const err = e.response?.data;
             Object.entries({
@@ -61,9 +60,11 @@ export const AddGame = ({ updateFunc }) => {
                         message: value,
                     });
                 });
+            return;
         } catch {
-            setResult({ message: formTexts.genericError, type: 'error' });
+            console.error(e);
         }
+        setResult({ message: formTexts.genericError, type: 'error' });
     };
 
     const onSubmit = (data) => {

@@ -1,6 +1,4 @@
 import { Divider, Flex } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
-import { GAMES_SPECIAL_PERMS, hasPermissions, userGroups } from '../../context/userReducer';
 import { UpdateActionPanel } from '../generic/updateActionPanel';
 import { ActionsTable } from '../generic/actionsTable';
 import { gamesService } from '../../services/games';
@@ -9,8 +7,6 @@ import { UpdateGame } from './updateGame';
 
 export const ActionsList = ({ item, updateFunc }) => {
     const { id, lastAction, actions } = item;
-    const groups = useSelector(userGroups);
-    const hasSpecialPerms = hasPermissions(groups, [GAMES_SPECIAL_PERMS]);
 
     const updateFuncWrapper = (itemId, action) => {
         updateFunc({
@@ -29,12 +25,10 @@ export const ActionsList = ({ item, updateFunc }) => {
                 lastAction={lastAction}
                 updateService={gamesService.updateStatus}
             />
-            {hasSpecialPerms && (
-                <Flex justifyContent="flex-end" my={2}>
-                    <DeleteGame item={item} updateFunc={updateFunc} />
-                    <UpdateGame item={item} updateFunc={updateFunc} />
-                </Flex>
-            )}
+            <Flex justifyContent="flex-end" my={2}>
+                <DeleteGame item={item} updateFunc={updateFunc} />
+                <UpdateGame item={item} updateFunc={updateFunc} />
+            </Flex>
         </>
     );
 };

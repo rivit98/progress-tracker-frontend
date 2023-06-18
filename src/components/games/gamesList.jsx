@@ -1,7 +1,7 @@
 import { Accordion, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { GAMES_SPECIAL_PERMS, hasPermissions, isLoggedIn, userGroups } from '../../context/userReducer';
+import { isLoggedIn } from '../../context/userReducer';
 import { NotLoggedInfo } from '../generic/notLoggedBanner';
 import { Paginate } from '../generic/paginate';
 import { AddGame } from './addGame';
@@ -11,8 +11,6 @@ import { Game } from './game';
 
 export const GamesList = ({ itemsWithActions }) => {
     const logged = useSelector(isLoggedIn);
-    const groups = useSelector(userGroups);
-    const hasSpecialPerms = hasPermissions(groups, [GAMES_SPECIAL_PERMS]);
 
     const [items, setItems] = useState(itemsWithActions);
 
@@ -80,15 +78,15 @@ export const GamesList = ({ itemsWithActions }) => {
     return (
         <>
             <Filters updateFilters={updateFilters} />
-            <Flex experimental_spaceX={2} my={1}>
-                {hasSpecialPerms && <AddGame updateFunc={updateItem} />}
+            <Flex my={1}>
+                {logged && <AddGame updateFunc={updateItem} />}
+                {!logged && <NotLoggedInfo />}
             </Flex>
-            {!logged && <NotLoggedInfo />}
             <Text mb={5} mt={1}>
                 {filteredItems.length} results
             </Text>
             <Flex w="full" justifyContent="center" flexDirection="column">
-                <Accordion allowToggle allowMultiple onChange={updateOpenedItems} index={expandedItems} reduceMotion>
+                <Accordion allowMultiple onChange={updateOpenedItems} index={expandedItems} reduceMotion>
                     {filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((item) => (
                         <Game item={item} updateFunc={updateItem} key={item.id} />
                     ))}
