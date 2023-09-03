@@ -1,12 +1,17 @@
-FROM node:18
+FROM node:21 as builder
+# ENV NODE_ENV production
 
 WORKDIR /app
 
-ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json package-lock.json ./
+RUN npm ci
 
-COPY . ./
+COPY . .
+RUN npm run build
 
-RUN npm install \
-    && npm run build
 
-CMD ["serve", "-s", "build"]
+FROM nginx:alpine
+ENV NODE_ENV production
+WORKDIR /usr/share/nginx/html
+RUN rm *
+COPY --from=builder /app/build/ .

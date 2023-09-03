@@ -79,8 +79,8 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
         ...(siblingsStart > boundaryCount + 2
             ? ['start-ellipsis']
             : boundaryCount + 1 < totalPages - boundaryCount
-            ? [boundaryCount + 1]
-            : []),
+              ? [boundaryCount + 1]
+              : []),
 
         // Sibling pages
         ...range(siblingsStart, siblingsEnd),
@@ -90,8 +90,8 @@ export const Paginate = ({ totalPages, currentPage, setCurrentPage }) => {
         ...(siblingsEnd < totalPages - boundaryCount - 1
             ? ['end-ellipsis']
             : totalPages - boundaryCount > boundaryCount
-            ? [totalPages - boundaryCount]
-            : []),
+              ? [totalPages - boundaryCount]
+              : []),
 
         ...endPages,
     ];
